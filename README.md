@@ -20,6 +20,3 @@ The project is about a help desk application where the customer can log-in, view
 
 
 ## Trello
-> - [Information about sprint 1 on Trello](https://trello.com/b/xjqDvNIJ/projectenjavasprint1)
-> - [Information about sprint 2 on Trello]()
-> - [Information about sprint 3 on Trello]()
