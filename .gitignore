@@ -19,5 +19,5 @@
 *.zip
 *.tar.gz
 *.rar
-*.classpath
+.classpath
 *.dll
