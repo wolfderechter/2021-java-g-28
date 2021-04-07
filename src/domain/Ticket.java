@@ -19,15 +19,16 @@ public class Ticket {
 
 	@Id
 	public int ticketNr;
-    public String Status;
-    public Date DateCreation;
-    public String Title;
-    public String Description;
-    public String Type;
-    public int CompanyNr;
-    public int ContactPersonId;
-    public String PicturePath;
-    public List<String> Attachments;
+    public TicketStatusEnum status;
+    public Date dateCreation;
+    public String title;
+    public String description;
+    public TicketTypeEnum type;
+    public int companyNr;
+    public int contactPersonId;
+    public String picturePath;
+    public List<String> attachments;
+    public List<Reaction> reactions;
     
     protected Ticket() {
     	
