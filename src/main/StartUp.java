@@ -1,18 +1,31 @@
 package main;
+import domain.Account;
 import domain.TicketController;
+import gui.AccountPanelController;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-public class StartUp {
-	TicketController tc = new TicketController();
+public class StartUp extends Application {
+	//TicketController tc = new TicketController();
 	
-    public static void main(String [] arg) {
-        new StartUp().run();
-    }
+	 @Override
+	    public void start(Stage stage) {
+	        
+		 	AccountPanelController root = new AccountPanelController();
+		 	
+		 	Scene scene = new Scene(root, 1900,900);
+		 	
+		 	stage.setScene(scene);
+		 	
+		 	stage.setTitle("Actemium | Sign In");
+		 	
+		 	stage.show();
+	    }
 
-    private void run() {
-		 
-		for(String ticket : tc.geefAlleTickets()) { System.out.println(ticket); }
-		 
-      
-    }
+	    public static void main(String... args) {
+	        launch(StartUp.class, args);
+	    }
     
 }

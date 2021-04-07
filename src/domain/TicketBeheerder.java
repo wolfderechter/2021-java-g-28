@@ -17,8 +17,7 @@ public class TicketBeheerder {
     }
 
     private void initializePersistentie() {
-        openPersistentie();
-        
+        openPersistentie();  
     }
     
     private void openPersistentie() {
