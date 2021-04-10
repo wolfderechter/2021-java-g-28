@@ -15,11 +15,13 @@ public class StartUp extends Application {
 	        
 		 	AccountPanelController root = new AccountPanelController();
 		 	
-		 	Scene scene = new Scene(root, 1900,900);
+		 	Scene scene = new Scene(root);
 		 	
 		 	stage.setScene(scene);
 		 	
 		 	stage.setTitle("Actemium | Sign In");
+		 	
+		 	stage.setMaximized(true);
 		 	
 		 	stage.show();
 	    }
