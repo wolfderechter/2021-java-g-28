@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root alignment="CENTER" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: white;" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" prefHeight="625.0" prefWidth="700.0" style="-fx-background-color: white;" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -39,7 +39,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="lblLoginError" textFill="RED">
+                  <Label fx:id="lblLoginError" alignment="CENTER" textFill="RED">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -85,6 +85,12 @@
                               <Font size="19.0" />
                            </font></Button>
                      </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>

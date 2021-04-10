@@ -3,6 +3,7 @@ package gui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import javafx.event.ActionEvent;
@@ -16,6 +17,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+/**
+ * This class is responsible for signing in.
+ * @author Stef
+ */
 public class AccountPanelController extends GridPane {
 	@FXML
 	private TextField txtUsername;
@@ -43,9 +48,8 @@ public class AccountPanelController extends GridPane {
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
 	private void signIn(ActionEvent event) {
 		String get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s", txtUsername.getText(), pwfPassword.getText()));
-		System.out.println(get);
 		
-		//FOR TESTING OTHER THAN LOGIN SCREEN USE FALSE
+		//FOR TESTING PURPOSE PUT FALSE
 		boolean runWithLogin = true;
 		
 		if(runWithLogin) {
@@ -82,11 +86,9 @@ public class AccountPanelController extends GridPane {
 			conn.setConnectTimeout(5000);
 			conn.setReadTimeout(5000);
 			try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-				for (String line; (line = reader.readLine()) != null;) {
-					result.append(line);
-				}
+				result.append(reader.readLine());
 			}
-		} catch (Exception e) {
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 		return result.toString();
