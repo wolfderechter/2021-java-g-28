@@ -3,7 +3,6 @@ package gui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import javafx.event.ActionEvent;
@@ -47,12 +46,11 @@ public class AccountPanelController extends GridPane {
 	
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
 	private void signIn(ActionEvent event) {
-		String get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s", txtUsername.getText(), pwfPassword.getText()));
-		
 		//FOR TESTING PURPOSE PUT FALSE
-		boolean runWithLogin = true;
+		boolean runWithLogin = false;
 		
 		if(runWithLogin) {
+			String get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s", txtUsername.getText(), pwfPassword.getText()));
 			if (get.equals("true")) {
 				showDashboard();
 			} else {
@@ -71,6 +69,7 @@ public class AccountPanelController extends GridPane {
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
 		stage.setMaximized(true);
+		stage.setResizable(false);
 		stage.setTitle("Actemium | Dashboard");
 		stage.show();
 	}
