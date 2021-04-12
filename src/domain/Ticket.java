@@ -24,7 +24,7 @@ public class Ticket {
     public String title;
     public String description;
     public TicketTypeEnum type;
-    public int companyNr;
+    public int companyNr; 
     public int contactPersonId;
     public String picturePath;
     public List<String> attachments;

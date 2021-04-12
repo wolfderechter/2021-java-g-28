@@ -4,14 +4,14 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 
-public class DashboardPanelController extends GridPane {
+public class DashboardPanelController extends BorderPane {
 
 	@FXML
 	private Label lblUsername;
-	
 	public DashboardPanelController(String username) {
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardPanel.fxml"));
