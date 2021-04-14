@@ -6,32 +6,31 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class TicketBeheerder {
+public class TicketManager {
 
 	public final String PERSISTENCE_UNIT_NAME = "project2";
     private EntityManager em;
     private EntityManagerFactory emf;
 
-    public TicketBeheerder() {
-        initializePersistentie();
+    public TicketManager() {
+        initializePersistence();
     }
 
-    private void initializePersistentie() {
-        openPersistentie();  
+    private void initializePersistence() {
+        openPersistence();  
     }
     
-    private void openPersistentie() {
+    private void openPersistence() {
         emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         em = emf.createEntityManager();
     }
 
-    public void closePersistentie() {
+    public void closePersistence() {
         em.close();
         emf.close();
     }
     
-    public List<Ticket> geefAlleTickets() {
-        return em.createNamedQuery("Ticket.alleTickets", Ticket.class).getResultList();
+    public List<Ticket> getAllTickets() {
+        return em.createNamedQuery("Ticket.allTickets", Ticket.class).getResultList();
     }
-    
 }

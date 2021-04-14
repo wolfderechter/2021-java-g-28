@@ -52,7 +52,7 @@ public class AccountPanelController extends GridPane {
 	private void signIn(ActionEvent event) {
 		
 		DashboardPanelController dpc = new DashboardPanelController(txtUsername.getText());
-		Scene scene = new Scene(dpc, 1900, 900);
+		Scene scene = new Scene(dpc, 1200, 600);
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
 		stage.show();

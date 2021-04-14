@@ -2,12 +2,31 @@ package domain;
 
 import java.util.List;
 
-public class ContactPerson extends Account {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
-	private int id;
-	private String FirstName;
-	private String LastName;
-	private Company Company;
-	private List<Notification> Notifications;
+
+
+
+@Entity
+@Table(name = "ContactPersons")
+@NamedQueries({
+	@NamedQuery(name = "ContactPerson.allContactPersons" , query = "SELECT * FROM ContactPerson")
+})
+public class ContactPerson extends Account {
+	
+	@Id
+	public int id;
+	public String FirstName;
+	public String LastName;
+	public Company Company;
+	public List<Notification> Notifications;
+	
+	protected ContactPerson() {
+		
+	}
 	
 }
