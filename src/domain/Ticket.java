@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Tickets")
 @NamedQueries({
-	@NamedQuery(name = "Ticket.alleTickets" , query = "SELECT * FROM Tickets")
+	//@NamedQuery(name = "Ticket.alleTickets" , query = "SELECT * FROM Tickets")
 })
 public class Ticket {
 

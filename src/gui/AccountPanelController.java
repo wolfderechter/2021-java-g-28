@@ -5,6 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.Account;
+import domain.Company;
+import domain.ContactPerson;
+import domain.DomainController;
+import domain.Notification;
+import domain.SupportManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +39,8 @@ public class AccountPanelController extends GridPane {
 	@FXML
 	private Label lblLoginError;
 
+	DomainController dc;
+	
 	public AccountPanelController() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AccountPanel.fxml"));
         loader.setController(this);
@@ -47,24 +58,32 @@ public class AccountPanelController extends GridPane {
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
 	private void signIn(ActionEvent event) {
 		//FOR TESTING PURPOSE PUT FALSE
-		boolean runWithLogin = false;
+		boolean runWithLogin = true;
 		
 		if(runWithLogin) {
-			String get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s", txtUsername.getText(), pwfPassword.getText()));
-			if (get.equals("true")) {
-				showDashboard();
+			String[] get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s", txtUsername.getText(), pwfPassword.getText())).split("-");
+			String isValid = get[0];
+			String role = get[1];
+			if (isValid.equals("true")) {
+				Account signedInUser = getSignedInUser(role);
+				showDashboard(signedInUser);
 			} else {
 				lblLoginError.setText("Username or password incorrect");
 				txtUsername.requestFocus();
 			}
 		} else {
-			showDashboard();
+			int testCompany = 1;
+			
+			List<Notification> testList = new ArrayList<>();
+			
+			Account testAccount = new ContactPerson("", 1, "", "", testCompany);
+			showDashboard(testAccount);
 		}
 	}
 	
 	/**Shows dashboard**/
-	private void showDashboard() {
-		DashboardPanelController dpc = new DashboardPanelController(txtUsername.getText());
+	private void showDashboard(Account signedInAccount) {
+		DashboardPanelController dpc = new DashboardPanelController(signedInAccount);
 		Scene scene = new Scene(dpc);
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
@@ -91,5 +110,20 @@ public class AccountPanelController extends GridPane {
 			e.printStackTrace();
 		}
 		return result.toString();
+	}
+	
+	/**Returns signed in account**/
+	private Account getSignedInUser(String role) {
+		if(role.equals("contactperson")) {
+			dc = new DomainController();
+			ContactPerson cp = dc.getContactPersonByUsername(txtUsername.getText());
+			dc.close();
+			return cp;
+		} else {
+			dc = new DomainController();
+			SupportManager sm = dc.getSupportManagerByUsername(txtUsername.getText());
+			dc.close();
+			return sm;
+		}
 	}
 }
