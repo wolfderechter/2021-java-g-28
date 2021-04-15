@@ -72,11 +72,11 @@ public class AccountPanelController extends GridPane {
 				txtUsername.requestFocus();
 			}
 		} else {
-			int testCompany = 1;
+			Company testCompany = new Company();
 			
 			List<Notification> testList = new ArrayList<>();
 			
-			Account testAccount = new ContactPerson("", 1, "", "", testCompany);
+			Account testAccount = new ContactPerson("", 1, "", "", testCompany, testList);
 			showDashboard(testAccount);
 		}
 	}

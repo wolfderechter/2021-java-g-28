@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,25 +29,27 @@ public class ContactPerson extends Account {
 	private String firstName;
 	@Column(name = "LastName")
 	private String lastName;
-	@Column(name = "CompanyNr")
-	private int companyNr;
+
 	@ManyToOne
 	@JoinColumn(name = "UserId")
 	private User user;
-	//@OneToMany11
-	//private List<Notification> notifications;
+	@OneToMany(mappedBy = "contactPerson")
+	private List<Notification> notifications;
+	@ManyToOne
+	@JoinColumn(name = "CompanyNr")
+	private Company company;
 	
 	public ContactPerson() {
 		
 	}
 	
-	public ContactPerson(String username, int id, String firstName, String lastName, int companyNr/*, List<Notification> notifications*/) {
+	public ContactPerson(String username, int id, String firstName, String lastName, Company company, List<Notification> notifications) {
 		super(username);
 		setId(id);
 		setFirstName(firstName);
 		setLastName(lastName);
-		setCompanyNr(companyNr);
-		//setNotifications(notifications);
+		setCompany(company);
+		setNotifications(notifications);
 	}
 
 	public int getId() {
@@ -71,21 +76,19 @@ public class ContactPerson extends Account {
 		this.lastName = lastName;
 	}
 
-	public int getCompanyNr() {
-		return companyNr;
+	public Company getCompany() {
+		return company;
 	}
 
-	private void setCompanyNr(int companyNr) {
-		this.companyNr = companyNr;
+	private void setCompany(Company company) {
+		this.company = company;
 	}
 
-//	public List<Notification> getNotifications() {
-//		return notifications;
-//	}
-//
-//	private void setNotifications(List<Notification> notifications) {
-//		this.notifications = notifications;
-//	}	
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
 	
-	
+	private void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
 }

@@ -6,6 +6,7 @@
     <class>domain.ContactPerson</class>
     <class>domain.Company</class>
     <class>domain.User</class>
+    <class>domain.Notification</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost;databaseName=Actemium;integratedsecurity=true"/>
