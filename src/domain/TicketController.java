@@ -3,16 +3,16 @@ package domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.collections.ObservableList;
+
 
 public class TicketController {
 
 	private TicketManager tm = new TicketManager();
 	
-	public List<String> getAllTickets() {
+	public ObservableList<Ticket> getAllTickets() {
         List<Ticket> li = tm.getAllTickets();
-    	return li.stream()
-        		 .map(a -> a.toString())
-        		 .collect(Collectors.toList());
+    	return (ObservableList<Ticket>) li;
     }
 	
 	public void close() {

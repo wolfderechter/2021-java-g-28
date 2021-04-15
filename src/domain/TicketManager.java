@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import javafx.collections.ObservableList;
+
 public class TicketManager {
 
 	public final String PERSISTENCE_UNIT_NAME = "project2";
@@ -31,6 +33,6 @@ public class TicketManager {
     }
     
     public List<Ticket> getAllTickets() {
-        return em.createNamedQuery("Ticket.allTickets", Ticket.class).getResultList();
+        return em.createNamedQuery("Ticket.alleTickets", Ticket.class).getResultList();
     }
 }
