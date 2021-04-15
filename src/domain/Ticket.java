@@ -22,9 +22,8 @@ import javafx.beans.property.StringProperty;
 @NamedQueries({
 	@NamedQuery(name = "Ticket.alleTickets" , query = "SELECT d FROM Tickets d")
 })
-public class Ticket implements Serializable{
+public class Ticket {
 
-	private static final long serialVersionUID = 1L;
 	@Id
 	private int ticketNr;
 	public IntegerProperty ticketNrProp = new SimpleIntegerProperty();

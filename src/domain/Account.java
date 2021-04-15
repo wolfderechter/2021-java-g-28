@@ -3,20 +3,20 @@ package domain;
 public abstract class Account {
 
 	private String username;
-	private String password;
 
 	public Account() {
 		
 	}
 	
+	public Account(String username) {
+		setUsername(username);
+	}
+	
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
-	public void setUsername(String username) {
+	private void setUsername(String username) {
 		this.username = username;
 	}
-	
-	
-	
 }

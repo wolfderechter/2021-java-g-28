@@ -3,6 +3,10 @@
   <persistence-unit name="project2" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>domain.Ticket</class>
+    <class>domain.ContactPerson</class>
+    <class>domain.Company</class>
+    <class>domain.User</class>
+    <class>domain.Notification</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     
     <properties>

@@ -2,8 +2,12 @@ package gui;
 
 import java.io.IOException;
 
+
 import domain.TicketController;
 import javafx.event.ActionEvent;
+
+import domain.Account;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,18 +21,15 @@ public class DashboardPanelController extends BorderPane {
 	@FXML
 	private Label lblUsername;
 	
+
     @FXML
     private Button btnCustomer;
     @FXML
     private Button btnTickets;
 
-//    @FXML
-//    public void test(ActionEvent event) {
-//    	ContactPersonPanelController cppc = new ContactPersonPanelController();
-//		setCenter(cppc);
-//    }
-    
-	public DashboardPanelController(String username) {
+
+	public DashboardPanelController(Account signedInAccount) {
+
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardPanel.fxml"));
         loader.setController(this);
@@ -38,10 +39,12 @@ public class DashboardPanelController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+
 		//displayTickets(null);
-		lblUsername.setText(username);
+		lblUsername.setText(signedInAccount.getUsername());
         btnCustomer.setOnAction(this::displayCustomers);
         btnTickets.setOnAction(this::displayTickets);
+
 	}
 	
 	

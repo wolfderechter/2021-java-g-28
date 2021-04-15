@@ -1,11 +1,8 @@
 package main;
-import domain.Account;
-import domain.TicketController;
 import gui.AccountPanelController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class StartUp extends Application {
 	//TicketController tc = new TicketController();
@@ -15,11 +12,15 @@ public class StartUp extends Application {
 	        
 		 	AccountPanelController root = new AccountPanelController();
 		 	
-		 	Scene scene = new Scene(root, 1900,900);
+		 	Scene scene = new Scene(root);
 		 	
 		 	stage.setScene(scene);
 		 	
 		 	stage.setTitle("Actemium | Sign In");
+		 	
+		 	stage.setMaximized(true);
+		 	
+		 	stage.setResizable(false);
 		 	
 		 	stage.show();
 	    }
