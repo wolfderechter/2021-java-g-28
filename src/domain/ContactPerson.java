@@ -13,15 +13,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 @Entity
 @Table(name = "ContactPersons")
 @NamedQueries({
-	@NamedQuery(name = "ContactPerson.getContactpersonByUsername" , query = "SELECT c FROM ContactPerson c WHERE c.user.userName = :username")
+	@NamedQuery(name = "ContactPersons.getContactpersonByUsername" , query = "SELECT c FROM ContactPerson c WHERE c.user.userName = :username"),
+	@NamedQuery(name = "ContactPersons.getAllContactPersons" , query = "SELECT c FROM ContactPerson c")
+
 })
-public class ContactPerson extends Account {
+public class ContactPerson {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
 	private int id;
 	@Column(name = "FirstName")
@@ -42,8 +47,7 @@ public class ContactPerson extends Account {
 		
 	}
 	
-	public ContactPerson(String username, int id, String firstName, String lastName, Company company, List<Notification> notifications) {
-		super(username);
+	public ContactPerson(int id, String firstName, String lastName, Company company, List<Notification> notifications) {
 		setId(id);
 		setFirstName(firstName);
 		setLastName(lastName);
@@ -90,4 +94,26 @@ public class ContactPerson extends Account {
 	private void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
 	}
+	
+	//gui screen
+	public StringProperty getUserNameProp() {
+		return new SimpleStringProperty(this, "userNameProp", user.getUserName()); 
+	}
+
+	public StringProperty getFirstNameProp() {
+		return new SimpleStringProperty(this, "firstNameProp", firstName);
+	}
+
+	public StringProperty getLastNameProp() {
+		return new SimpleStringProperty(this, "lastNameProp", lastName);
+	}
+		
+	public StringProperty getCompanyProp() {
+		return new SimpleStringProperty(this, "companyProp", company.getCompanyName());
+	}
+
+//	public StringProperty getStatusProp() {
+//		return new SimpleStringProperty(this, "statusProp", status.ToString());
+//	}
+	
 }

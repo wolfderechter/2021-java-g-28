@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -41,5 +43,9 @@ public class DomainManager {
     	TypedQuery<SupportManager> query1 = em.createNamedQuery("SupportManager.getSupportManagerByUsername", SupportManager.class).setParameter("username", username);
         SupportManager sm = query1.getSingleResult();
         return sm;
+    }
+    
+    public List<ContactPerson> getAllContactPersons() {
+        return em.createNamedQuery("ContactPersons.getAllContactPersons", ContactPerson.class).getResultList();
     }
 }

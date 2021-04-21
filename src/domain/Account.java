@@ -2,7 +2,7 @@ package domain;
 
 public abstract class Account {
 
-	private String username;
+	protected String username;
 
 	public Account() {
 		
