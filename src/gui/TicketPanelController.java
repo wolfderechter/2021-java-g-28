@@ -8,6 +8,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -39,10 +40,29 @@ public class TicketPanelController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        TicketEditPanelController tepc = new TicketEditPanelController(ticketsC.getAllTickets().get(1));
+		tepc.setDisable(true);
+        setRight(tepc);
         System.out.print(ticketsC.getAllTickets());
         ticketNrCol.setCellValueFactory(cellData -> cellData.getValue().getTicketNrProp());
         statusCol.setCellValueFactory(cellData-> cellData.getValue().getStatusProp());
         titleCol.setCellValueFactory(cellData-> cellData.getValue().getTitleProp());
 		tvTickets.setItems(tc.getAllTickets());
+		tvTickets.getSelectionModel().selectedItemProperty()
+		.addListener((observableValue, vorigTicket, selectedTicket) -> 
+			{
+			//Controleerof er een persoon is geselecteerd
+			if (selectedTicket!= null) {
+				int index = tvTickets.getSelectionModel().getSelectedIndex();
+				displaySelectedTicketDetails(selectedTicket);
+				}
+			}
+		);
+		}
+	
+		private void displaySelectedTicketDetails(Ticket selectedTicket) {
+			TicketEditPanelController tepc = new TicketEditPanelController(selectedTicket);
+			setRight(tepc);
+		}
 	}
-}
+	

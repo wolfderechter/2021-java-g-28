@@ -35,7 +35,7 @@ public class Ticket {
 
 	private int ticketNr;
     public String title;
-    public String status;
+    public TicketStatusEnum status;
     private Date dateCreation;
     private String description;
 	@ManyToOne()
@@ -101,17 +101,73 @@ public class Ticket {
 		this.title = title;
 	}
 
-
-
-
-	public String getStatus() {
+	public TicketStatusEnum getStatus() {
 		return status;
 	}
 
-
-
-
-	public void setStatus(String status) {
+	public void setStatus(TicketStatusEnum status) {
 		this.status = status;
 	}
+
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public ContactPerson getContactPersonId() {
+		return contactPersonId;
+	}
+
+	public void setContactPersonId(ContactPerson contactPersonId) {
+		this.contactPersonId = contactPersonId;
+	}
+
+	public String getPicturePath() {
+		return picturePath;
+	}
+
+	public void setPicturePath(String picturePath) {
+		this.picturePath = picturePath;
+	}
+
+	public List<Reaction> getReactions() {
+		return reactions;
+	}
+
+	public void setReactions(List<Reaction> reactions) {
+		this.reactions = reactions;
+	}
+
+
+
+
+//	public String getStatus() {
+//		return status;
+//	}
+//
+//
+//
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 }
