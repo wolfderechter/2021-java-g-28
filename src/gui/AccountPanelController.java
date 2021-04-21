@@ -5,24 +5,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import domain.Account;
-import domain.Company;
 import domain.ContactPerson;
 import domain.DomainController;
-import domain.Notification;
 import domain.SupportManager;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -57,11 +59,9 @@ public class AccountPanelController extends GridPane {
 	
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
 	private void signIn(ActionEvent event) {
-		//FOR TESTING PURPOSE PUT FALSE
-		boolean runWithLogin = true;
-		
-		if(runWithLogin) {
-			String[] get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s", txtUsername.getText(), pwfPassword.getText())).split("-");
+		try {
+			String[] get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
+					txtUsername.getText(), pwfPassword.getText())).split("-");
 			String isValid = get[0];
 			String role = get[1];
 			if (isValid.equals("true")) {
@@ -71,16 +71,11 @@ public class AccountPanelController extends GridPane {
 				lblLoginError.setText("Username or password incorrect");
 				txtUsername.requestFocus();
 			}
-		} else {
-			Company testCompany = new Company();
-			
-			List<Notification> testList = new ArrayList<>();
-			
-			Account testAccount = new ContactPerson("", 1, "", "", testCompany, testList);
-			showDashboard(testAccount);
+		} catch (IOException e) {
+			createAndShowPopupConnection();
 		}
 	}
-	
+
 	/**Shows dashboard**/
 	private void showDashboard(Account signedInAccount) {
 		DashboardPanelController dpc = new DashboardPanelController(signedInAccount);
@@ -93,22 +88,21 @@ public class AccountPanelController extends GridPane {
 		stage.show();
 	}
 
-	/**Sends GET request to specific URL and returns result from server as a string**/
-	private String get(String urlToRead) {
+	/**Sends GET request to specific URL and returns result from server as a string
+	 * @throws IOException **/
+	private String get(String urlToRead) throws IOException {
 		StringBuilder result = new StringBuilder();
-		try {
-			URL url = new URL(urlToRead);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Content-Type", "text/plain");
-			conn.setConnectTimeout(5000);
-			conn.setReadTimeout(5000);
-			try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-				result.append(reader.readLine());
-			}
-		}catch (IOException e) {
-			e.printStackTrace();
+
+		URL url = new URL(urlToRead);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-Type", "text/plain");
+		conn.setConnectTimeout(5000);
+		conn.setReadTimeout(5000);
+		try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+			result.append(reader.readLine());
 		}
+
 		return result.toString();
 	}
 	
@@ -125,5 +119,52 @@ public class AccountPanelController extends GridPane {
 			dc.close();
 			return sm;
 		}
+	}
+	
+	private void createAndShowPopupConnection() {
+		Label lblError1 = new Label("Connection refused");
+		Label lblError2 = new Label("Please check your internet connection or try again later");
+		
+		lblError1.setFont(Font.font(15));
+		
+		Button btnClose = new Button("Ok");
+		
+		btnClose.setOnAction(new EventHandler<ActionEvent>() {	
+			@Override
+			public void handle(ActionEvent arg0) {
+				Stage stage = (Stage) btnClose.getScene().getWindow();
+				stage.close();	
+			}
+		});
+		
+		VBox root = new VBox(2);
+		
+		root.getChildren().add(lblError1);
+		
+		root.getChildren().add(lblError2);
+		
+		root.getChildren().add(btnClose);
+		
+		root.setAlignment(Pos.CENTER);
+		
+		VBox.setMargin(btnClose,new Insets(20));
+		
+		Scene scene = new Scene(root);
+		
+		Stage stage = new Stage();
+		
+		stage.setScene(scene);
+
+		stage.setTitle("Error");
+
+		stage.setHeight(200);
+		
+		stage.setWidth(400);
+		
+		stage.setResizable(false);
+		
+		stage.initModality(Modality.APPLICATION_MODAL);
+		
+		stage.show();
 	}
 }

@@ -20,8 +20,6 @@ public class DashboardPanelController extends BorderPane {
 
 	@FXML
 	private Label lblUsername;
-	
-
     @FXML
     private Button btnCustomer;
     @FXML
@@ -41,7 +39,8 @@ public class DashboardPanelController extends BorderPane {
         }
 
 		//displayTickets(null);
-		lblUsername.setText(signedInAccount.getUsername());
+		//lblUsername.setText(signedInAccount.getUsername());
+        lblUsername.setText("bert");
         btnCustomer.setOnAction(this::displayCustomers);
         btnTickets.setOnAction(this::displayTickets);
 

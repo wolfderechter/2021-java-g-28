@@ -20,9 +20,10 @@ public class TicketPanelController extends BorderPane {
 	@FXML
 	private TableColumn<Ticket, Number> ticketNrCol;
 	@FXML
-	private TableColumn<Ticket, String> statusCol;
+	private TableColumn<Ticket, Number> statusCol;
 	@FXML
 	private TableColumn<Ticket, String>  titleCol;
+	
 	private TicketController tc;
 	
 	public TicketPanelController(TicketController ticketsC) {
@@ -35,9 +36,12 @@ public class TicketPanelController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        ticketNrCol.setCellValueFactory(cellData -> cellData.getValue().getTicketNrProp());
-        statusCol.setCellValueFactory(cellData-> cellData.getValue().getStatusProp());
-        titleCol.setCellValueFactory(cellData-> cellData.getValue().getTitleProp());
-		tvTickets.setItems(tc.getAllTickets());
+		/*
+		 * ticketNrCol.setCellValueFactory(cellData ->
+		 * cellData.getValue().getTicketNr()); statusCol.setCellValueFactory(cellData->
+		 * cellData.getValue().getStatus()); titleCol.setCellValueFactory(cellData->
+		 * cellData.getValue().getTitel()); tvTickets.setItems(tc.getAllTickets());
+		 */
+		System.out.println(tc.getAllTickets());
 	}
 }

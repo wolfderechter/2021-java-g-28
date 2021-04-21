@@ -7,8 +7,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import javafx.beans.property.IntegerProperty;
@@ -26,21 +29,29 @@ public class Ticket {
 
 	@Id
 	private int ticketNr;
-	public IntegerProperty ticketNrProp = new SimpleIntegerProperty();
-    public StringProperty titleProp = new SimpleStringProperty();
-    public StringProperty statusProp = new SimpleStringProperty();;
+	//private SimpleIntegerProperty ticketNrProp = new SimpleIntegerProperty();
+    //private SimpleStringProperty titleProp = new SimpleStringProperty();
+    //private SimpleIntegerProperty statusProp = new SimpleIntegerProperty();
+	private String title;
+	private int status;
     private Date dateCreation;
     private String description;
+    
+    @ManyToOne
+    @JoinColumn(name = "CompanyNr")
     private Company Company;
-    private int contactPersonId;
+    @ManyToOne
+    @JoinColumn(name = "contactPersonId")
+    private ContactPerson contactPerson;
     private String picturePath;
-    private List<String> attachments;
+    //private List<String> attachments;
+    @OneToMany(mappedBy = "ticket")
     private List<Reaction> reactions;
     
     
     
     
-    public IntegerProperty getTicketNrProp() {
+    /*public IntegerProperty getTicketNrProp() {
     	if (ticketNrProp==null) {
 			ticketNrProp = new SimpleIntegerProperty(this, "ticketNrProp", ticketNr);
 		}
@@ -59,7 +70,19 @@ public class Ticket {
 			statusProp = new SimpleStringProperty(this, "statusProp", status.toString());
 		}
 		return statusProp;
-	}
+	}*/
+    
+    //public IntegerProperty getTicketNr() {
+    //	return ticketNrProp;
+    //}
+    
+   // public IntegerProperty getStatus() {
+    //	return statusProp;
+    //}
+    
+   // public StringProperty getTitel() {
+   // titleProp;
+    //}
 
     protected Ticket() {
     	

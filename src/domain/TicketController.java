@@ -10,9 +10,14 @@ public class TicketController {
 
 	private TicketManager tm = new TicketManager();
 	
-	public ObservableList<Ticket> getAllTickets() {
+	/*
+	 * public ObservableList<Ticket> getAllTickets() { List<Ticket> li =
+	 * tm.getAllTickets(); return (ObservableList<Ticket>) li; }
+	 */
+	
+	public List<Ticket> getAllTickets() {
         List<Ticket> li = tm.getAllTickets();
-    	return (ObservableList<Ticket>) li;
+    	return li;
     }
 	
 	public void close() {
