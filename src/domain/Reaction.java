@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Reactions")
+@Table(name="Reactions")
 public class Reaction {
 
 	@Id
@@ -16,9 +16,7 @@ public class Reaction {
     public boolean IsSolution;
     public String NameUserReaction;
     public boolean ReactionSup;
-    
     @ManyToOne
-    @JoinColumn(name = "TicketId")
-    private Ticket ticket;
-    
+    @JoinColumn(name="TicketId")
+    public Ticket ticket; 
 }

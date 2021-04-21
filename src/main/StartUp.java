@@ -1,4 +1,5 @@
 package main;
+
 import domain.ContactPerson;
 import gui.AccountPanelController;
 import gui.DashboardPanelController;

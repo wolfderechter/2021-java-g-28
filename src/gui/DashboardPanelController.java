@@ -57,6 +57,5 @@ public class DashboardPanelController extends BorderPane {
 	private void displayTickets(ActionEvent event) {
 		TicketPanelController tpc = new TicketPanelController(new TicketController());
 		setCenter(tpc);
-		
 		}
 }

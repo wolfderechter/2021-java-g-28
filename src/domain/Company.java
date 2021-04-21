@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,11 +21,44 @@ public class Company {
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int CompanyNr;
-    public String CompanyAdress;
-    public String CompanyName;
-    public Date CustomerInitDate;
+	private int CompanyNr;
+    private String CompanyAdress;
+    private String CompanyName;
+    private Date CustomerInitDate;
 //    public List<Contract> Contracts;
-//    public List<ContactPerson> ContactPersons;
+    @OneToMany(mappedBy ="company")
+    private List<ContactPerson> ContactPersons;
+	public int getCompanyNr() {
+		return CompanyNr;
+	}
+	public void setCompanyNr(int companyNr) {
+		CompanyNr = companyNr;
+	}
+	public String getCompanyAdress() {
+		return CompanyAdress;
+	}
+	public void setCompanyAdress(String companyAdress) {
+		CompanyAdress = companyAdress;
+	}
+	public String getCompanyName() {
+		return CompanyName;
+	}
+	public void setCompanyName(String companyName) {
+		CompanyName = companyName;
+	}
+	public Date getCustomerInitDate() {
+		return CustomerInitDate;
+	}
+	public void setCustomerInitDate(Date customerInitDate) {
+		CustomerInitDate = customerInitDate;
+	}
+	public List<ContactPerson> getContactPersons() {
+		return ContactPersons;
+	}
+	public void setContactPersons(List<ContactPerson> contactPersons) {
+		ContactPersons = contactPersons;
+	}
+    
+    
     
 }

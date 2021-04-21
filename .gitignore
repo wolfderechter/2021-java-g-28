@@ -21,3 +21,5 @@
 *.rar
 .classpath
 *.dll
+
+/bin/
