@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import domain.Ticket;
 import domain.TicketController;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -35,6 +39,7 @@ public class TicketPanelController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        System.out.print(ticketsC.getAllTickets());
         ticketNrCol.setCellValueFactory(cellData -> cellData.getValue().getTicketNrProp());
         statusCol.setCellValueFactory(cellData-> cellData.getValue().getStatusProp());
         titleCol.setCellValueFactory(cellData-> cellData.getValue().getTitleProp());

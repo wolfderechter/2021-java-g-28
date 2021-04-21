@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +26,7 @@ public class Company {
     public String CompanyName;
     public Date CustomerInitDate;
 //    public List<Contract> Contracts;
-//    public List<ContactPerson> ContactPersons;
+    @OneToMany(mappedBy ="company")
+    public List<ContactPerson> ContactPersons;
     
 }

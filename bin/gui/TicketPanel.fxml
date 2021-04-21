@@ -9,7 +9,7 @@
 
 <fx:root prefHeight="455.0" prefWidth="511.0" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView prefHeight="200.0" prefWidth="200.0" fx:id="tvTickets">
          <columns>
             <TableColumn fx:id="ticketNrCol" prefWidth="75.0" text="TicketNr" />
             <TableColumn fx:id="statusCol" prefWidth="75.0" text="Status" />

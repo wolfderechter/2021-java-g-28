@@ -5,10 +5,17 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import javafx.beans.property.IntegerProperty;
@@ -25,43 +32,86 @@ import javafx.beans.property.StringProperty;
 public class Ticket {
 
 	@Id
+
 	private int ticketNr;
-	public IntegerProperty ticketNrProp = new SimpleIntegerProperty();
-    public StringProperty titleProp = new SimpleStringProperty();
-    public StringProperty statusProp = new SimpleStringProperty();;
+    public String title;
+    public String status;
     private Date dateCreation;
     private String description;
-    private Company Company;
-    private int contactPersonId;
+	@ManyToOne()
+	@JoinColumn(name="CompanyNr")
+    private Company company;
+	@ManyToOne()
+	@JoinColumn(name="contactPersonId")
+    private ContactPerson contactPersonId;
     private String picturePath;
-    private List<String> attachments;
+    //@Column(name = "FirstName")
+    //@ManyToOne(mappedBy = "Attachments")
+    //private List<String> attachments;
+    @OneToMany(mappedBy = "ticket")
     private List<Reaction> reactions;
     
     
     
     
-    public IntegerProperty getTicketNrProp() {
-    	if (ticketNrProp==null) {
-			ticketNrProp = new SimpleIntegerProperty(this, "ticketNrProp", ticketNr);
-		}
-		return ticketNrProp ;
+    
+   public IntegerProperty getTicketNrProp() {
+		return new SimpleIntegerProperty(this, "ticketNrProp", ticketNr); 
 	}
 
 	public StringProperty getTitleProp() {
-		if (titleProp==null) {
-			titleProp = new SimpleStringProperty(this, "titleProp", title);
-		}
-		return titleProp;
+		return new SimpleStringProperty(this, "titleProp", title);
 	}
 
 	public StringProperty getStatusProp() {
-		if (statusProp==null) {
-			statusProp = new SimpleStringProperty(this, "statusProp", status.toString());
-		}
-		return statusProp;
+		return new SimpleStringProperty(this, "statusProp", status.toString());
 	}
 
-    protected Ticket() {
+    public Ticket() {
     	
     }
+
+
+
+
+	public int getTicketNr() {
+		return ticketNr;
+	}
+
+
+
+
+	public void setTicketNr(int ticketNr) {
+		this.ticketNr = ticketNr;
+	}
+
+
+
+
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

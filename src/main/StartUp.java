@@ -1,5 +1,7 @@
 package main;
+import domain.SupportManager;
 import gui.AccountPanelController;
+import gui.DashboardPanelController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,7 +12,7 @@ public class StartUp extends Application {
 	 @Override
 	    public void start(Stage stage) {
 	        
-		 	AccountPanelController root = new AccountPanelController();
+		 	DashboardPanelController root = new DashboardPanelController(new SupportManager());
 		 	
 		 	Scene scene = new Scene(root);
 		 	
