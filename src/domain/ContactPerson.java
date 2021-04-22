@@ -19,11 +19,11 @@ import javafx.beans.property.StringProperty;
 @Entity
 @Table(name = "ContactPersons")
 @NamedQueries({
-	@NamedQuery(name = "ContactPersons.getContactpersonByUsername" , query = "SELECT c FROM ContactPerson c WHERE c.user.userName = :username"),
-	@NamedQuery(name = "ContactPersons.getAllContactPersons" , query = "SELECT c FROM ContactPerson c")
+	@NamedQuery(name = "ContactPerson.getContactpersonByUsername" , query = "SELECT c FROM ContactPerson c WHERE c.user.userName = :username"),
+	@NamedQuery(name = "ContactPerson.getAllContactPersons" , query = "SELECT c FROM ContactPerson c")
 
 })
-public class ContactPerson {
+public class ContactPerson extends Account {
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,11 +48,13 @@ public class ContactPerson {
 	}
 	
 	public ContactPerson(int id, String firstName, String lastName, Company company, List<Notification> notifications) {
+		
 		setId(id);
 		setFirstName(firstName);
 		setLastName(lastName);
 		setCompany(company);
 		setNotifications(notifications);
+		
 	}
 
 	public int getId() {

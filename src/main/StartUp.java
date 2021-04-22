@@ -1,5 +1,6 @@
 package main;
 
+
 import domain.ContactPerson;
 import gui.AccountPanelController;
 import gui.DashboardPanelController;
@@ -12,7 +13,7 @@ public class StartUp extends Application {
 	@Override
 	public void start(Stage stage) {
 		// TESTING PURPOSE
-		boolean runWithLogin = false;
+		boolean runWithLogin = true;
 
 		Parent root;
 

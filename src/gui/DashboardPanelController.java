@@ -41,34 +41,12 @@ public class DashboardPanelController extends BorderPane {
         }
         this.dc = new DomainController();
 		//displayTickets(null);
-		//lblUsername.setText(signedInAccount.getUsername());
-        lblUsername.setText("bert");
+        lblUsername.setText("NathanT");
         btnCustomer.setOnAction(this::displayCustomers);
         btnTickets.setOnAction(this::displayTickets);
-
 	}
 	
-	public DashboardPanelController(ContactPerson signedInAccount) {
-
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardPanel.fxml"));
-        loader.setController(this);
-        loader.setRoot(this);
-        try {
-            loader.load();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        this.dc = new DomainController();
-		//displayTickets(null);
-		//lblUsername.setText(signedInAccount.getUsername());
-        lblUsername.setText("bert");
-        btnCustomer.setOnAction(this::displayCustomers);
-        btnTickets.setOnAction(this::displayTickets);
-
-	}
-	
-	
 	private void displayCustomers(ActionEvent event) {
 		ContactPersonPanelController cppc = new ContactPersonPanelController(dc);
 		setCenter(cppc);

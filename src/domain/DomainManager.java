@@ -46,6 +46,6 @@ public class DomainManager {
     }
     
     public List<ContactPerson> getAllContactPersons() {
-        return em.createNamedQuery("ContactPersons.getAllContactPersons", ContactPerson.class).getResultList();
+        return em.createNamedQuery("ContactPerson.getAllContactPersons", ContactPerson.class).getResultList();
     }
 }

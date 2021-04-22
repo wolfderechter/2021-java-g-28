@@ -31,7 +31,6 @@ public class SupportManager extends Account {
 	}
 	
 	public SupportManager(String username) {
-		super(username);
 		setId(id);
 		setAdress(adress);
 		setDateInService(dateInService);
