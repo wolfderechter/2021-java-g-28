@@ -41,8 +41,8 @@ public class TicketEditPanelController extends GridPane {
         TxFieldTitle.setDisable(true);
         TxFieldStatus.setText(ticket.status.toString());
         TxAreaDescription.setText(ticket.getDescription());
-        TxFieldContPersName.setText(String.format("%s %s", ticket.getContactPersonId().getFirstName(),ticket.getContactPersonId().getLastName()));
-        TxFieldCompName.setText(ticket.getContactPersonId().getCompany().getCompanyName());
+       // TxFieldContPersName.setText(String.format("%s %s", ticket.getContactPersonId().getFirstName(),ticket.getContactPersonId().getLastName()));
+       // TxFieldCompName.setText(ticket.getContactPersonId().getCompany().getCompanyName());
         TxFieldCreDate.setText(ticket.getDateCreation().toString());		
 	}
 
