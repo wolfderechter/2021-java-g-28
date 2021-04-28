@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,9 +19,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -29,13 +34,15 @@ import javafx.beans.property.StringProperty;
 @NamedQueries({
 	@NamedQuery(name = "Ticket.alleTickets" , query = "SELECT d FROM Tickets d")
 })
+@Access(AccessType.FIELD)
 public class Ticket {
-
-	@Id
-
-	private int ticketNr;
-    public String title;
-    public TicketStatusEnum status;
+	
+	
+	private IntegerProperty ticketNr;
+	@Transient
+    public StringProperty title;
+	@Transient
+    public ObjectProperty<TicketStatusEnum> status;
     private Date dateCreation;
     private String description;
 	@ManyToOne()
@@ -55,59 +62,60 @@ public class Ticket {
     
     
     
-   public IntegerProperty getTicketNrProp() {
-		return new SimpleIntegerProperty(this, "ticketNrProp", ticketNr); 
+   public IntegerProperty TicketNr() {
+		return ticketNr; 
 	}
 
-	public StringProperty getTitleProp() {
-		return new SimpleStringProperty(this, "titleProp", title);
+	public StringProperty Title() {
+		return title;
 	}
 
-	public StringProperty getStatusProp() {
-		return new SimpleStringProperty(this, "statusProp", status.toString());
+	public ObjectProperty<TicketStatusEnum> Status() {
+		return status;
 	}
+	@Id
+	@Access(AccessType.PROPERTY)
+	public int getTicketNr() {
+		return ticketNr.intValue();
+	}
+	public void setTicketNr(int ticketNr) {
+		this.ticketNr = new SimpleIntegerProperty(ticketNr);
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getTitle() {
+		return title.getValue();
+	}
+
+	public void setTitle(String title) {
+		this.title = new SimpleStringProperty(title);
+	}
+	@Access(AccessType.PROPERTY)
+	public TicketStatusEnum getStatus() {
+		return status.getValue();
+	}
+
+	public void setStatus(TicketStatusEnum status) {
+		this.status = new SimpleObjectProperty<TicketStatusEnum>(status);
+	}
+	
+	
+	
 
     public Ticket() {
     	
     }
 
-
-
-
-	public int getTicketNr() {
-		return ticketNr;
-	}
-
-
-
-
-	public void setTicketNr(int ticketNr) {
-		this.ticketNr = ticketNr;
-	}
+	
 
 
 
 
 
 
-	public String getTitle() {
-		return title;
-	}
+	
 
-
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public TicketStatusEnum getStatus() {
-		return status;
-	}
-
-	public void setStatus(TicketStatusEnum status) {
-		this.status = status;
-	}
+	
 
 	public Date getDateCreation() {
 		return dateCreation;

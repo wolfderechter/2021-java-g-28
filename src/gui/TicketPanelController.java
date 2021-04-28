@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import domain.Ticket;
 import domain.TicketController;
+import domain.TicketStatusEnum;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -25,7 +26,7 @@ public class TicketPanelController extends BorderPane {
 	@FXML
 	private TableColumn<Ticket, Number> ticketNrCol;
 	@FXML
-	private TableColumn<Ticket, String> statusCol;
+	private TableColumn<Ticket, TicketStatusEnum> statusCol;
 	@FXML
 	private TableColumn<Ticket, String>  titleCol;
 	
@@ -46,14 +47,14 @@ public class TicketPanelController extends BorderPane {
 		tepc.setDisable(true);
         setRight(tepc);
         System.out.print(ticketsC.getAllTickets());
-        ticketNrCol.setCellValueFactory(cellData -> cellData.getValue().getTicketNrProp());
-        statusCol.setCellValueFactory(cellData-> cellData.getValue().getStatusProp());
-        titleCol.setCellValueFactory(cellData-> cellData.getValue().getTitleProp());
+        ticketNrCol.setCellValueFactory(cellData -> cellData.getValue().TicketNr());
+        statusCol.setCellValueFactory(cellData-> cellData.getValue().Status());
+        titleCol.setCellValueFactory(cellData-> cellData.getValue().Title());
 		tvTickets.setItems(tc.getAllTickets());
 		tvTickets.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, vorigTicket, selectedTicket) -> 
 			{
-			//Controleerof er een persoon is geselecteerd
+			//Controleer of er een persoon is geselecteerd
 			if (selectedTicket!= null) {
 				int index = tvTickets.getSelectionModel().getSelectedIndex();
 				displaySelectedTicketDetails(selectedTicket);
