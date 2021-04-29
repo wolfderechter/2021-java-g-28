@@ -6,10 +6,11 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import repository.GenericDaoJpa;
 
 public class DomainController {
 
-private DomainManager dm = new DomainManager();
+	private DomainManager dm = new DomainManager();
 	
 	private Ticket ticket;
 	private PropertyChangeSupport ticketSubject;
@@ -38,6 +39,8 @@ private DomainManager dm = new DomainManager();
     }
 	//nodig voor lijst van tickets voor tableview
 	public ObservableList<Ticket>  getAllTickets() {
+		//WEGGGG
+		dm.getAllContactPersons();
         List<Ticket> li = dm.getAllTickets();
         ObservableList<Ticket> obListTickets = FXCollections.observableList(li);
         return obListTickets;
@@ -45,16 +48,16 @@ private DomainManager dm = new DomainManager();
 	//nodig voor login
 	public ContactPerson getContactPersonByUsername(String username) {
         ContactPerson cp = dm.getContactPersonByUsername(username);
-        return cp;
-    }
-
-    public SupportManager getSupportManagerByUsername(String username) {
-        SupportManager sm = dm.getSupportManagerByUsername(username);
-        return sm;
+    	return cp;
     }
 	
+	public SupportManager getSupportManagerByUsername(String username) {
+		SupportManager sm = dm.getSupportManagerByUsername(username);
+    	return sm;
+	}
+
 	public void close() {
-        dm.closePersistentie();
+        GenericDaoJpa.closePersistency();
     }
 	
 	

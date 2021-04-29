@@ -46,6 +46,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 
 	public TicketEditPanelController(DomainController dc) {
 		this.dc = dc;
+		this.ticket = new Ticket();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketEditPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -54,6 +55,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
+		
 	}
 
 	private void saveTicketDetails(ActionEvent actionEvent) {

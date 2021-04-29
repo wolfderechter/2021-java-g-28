@@ -20,7 +20,7 @@ import javafx.beans.property.StringProperty;
 @Table(name = "ContactPersons")
 @NamedQueries({
 	@NamedQuery(name = "ContactPerson.getContactpersonByUsername" , query = "SELECT c FROM ContactPerson c WHERE c.user.userName = :username"),
-	@NamedQuery(name = "ContactPerson.getAllContactPersons" , query = "SELECT c FROM ContactPerson c")
+	@NamedQuery(name = "ContactPerson.getAll" , query = "SELECT c FROM ContactPerson c")
 
 })
 public class ContactPerson extends Account {

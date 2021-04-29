@@ -35,7 +35,7 @@ import javafx.beans.property.StringProperty;
 @Entity(name = "Tickets")
 @Table(name = "Tickets")
 @NamedQueries({
-	@NamedQuery(name = "Ticket.alleTickets" , query = "SELECT d FROM Tickets d")
+	@NamedQuery(name = "Ticket.getAll" , query = "SELECT d FROM Tickets d")
 })
 @Access(AccessType.FIELD)
 public class Ticket {
