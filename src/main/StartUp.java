@@ -22,7 +22,7 @@ public class StartUp extends Application {
 		if (runWithLogin) {
 			root = new AccountPanelController();
 		} else {
-			root = new DashboardPanelController(new ContactPerson());
+			root = new DashboardPanelController(new ContactPerson(),new DomainController());
 		}
 		DomainController dc = new DomainController();
 		

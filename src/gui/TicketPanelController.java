@@ -1,9 +1,11 @@
 package gui;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
+import domain.DomainController;
 import domain.Ticket;
-import domain.TicketController;
 import domain.TicketStatusEnum;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -19,7 +21,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class TicketPanelController extends BorderPane {
+public class TicketPanelController extends BorderPane implements PropertyChangeListener{
 
 	@FXML
 	private TableView<Ticket> tvTickets;
@@ -30,10 +32,10 @@ public class TicketPanelController extends BorderPane {
 	@FXML
 	private TableColumn<Ticket, String>  titleCol;
 	
-	private TicketController tc;
+	private DomainController dc;
 	
-	public TicketPanelController(TicketController ticketsC) {
-		tc= ticketsC;
+	public TicketPanelController(DomainController domainC) {
+		this.dc= domainC;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketPanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);
@@ -42,30 +44,32 @@ public class TicketPanelController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        
-        TicketEditPanelController tepc = new TicketEditPanelController(ticketsC.getAllTickets().get(1));
-		tepc.setDisable(true);
-        setRight(tepc);
-        System.out.print(ticketsC.getAllTickets());
+        //aanmaak tableview + data
         ticketNrCol.setCellValueFactory(cellData -> cellData.getValue().TicketNr());
         statusCol.setCellValueFactory(cellData-> cellData.getValue().Status());
         titleCol.setCellValueFactory(cellData-> cellData.getValue().Title());
-		tvTickets.setItems(tc.getAllTickets());
+		tvTickets.setItems(dc.getAllTickets());
+		//toevoegen edit panel
+		TicketEditPanelController tepc = new TicketEditPanelController(dc);
+		dc.addTicketListener(tepc);
+		setRight(tepc);
 		tvTickets.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, vorigTicket, selectedTicket) -> 
 			{
-			//Controleer of er een persoon is geselecteerd
+			//Controleer of er een ticket is geselecteerd
 			if (selectedTicket!= null) {
 				int index = tvTickets.getSelectionModel().getSelectedIndex();
-				displaySelectedTicketDetails(selectedTicket);
+				dc.setTicket(selectedTicket);
 				}
 			}
 		);
 		}
-	
-		private void displaySelectedTicketDetails(Ticket selectedTicket) {
-			TicketEditPanelController tepc = new TicketEditPanelController(selectedTicket);
-			setRight(tepc);
-		}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+		
 	}
+}
 	

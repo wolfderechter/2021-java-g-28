@@ -20,7 +20,7 @@ public class DomainManager {
 	}
 
     private void initializePersistentie() {
-        openPersistentie();  
+        openPersistentie();
     }
     
     private void openPersistentie() {
@@ -47,5 +47,9 @@ public class DomainManager {
     
     public List<ContactPerson> getAllContactPersons() {
         return em.createNamedQuery("ContactPerson.getAllContactPersons", ContactPerson.class).getResultList();
+    }
+    
+    public List<Ticket> getAllTickets() {
+        return em.createNamedQuery("Ticket.alleTickets", Ticket.class).getResultList();
     }
 }

@@ -32,7 +32,5 @@ public class TicketManager {
         emf.close();
     }
     
-    public List<Ticket> getAllTickets() {
-        return em.createNamedQuery("Ticket.alleTickets", Ticket.class).getResultList();
-    }
+    
 }

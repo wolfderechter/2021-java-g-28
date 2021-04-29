@@ -78,7 +78,7 @@ public class AccountPanelController extends GridPane {
 
 	/**Shows dashboard**/
 	private void showDashboard(Account signedInAccount) {
-		DashboardPanelController dpc = new DashboardPanelController(signedInAccount);
+		DashboardPanelController dpc = new DashboardPanelController(signedInAccount,new DomainController());
 		Scene scene = new Scene(dpc);
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);

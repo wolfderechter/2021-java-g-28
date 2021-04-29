@@ -1,6 +1,9 @@
 package domain;
 
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -39,10 +42,8 @@ public class Ticket {
 	
 	
 	private IntegerProperty ticketNr;
-	@Transient
-    public StringProperty title;
-	@Transient
-    public ObjectProperty<TicketStatusEnum> status;
+    private StringProperty title;
+    private ObjectProperty<TicketStatusEnum> status;
     private Date dateCreation;
     private String description;
 	@ManyToOne()
@@ -58,9 +59,12 @@ public class Ticket {
     @OneToMany(mappedBy = "ticket")
     private List<Reaction> reactions;
     
-    
-    
-    
+    public Ticket() {
+    	
+    }
+   
+
+
     
    public IntegerProperty TicketNr() {
 		return ticketNr; 
@@ -79,6 +83,7 @@ public class Ticket {
 		return ticketNr.intValue();
 	}
 	public void setTicketNr(int ticketNr) {
+		
 		this.ticketNr = new SimpleIntegerProperty(ticketNr);
 	}
 	
@@ -96,26 +101,9 @@ public class Ticket {
 	}
 
 	public void setStatus(TicketStatusEnum status) {
+		
 		this.status = new SimpleObjectProperty<TicketStatusEnum>(status);
 	}
-	
-	
-	
-
-    public Ticket() {
-    	
-    }
-
-	
-
-
-
-
-
-
-	
-
-	
 
 	public Date getDateCreation() {
 		return dateCreation;
@@ -138,6 +126,7 @@ public class Ticket {
 	}
 
 	public void setCompany(Company company) {
+		
 		this.company = company;
 	}
 
@@ -146,6 +135,7 @@ public class Ticket {
 	}
 
 	public void setContactPersonId(ContactPerson contactPersonId) {
+		
 		this.contactPersonId = contactPersonId;
 	}
 
@@ -164,18 +154,4 @@ public class Ticket {
 	public void setReactions(List<Reaction> reactions) {
 		this.reactions = reactions;
 	}
-
-
-
-
-//	public String getStatus() {
-//		return status;
-//	}
-//
-//
-//
-//
-//	public void setStatus(String status) {
-//		this.status = status;
-//	}
 }
