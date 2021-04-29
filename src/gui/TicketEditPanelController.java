@@ -46,7 +46,6 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 
 	public TicketEditPanelController(DomainController dc) {
 		this.dc = dc;
-		this.ticket = new Ticket();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketEditPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -55,25 +54,25 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
-		
 	}
 
 	private void saveTicketDetails(ActionEvent actionEvent) {
 		ticket.setStatus(CmbFieldStatus.getSelectionModel().getSelectedItem());
 		ticket.setDescription(TxAreaDescription.getText());
-		this.dc.setTicket(ticket);
+		this.dc.updateTicket(ticket);
 	}
 	
 	private void cancelTicketDetails(ActionEvent actionEvent) {
-		propertyChange(new PropertyChangeEvent(actionEvent, "ticket", this.ticket, this.ticket));
+		resetFields();
 	}
-	
-	
-
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		this.ticket = (Ticket) evt.getNewValue();
+		resetFields();
+	}
+	
+	private void resetFields() {
 		TxFieldTicketNr.setText(ticket.TicketNr().getValue().toString());
 		TxFieldTicketNr.setDisable(true);
 		TxFieldTitle.setText(ticket.Title().getValue());

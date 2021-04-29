@@ -47,9 +47,6 @@ public class Ticket {
     private Date dateCreation;
     private String description;
 	@ManyToOne()
-	@JoinColumn(name="CompanyNr")
-    private Company company;
-	@ManyToOne()
 	@JoinColumn(name="contactPersonId")
     private ContactPerson contactPersonId;
     private String picturePath;
@@ -63,9 +60,6 @@ public class Ticket {
     	
     }
    
-
-
-    
    public IntegerProperty TicketNr() {
 		return ticketNr; 
 	}
@@ -119,15 +113,6 @@ public class Ticket {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		
-		this.company = company;
 	}
 
 	public ContactPerson getContactPersonId() {
