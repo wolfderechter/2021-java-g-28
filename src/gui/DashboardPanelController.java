@@ -1,23 +1,17 @@
 package gui;
 
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-
 import javafx.event.ActionEvent;
-
 import domain.Account;
-import domain.ContactPerson;
 import domain.DomainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import gui.TicketPanelController;
-public class DashboardPanelController extends BorderPane {
+import javafx.scene.layout.GridPane;
+public class DashboardPanelController extends GridPane {
 
 	@FXML
 	private Label lblUsername;
@@ -25,6 +19,8 @@ public class DashboardPanelController extends BorderPane {
     private Button btnCustomer;
     @FXML
     private Button btnTickets;
+    @FXML
+    private BorderPane bpDashboard;
     
     private DomainController dc;
     
@@ -46,17 +42,18 @@ public class DashboardPanelController extends BorderPane {
         lblUsername.setText("NathanT");
         btnCustomer.setOnAction(this::displayCustomers);
         btnTickets.setOnAction(this::displayTickets);
+        
 	}
 	
 		
 	private void displayCustomers(ActionEvent event) {
 		ContactPersonPanelController cppc = new ContactPersonPanelController(dc);
-		setCenter(cppc);
+		bpDashboard.setCenter(cppc);
 		}
 	
 	private void displayTickets(ActionEvent event) {
 		
 		TicketPanelController tpc = new TicketPanelController(dc);
-		setCenter(tpc);
+		bpDashboard.setCenter(tpc);
 		}
 }
