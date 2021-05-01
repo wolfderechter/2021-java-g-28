@@ -110,6 +110,7 @@ public class AccountPanelController extends GridPane {
 	private Account getSignedInUser(String role) {
 		if(role.equals("contactperson")) {
 			dc = new DomainController();
+			//vervangen door lambda
 			ContactPerson cp = dc.getContactPersonByUsername(txtUsername.getText());
 			dc.close();
 			return cp;

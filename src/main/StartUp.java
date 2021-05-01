@@ -13,7 +13,7 @@ public class StartUp extends Application {
 	@Override
 	public void start(Stage stage) {
 		// TESTING PURPOSE
-		boolean runWithLogin = true;
+		boolean runWithLogin = false;
 
 		Parent root;
 
