@@ -1,9 +1,9 @@
 package gui;
 
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 
-import domain.TicketController;
 import javafx.event.ActionEvent;
 
 import domain.Account;
@@ -27,9 +27,11 @@ public class DashboardPanelController extends BorderPane {
     private Button btnTickets;
     
     private DomainController dc;
+    
 
-	public DashboardPanelController(Account signedInAccount) {
+	public DashboardPanelController(Account signedInAccount,DomainController domainC) {
 
+		this.dc = domainC;
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardPanel.fxml"));
         loader.setController(this);
@@ -53,7 +55,8 @@ public class DashboardPanelController extends BorderPane {
 		}
 	
 	private void displayTickets(ActionEvent event) {
-		TicketPanelController tpc = new TicketPanelController(new TicketController());
+		
+		TicketPanelController tpc = new TicketPanelController(dc);
 		setCenter(tpc);
 		}
 }

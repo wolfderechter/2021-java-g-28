@@ -2,7 +2,9 @@ package main;
 
 
 import domain.ContactPerson;
+import domain.DomainController;
 import gui.AccountPanelController;
+import gui.ContactPersonPanelController;
 import gui.DashboardPanelController;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -20,8 +22,12 @@ public class StartUp extends Application {
 		if (runWithLogin) {
 			root = new AccountPanelController();
 		} else {
-			root = new DashboardPanelController(new ContactPerson());
+			root = new DashboardPanelController(new ContactPerson(),new DomainController());
 		}
+		DomainController dc = new DomainController();
+		
+		//root = new ContactPersonPanelController(dc);
+		
 
 		Scene scene = new Scene(root);
 

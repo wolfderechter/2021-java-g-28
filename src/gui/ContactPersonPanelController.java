@@ -48,12 +48,32 @@ public class ContactPersonPanelController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        //System.out.println(dc.getAllContactPersons());
+      
+        ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(dc.getAllContactPersons().get(0));
+        cpepc.setDisable(true);
+        setRight(cpepc);
+      //  System.out.println(dc.getAllContactPersons());
         userNameCol.setCellValueFactory(cellData -> cellData.getValue().getUserNameProp());
         firstNameCol.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProp());
         lastNameCol.setCellValueFactory(cellData -> cellData.getValue().getLastNameProp());
         companyCol.setCellValueFactory(cellData -> cellData.getValue().getCompanyProp());
         tvContactPersons.setItems(this.dc.getAllContactPersons());
+        tvContactPersons.getSelectionModel().selectedItemProperty()
+        .addListener((observableValue, previousContactPerson, selectedContactPerson) -> 
+        {
+		
+			if (selectedContactPerson!= null) {
+				int index = tvContactPersons.getSelectionModel().getSelectedIndex();
+				displaySelectedContactPersonDetails(selectedContactPerson);
+				}
+			}
+		);
 	
 	}
+        private void displaySelectedContactPersonDetails(ContactPerson selectedContactPerson) {
+        	ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(selectedContactPerson);
+        	setRight(cpepc);
+        }   
+	
+	
 }
