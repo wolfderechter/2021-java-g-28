@@ -40,9 +40,11 @@ import javafx.beans.property.StringProperty;
 @Access(AccessType.FIELD)
 public class Ticket {
 	
-	
+	@Transient
 	private IntegerProperty ticketNr;
+	@Transient
     private StringProperty title;
+	@Transient
     private ObjectProperty<TicketStatusEnum> status;
     private Date dateCreation;
     private String description;
@@ -57,6 +59,13 @@ public class Ticket {
     private List<Reaction> reactions;
     
     public Ticket() {
+    	
+    }
+    
+   
+    
+    public void  addReaction(String text,boolean isSolution,String nameUser) {
+    	reactions.add(new Reaction(text, isSolution, nameUser, this));
     	
     }
    

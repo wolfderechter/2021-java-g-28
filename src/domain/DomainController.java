@@ -20,6 +20,7 @@ public class DomainController {
 
 	private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
+
 	// private GenericDao<Employee> employeeRepo;
 
 	// observable list?
@@ -43,6 +44,7 @@ public class DomainController {
 		this.ticketRepo = ticketRepo;
 	}
 
+
 	public void close() {
 		GenericDaoJpa.closePersistency();
 	}
@@ -51,14 +53,24 @@ public class DomainController {
 	public void setTicket(Ticket ticket) {
 		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 		this.ticket = ticket;
+		System.out.println(ticket.getTicketNr());
 	}
 
 	public void updateTicket(Ticket ticket) {
 		GenericDaoJpa.startTransaction();
 		ticketRepo.update(ticket);
         GenericDaoJpa.commitTransaction();
-		
 	}
+	
+	public void addReaction(String text) {
+		//nog te vervangen met ingelogde usernaam
+		ticket.addReaction(text,false,"Nathan Supp Test");
+		GenericDaoJpa.startTransaction();
+		ticketRepo.update(ticket);
+        GenericDaoJpa.commitTransaction();
+        ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
+	}
+
 
 	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd
 	// worden

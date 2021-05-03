@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import domain.DomainController;
+import domain.Reaction;
 import domain.Ticket;
 import domain.TicketStatusEnum;
 import javafx.beans.property.ObjectProperty;
@@ -15,9 +16,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 
 public class TicketEditPanelController extends GridPane implements PropertyChangeListener {
@@ -39,9 +43,13 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	private Button btnSave;
 	@FXML
 	private Button btnCancel;
+	@FXML
+	private ListView<Reaction> lstReactions;
+	@FXML
+	private Button btnAddReaction;
 
 	private Ticket ticket;
-	
+
 	private DomainController dc;
 
 	public TicketEditPanelController(DomainController dc) {
@@ -61,18 +69,19 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		ticket.setDescription(TxAreaDescription.getText());
 		this.dc.updateTicket(ticket);
 	}
-	
+
 	private void cancelTicketDetails(ActionEvent actionEvent) {
 		resetFields();
 	}
-	
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		this.ticket = (Ticket) evt.getNewValue();
 		resetFields();
 	}
-	
+
 	private void resetFields() {
+		//ticket info
 		TxFieldTicketNr.setText(ticket.TicketNr().getValue().toString());
 		TxFieldTicketNr.setDisable(true);
 		TxFieldTitle.setText(ticket.Title().getValue());
@@ -87,8 +96,32 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		TxFieldCompName.setDisable(true);
 		TxFieldCreDate.setText(ticket.getDateCreation().toString());
 		TxFieldCreDate.setDisable(true);
+		//button acties
 		btnSave.setOnAction(this::saveTicketDetails);
 		btnCancel.setOnAction(this::cancelTicketDetails);
+		//listview reacties
+		//lstReactions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		btnAddReaction.setOnAction(this::addReaction);
+		lstReactions.setItems(FXCollections.observableArrayList(ticket.getReactions()));
+		System.out.println(ticket.TicketNr());
+		System.out.println(ticket.getReactions());
+	}
+	
+	@FXML
+	private void addReaction(ActionEvent event) {
+		// naam van filosoof aan de gebruiker vragen
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Enter details");
+		dialog.setHeaderText("Add Reaction");
+		dialog.setContentText("Enter Reaction:");
+		dialog.showAndWait().ifPresent(response -> {
+			if (!response.isBlank()) {
+				// voeg nieuwe filosoof toe in model
+				dc.addReaction(response);
+				// zie volgende slide
+				lstReactions.getSelectionModel().selectLast();
+			}
+		});
 	}
 
 }

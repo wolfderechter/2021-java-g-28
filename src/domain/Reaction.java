@@ -19,4 +19,12 @@ public class Reaction {
     @ManyToOne
     @JoinColumn(name="TicketId")
     public Ticket ticket; 
+    
+    public Reaction() {};
+    public Reaction(String text,boolean isSolution,String nameUser,Ticket ticket) {
+    	this.Text = text;
+    	this.IsSolution = isSolution;
+    	this.NameUserReaction = nameUser;
+    	this.ticket = ticket;
+    }
 }

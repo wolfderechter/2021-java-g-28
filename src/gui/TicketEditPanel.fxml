@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="703.0" prefWidth="815.0" type="GridPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="552.0" prefWidth="500.0" type="GridPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="286.0" minWidth="173.0" prefWidth="272.0" />
       <ColumnConstraints maxWidth="412.0" minWidth="299.0" prefWidth="313.0" />
@@ -19,6 +20,10 @@
    </columnConstraints>
    <rowConstraints>
       <RowConstraints maxHeight="39.0" minHeight="39.0" prefHeight="39.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
@@ -71,6 +76,10 @@
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin></TextField>
+      <ComboBox fx:id="CmbFieldStatus" prefHeight="25.0" prefWidth="291.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin></ComboBox>
       <TextField fx:id="TxFieldCreDate" prefHeight="25.0" prefWidth="151.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -83,7 +92,7 @@
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin></TextField>
-      <TextArea fx:id="TxAreaDescription" prefHeight="200.0" prefWidth="284.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <TextArea fx:id="TxAreaDescription" minHeight="-Infinity" prefHeight="75.0" prefWidth="259.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
          
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -103,12 +112,14 @@
             <Insets bottom="10.0" left="200.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <ComboBox fx:id="CmbFieldStatus" prefHeight="25.0" prefWidth="291.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Button fx:id="btnAddReaction" mnemonicParsing="false" text="Add Reaction" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <ListView fx:id="lstReactions" minHeight="-Infinity" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="13">
          <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </GridPane.margin></ComboBox>
+            <Insets top="10.0" />
+         </GridPane.margin>
+      </ListView>
    </children>
    <padding>
-      <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+      <Insets bottom="100.0" left="100.0" right="100.0" top="10.0" />
    </padding>
 </fx:root>
