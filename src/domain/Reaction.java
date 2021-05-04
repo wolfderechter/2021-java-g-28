@@ -1,5 +1,6 @@
 package domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,19 +13,27 @@ public class Reaction {
 
 	@Id
 	public int ReactionId;
-    public String Text;
+    public String text;
     public boolean IsSolution;
-    public String NameUserReaction;
+    private String NameUserReaction;
     public boolean ReactionSup;
-    @ManyToOne
+    @ManyToOne( cascade = CascadeType.PERSIST)
     @JoinColumn(name="TicketId")
     public Ticket ticket; 
     
     public Reaction() {};
     public Reaction(String text,boolean isSolution,String nameUser,Ticket ticket) {
-    	this.Text = text;
+    	this.text = text;
     	this.IsSolution = isSolution;
     	this.NameUserReaction = nameUser;
     	this.ticket = ticket;
+    }
+    
+    public String getNameUserReaction() {
+    	return NameUserReaction;
+    }
+    
+    public String getText() {
+    	return text;
     }
 }

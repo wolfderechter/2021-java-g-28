@@ -3,6 +3,7 @@ package gui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import domain.DomainController;
 import domain.Reaction;
@@ -11,6 +12,7 @@ import domain.TicketStatusEnum;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,9 +46,11 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	@FXML
 	private Button btnCancel;
 	@FXML
-	private ListView<Reaction> lstReactions;
+	private ListView<String> lstReactions;
 	@FXML
 	private Button btnAddReaction;
+	@FXML
+	private TextArea txtReactionText;
 
 	private Ticket ticket;
 
@@ -102,7 +106,18 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		//listview reacties
 		//lstReactions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		btnAddReaction.setOnAction(this::addReaction);
-		lstReactions.setItems(FXCollections.observableArrayList(ticket.getReactions()));
+		ObservableList<String> reactions = FXCollections.observableArrayList(ticket.getReactions().stream().map(r->r.getNameUserReaction()).collect(Collectors.toList()));
+		lstReactions.setItems(reactions);
+		lstReactions.getSelectionModel().selectedItemProperty()
+		.addListener((observableValue, vorigReactie, selectedReactie) -> 
+		{
+		//Controleer of er een ticket is geselecteerd
+		if (selectedReactie!= null) {
+			int index = lstReactions.getSelectionModel().getSelectedIndex();
+			txtReactionText.setText(ticket.getReactions().get(index).getText());
+			}
+		}
+	);
 		System.out.println(ticket.TicketNr());
 		System.out.println(ticket.getReactions());
 	}
@@ -119,7 +134,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 				// voeg nieuwe filosoof toe in model
 				dc.addReaction(response);
 				// zie volgende slide
-				lstReactions.getSelectionModel().selectLast();
+				lstReactions.getSelectionModel().selectLast(); 
 			}
 		});
 	}

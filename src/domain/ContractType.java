@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ContractType {
 
-	public String Name;
+	private String name;
     public ContractTypeCreationMethod CreationMethod;
     public boolean IsOutsideBusinessHours;
     public boolean IsActive;
@@ -13,5 +13,9 @@ public class ContractType {
     public double Price;
     public List<Contract> contracts;
     
+    protected ContractType() {}
     
+    public String getName() {
+    	return name;
+    }
 }

@@ -56,6 +56,10 @@ public class ContactPerson extends Account {
 		setNotifications(notifications);
 		
 	}
+	
+	public void addNotification(String reaction) {
+		notifications.add(new Notification("Reaction",reaction,this));
+	}
 
 	public int getId() {
 		return id;

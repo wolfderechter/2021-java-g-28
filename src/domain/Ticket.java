@@ -5,11 +5,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,23 +52,21 @@ public class Ticket {
     private String description;
 	@ManyToOne()
 	@JoinColumn(name="contactPersonId")
-    private ContactPerson contactPersonId;
+    private ContactPerson contactPerson;
     private String picturePath;
     //@Column(name = "FirstName")
     //@ManyToOne(mappedBy = "Attachments")
     //private List<String> attachments;
-    @OneToMany(mappedBy = "ticket")
-    private List<Reaction> reactions;
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
+    private List<Reaction> reactions = new ArrayList<>();
     
-    public Ticket() {
+    protected Ticket() {
     	
     }
-    
    
-    
     public void  addReaction(String text,boolean isSolution,String nameUser) {
     	reactions.add(new Reaction(text, isSolution, nameUser, this));
-    	
+    	contactPerson.addNotification(title.getValue());
     }
    
    public IntegerProperty TicketNr() {
@@ -125,12 +125,12 @@ public class Ticket {
 	}
 
 	public ContactPerson getContactPersonId() {
-		return contactPersonId;
+		return contactPerson;
 	}
 
 	public void setContactPersonId(ContactPerson contactPersonId) {
 		
-		this.contactPersonId = contactPersonId;
+		this.contactPerson = contactPersonId;
 	}
 
 	public String getPicturePath() {

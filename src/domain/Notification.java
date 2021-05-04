@@ -23,4 +23,13 @@ public class Notification {
 	@ManyToOne
 	@JoinColumn(name = "ContactPersonId")
     private ContactPerson contactPerson;
+	
+	public Notification() {}
+	
+	public Notification(String action,String notificationTitle,ContactPerson person) {
+		this.action=action;
+		this.ticketName = notificationTitle;
+		this.contactPerson = person;
+		
+	}
 }

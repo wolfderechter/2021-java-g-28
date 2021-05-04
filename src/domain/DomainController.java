@@ -17,6 +17,7 @@ public class DomainController {
 
 	private Ticket ticket;
 	private PropertyChangeSupport ticketSubject;
+	
 
 	private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
@@ -53,10 +54,11 @@ public class DomainController {
 	public void setTicket(Ticket ticket) {
 		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 		this.ticket = ticket;
-		System.out.println(ticket.getTicketNr());
+		
 	}
 
 	public void updateTicket(Ticket ticket) {
+		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 		GenericDaoJpa.startTransaction();
 		ticketRepo.update(ticket);
         GenericDaoJpa.commitTransaction();
@@ -68,12 +70,10 @@ public class DomainController {
 		GenericDaoJpa.startTransaction();
 		ticketRepo.update(ticket);
         GenericDaoJpa.commitTransaction();
-        ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 	}
 
 
-	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd
-	// worden
+	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd worden
 	public void addTicketListener(PropertyChangeListener pcl) {
 		ticketSubject.addPropertyChangeListener(pcl);
 	}
@@ -88,15 +88,22 @@ public class DomainController {
 		return obListContactPersons;
 	}
 
-	// nodig voor lijst van tickets voor tableview
+	// nodig voor lijst van tickets voor tableview van ticketPanel
 	public ObservableList<Ticket> getAllTickets() {
 		// WEGGGG
-		dm.getAllContactPersons();
+		//dm.getAllContactPersons();
 		List<Ticket> li = dm.getAllTickets();
 		ObservableList<Ticket> obListTickets = FXCollections.observableList(li);
 		return obListTickets;
 	}
-
+	
+	//nodig voor lijst van contractTypes voor tableview van ContractTypePanel
+	public ObservableList<ContractType> getAllContractTypes() {
+		List<ContractType> li = dm.getAllContractTypes();
+		ObservableList<ContractType> obListContractTypes = FXCollections.observableList(li);
+		return obListContractTypes;
+	}
+	
 	// nodig voor login
 	public ContactPerson getContactPersonByUsername(String username) {
 		ContactPerson cp = dm.getContactPersonByUsername(username);
@@ -107,5 +114,7 @@ public class DomainController {
 		SupportManager sm = dm.getSupportManagerByUsername(username);
 		return sm;
 	}
+
+	
 
 }
