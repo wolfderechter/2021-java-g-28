@@ -25,7 +25,7 @@
       </HBox>
    </top>
    <center>
-      <TableView fx:id="tvContractenTypes" minWidth="-Infinity" prefHeight="200.0" prefWidth="464.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tvContractTypes" minWidth="-Infinity" prefHeight="200.0" prefWidth="464.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="colName" prefWidth="95.0" text="name" />
           <TableColumn fx:id="colStatus" prefWidth="76.0" text="status" />

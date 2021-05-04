@@ -7,18 +7,18 @@ import domain.DomainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableView;
-
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.TableColumn;
 
-public class ContractTypePanelController {
+public class ContractTypePanelController extends BorderPane{
 	@FXML
-	private TableView<ContractType> tvContractenTypes;
+	private TableView<ContractType> tvContractTypes;
 	@FXML
 	private TableColumn<ContractType,String> colName;
 	@FXML
-	private TableColumn<ContractType,String> colStatus;
+	private TableColumn<ContractType,Boolean> colStatus;
 	@FXML
-	private TableColumn<ContractType,Integer> colAmount;
+	private TableColumn<ContractType,Number> colAmount;
 	
 	private DomainController dc;
 	
@@ -32,12 +32,20 @@ public class ContractTypePanelController {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }		
-        colName.setCellValueFactory(cellData -> cellData.getValue().getName());
+        colName.setCellValueFactory(cellData -> cellData.getValue().Name());
         colStatus.setCellValueFactory(cellData-> cellData.getValue().Status());
-        colAmount.setCellValueFactory(cellData-> cellData.getValue().Title());
-        tvContractenTypes.setItems(dc.getAllContractTypes());
+        colAmount.setCellValueFactory(cellData-> cellData.getValue().Amount());
+        tvContractTypes.setItems(this.dc.getAllContractTypes());
 		//toevoegen edit panel
-		TicketEditPanelController tepc = new TicketEditPanelController(dc);
+		ContractTypeEditPanelController cepc = new ContractTypeEditPanelController(this.dc);
+		this.setRight(tvContractTypes);
+		tvContractTypes.getSelectionModel().selectedItemProperty()
+		.addListener((observableValue, vorigContractType, selectedContractType) -> 
+		{
+		//Controleer of er een ContractType is geselecteerd
+		if (selectedContractType!= null) {
+			cepc.changeContractType(selectedContractType);
+			}
+		});
 	}
-
 }

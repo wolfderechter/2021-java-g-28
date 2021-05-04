@@ -26,6 +26,9 @@ public class DashboardPanelController extends GridPane {
 	private Button btnEmployee;
 	@FXML
 	private Button btnFaq;
+	@FXML
+	private Button btnContractType;
+	
 
 	private DomainController dc;
 
@@ -48,6 +51,7 @@ public class DashboardPanelController extends GridPane {
 		btnTickets.setOnAction(this::displayTickets);
 		btnFaq.setOnAction(this::displayFaq);
 		btnEmployee.setOnAction(this::displayEmployees);
+		btnContractType.setOnAction(this::displayContractType);
 	}
 
 	private void displayCustomers(ActionEvent event) {
@@ -60,6 +64,11 @@ public class DashboardPanelController extends GridPane {
 		setActiveButtonColor(btnTickets);
 		TicketPanelController tpc = new TicketPanelController(dc);
 		bpDashboard.setCenter(tpc);
+	}
+	private void displayContractType(ActionEvent event) {
+		setActiveButtonColor(btnContractType);
+		ContractTypePanelController ctpc = new ContractTypePanelController(dc);
+		bpDashboard.setCenter(ctpc);
 	}
 	
 	private void displayFaq(ActionEvent event) {
@@ -94,6 +103,10 @@ public class DashboardPanelController extends GridPane {
 
 		if (button.equals(btnFaq)) {
 			btnFaq.setStyle("-fx-text-fill: #000000;");
+		}
+		
+		if (button.equals(btnContractType)) {
+			btnContractType.setStyle("-fx-text-fill: #000000;");
 		}
 	}
 }
