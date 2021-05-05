@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import domain.Account;
+import domain.Controller;
 import domain.DomainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,11 +31,11 @@ public class DashboardPanelController extends GridPane {
 	private Button btnContractType;
 	
 
-	private DomainController dc;
+	private Controller dc;
 
-	public DashboardPanelController(Account signedInAccount, DomainController domainC) {
+	public DashboardPanelController(Account signedInAccount, Controller controller) {
 
-		this.dc = domainC;
+		this.dc = controller;
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardPanel.fxml"));
 		loader.setController(this);
@@ -44,7 +45,6 @@ public class DashboardPanelController extends GridPane {
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
-		this.dc = new DomainController();
 		// displayTickets(null);
 		lblUsername.setText("NathanT");
 		btnCustomer.setOnAction(this::displayCustomers);

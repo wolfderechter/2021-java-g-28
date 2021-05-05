@@ -1,16 +1,11 @@
 package gui;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import domain.Account;
-import domain.ContactPerson;
+import domain.Controller;
 import domain.DomainController;
 import domain.LoginController;
-import domain.SupportManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -43,6 +38,7 @@ public class AccountPanelController extends GridPane {
 	private Label lblLoginError;
 
 	DomainController dc;
+	LoginController lc;
 	
 	public AccountPanelController() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AccountPanel.fxml"));
@@ -52,23 +48,24 @@ public class AccountPanelController extends GridPane {
             loader.load();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
-        }		
+        }
+        
+        lc = new LoginController();
+        
         txtUsername.setOnAction(this::signIn);
         pwfPassword.setOnAction(this::signIn);
         btnSignIn.setOnAction(this::signIn);
-        
 	}
 	
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
 	private void signIn(ActionEvent event) {
 		try {
-			String[] get = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
-					txtUsername.getText(), pwfPassword.getText())).split("-");
+			String[] get = lc.getValidationAndRole(txtUsername.getText(), pwfPassword.getText());
 			String isValid = get[0];
 			String role = get[1];
 			if (isValid.equals("true")) {
-				Account signedInUser = getSignedInUser(role);
-				showDashboard(signedInUser);
+				Account signedInUser = getSignedInUser(role, txtUsername.getText());
+				showDashboard(signedInUser, lc.getController(role));
 			} else {
 				lblLoginError.setText("Username or password incorrect");
 				txtUsername.requestFocus();
@@ -79,8 +76,8 @@ public class AccountPanelController extends GridPane {
 	}
 
 	/**Shows dashboard**/
-	private void showDashboard(Account signedInAccount) {
-		DashboardPanelController dpc = new DashboardPanelController(signedInAccount,new DomainController());
+	private void showDashboard(Account signedInAccount, Controller controller) {
+		DashboardPanelController dpc = new DashboardPanelController(signedInAccount, controller);
 		Scene scene = new Scene(dpc);
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
@@ -89,39 +86,10 @@ public class AccountPanelController extends GridPane {
 		stage.setTitle("Actemium | Dashboard");
 		stage.show();
 	}
-
-	/**Sends GET request to specific URL and returns result from server as a string
-	 * @throws IOException **/
-	private String get(String urlToRead) throws IOException {
-		StringBuilder result = new StringBuilder();
-
-		URL url = new URL(urlToRead);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-Type", "text/plain");
-		conn.setConnectTimeout(5000);
-		conn.setReadTimeout(5000);
-		try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-			result.append(reader.readLine());
-		}
-
-		return result.toString();
-	}
 	
 	/**Returns signed in account**/
-	private Account getSignedInUser(String role) {
-		if(role.equals("contactperson")) {
-			dc = new DomainController();
-			//vervangen door lambda
-			ContactPerson cp = dc.getContactPersonByUsername(txtUsername.getText());
-			dc.close();
-			return cp;
-		} else {
-			dc = new DomainController();
-			SupportManager sm = dc.getSupportManagerByUsername(txtUsername.getText());
-			dc.close();
-			return sm;
-		}
+	private Account getSignedInUser(String role, String username) {
+		return lc.getSignedInUser(role, username);
 	}
 	
 	private void createAndShowPopupConnection() {

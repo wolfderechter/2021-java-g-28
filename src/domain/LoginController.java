@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import gui.tc;
 import javafx.event.ActionEvent;
 
 public class LoginController {
@@ -28,5 +29,45 @@ public class LoginController {
 		}
 
 		return result.toString();
+	}
+	
+	public String[] getValidationAndRole(String username, String password) throws IOException {
+		return get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
+				username, password)).split("-");
+	}
+	
+	/**Returns signed in account**/
+	public Account getSignedInUser(String role, String username) {
+		if(role.equals("administrator")) {
+			AdministratorController ac = new AdministratorController();
+			//vervangen door lambda
+			Administrator cp = ac.getAdministratorByUsername(username);
+			ap.close();
+			return cp;
+		} 
+		
+		if(role.equals("supportmanager")) {
+			SupportManagerController spc = new SupportManagerController();
+			SupportManager sm = spc.getSupportManagerByUsername(username);
+			spc.close();
+			return sm;
+		}
+		
+		if(role.equals("technician")) {
+			TechnicianController tc = new TechnicianController();
+			Technician tn = new tc.getTechnicianByUsername(username);
+			tc.close();
+			return tn;
+		}
+	}
+	
+	public Controller getController(String role) {
+		switch (role) {
+		case "administrator": return new AdministratorController();
+		case "supportmanager": return new SupportManagerController();
+		case "technician": return new TechnicianController();
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + role);
+		}
 	}
 }

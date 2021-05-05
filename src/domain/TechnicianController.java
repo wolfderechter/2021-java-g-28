@@ -1,5 +1,5 @@
 package domain;
 
-public class TechnicianController {
+public class TechnicianController extends Controller {
 
 }

@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 
 import domain.ContactPerson;
+import domain.Controller;
 import domain.DomainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,8 +39,8 @@ public class ContactPersonPanelController extends BorderPane {
 	
 	private DomainController dc;
 	
-	public ContactPersonPanelController(DomainController dc) {
-		this.dc = dc;
+	public ContactPersonPanelController(Controller dc2) {
+		this.dc = dc2;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactPersonPanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);
@@ -49,7 +50,7 @@ public class ContactPersonPanelController extends BorderPane {
             throw new RuntimeException(ex);
         }
       
-        ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(dc.getAllContactPersons().get(0));
+        ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(dc2.getAllContactPersons().get(0));
         cpepc.setDisable(true);
         setRight(cpepc);
       //  System.out.println(dc.getAllContactPersons());
