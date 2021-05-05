@@ -15,13 +15,13 @@ public class DomainController {
 
 	private DomainManager dm = new DomainManager();
 
-	private Ticket ticket;
+	//private Ticket ticket;
 	private Employee employee;
-	private PropertyChangeSupport ticketSubject;
+	//private PropertyChangeSupport ticketSubject;
 	private PropertyChangeSupport employeeSubject;
 
 
-	private GenericDao<Ticket> ticketRepo;
+	//private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
 	private GenericDao<Employee> employeeRepo;
 
@@ -30,8 +30,8 @@ public class DomainController {
 	//private List<ContactPerson> contactPersonList;
 
 	public DomainController() {
-		ticketSubject = new PropertyChangeSupport(this);
-		setTicketRepo(new GenericDaoJpa<>(Ticket.class));
+		//ticketSubject = new PropertyChangeSupport(this);
+		//setTicketRepo(new GenericDaoJpa<>(Ticket.class));
 		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
 		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
 		
@@ -42,9 +42,9 @@ public class DomainController {
 		this.contactPersonRepo = contactPersonRepo;
 	}
 
-	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
-		this.ticketRepo = ticketRepo;
-	}
+//	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
+//		this.ticketRepo = ticketRepo;
+//	}
 	
 	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
 		this.employeeRepo = employeeRepo;
@@ -55,36 +55,36 @@ public class DomainController {
 	}
 
 	// bij het zetten van de ticket wordt de ticket in de editticketpanel geset
-	public void setTicket(Ticket ticket) {
-		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
-		this.ticket = ticket;
-		
-	}
+//	public void setTicket(Ticket ticket) {
+//		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
+//		this.ticket = ticket;
+//		
+//	}
 
-	public void updateTicket(Ticket ticket) {
-		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
-		GenericDaoJpa.startTransaction();
-		ticketRepo.update(ticket);
-        GenericDaoJpa.commitTransaction();
-	}
+//	public void updateTicket(Ticket ticket) {
+//		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
+//		GenericDaoJpa.startTransaction();
+//		ticketRepo.update(ticket);
+//        GenericDaoJpa.commitTransaction();
+//	}
 	
-	public void addReaction(String text) {
-		//nog te vervangen met ingelogde usernaam
-		ticket.addReaction(text,false,"Nathan Supp Test");
-		GenericDaoJpa.startTransaction();
-		ticketRepo.update(ticket);
-        GenericDaoJpa.commitTransaction();
-	}
+//	public void addReaction(String text) {
+//		//nog te vervangen met ingelogde usernaam
+//		ticket.addReaction(text,false,"Nathan Supp Test");
+//		GenericDaoJpa.startTransaction();
+//		ticketRepo.update(ticket);
+//        GenericDaoJpa.commitTransaction();
+//	}
 
 
 	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd worden
-	public void addTicketListener(PropertyChangeListener pcl) {
-		ticketSubject.addPropertyChangeListener(pcl);
-	}
+//	public void addTicketListener(PropertyChangeListener pcl) {
+//		ticketSubject.addPropertyChangeListener(pcl);
+//	}
 
-	public void removePropertyChangeListener(PropertyChangeListener pcl) {
-		ticketSubject.removePropertyChangeListener(pcl);
-	}
+//	public void removePropertyChangeListener(PropertyChangeListener pcl) {
+//		ticketSubject.removePropertyChangeListener(pcl);
+//	}
 
 	public ObservableList<ContactPerson> getAllContactPersons() {
 		List<ContactPerson> li = dm.getAllContactPersons();
@@ -93,13 +93,13 @@ public class DomainController {
 	}
 
 	// nodig voor lijst van tickets voor tableview van ticketPanel
-	public ObservableList<Ticket> getAllTickets() {
-		// WEGGGG
-		//dm.getAllContactPersons();
-		List<Ticket> li = dm.getAllTickets();
-		ObservableList<Ticket> obListTickets = FXCollections.observableList(li);
-		return obListTickets;
-	}
+//	public ObservableList<Ticket> getAllTickets() {
+//		// WEGGGG
+//		//dm.getAllContactPersons();
+//		List<Ticket> li = dm.getAllTickets();
+//		ObservableList<Ticket> obListTickets = FXCollections.observableList(li);
+//		return obListTickets;
+//	}
 	
 	//nodig voor lijst van contractTypes voor tableview van ContractTypePanel
 	public ObservableList<ContractType> getAllContractTypes() {
@@ -109,9 +109,9 @@ public class DomainController {
 	}
 	
 	//voor het aantal behandelde tickets per contractType
-	public int getProcessedTicketPerContractType(ContractType type) {
-		
-	}
+//	public int getProcessedTicketPerContractType(ContractType type) {
+//		
+//	}
 	
 	// nodig voor login
 	public ContactPerson getContactPersonByUsername(String username) {
