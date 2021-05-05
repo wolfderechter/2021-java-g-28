@@ -16,6 +16,9 @@ public class DomainManager {
 
 	private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
+	private GenericDao<Faq> faqRepo;
+	private GenericDao<Contract> contractRepo;
+	//private GenericDao<Employee> employeeRepo;
 	private GenericDao<ContractType> contractTypeRepo;
 	private GenericDao<Employee> employeeRepo;
 	
@@ -25,6 +28,9 @@ public class DomainManager {
 	private List<ContractType> contractTypeList;
 	private List<Employee> employeeList;
 
+	private List<Faq> faqList;
+	private List<Contract> contractList;
+	
 	//TIJDELIJK -> login
 	public final String PERSISTENCE_UNIT_NAME = "project2";
     private EntityManager em;
@@ -34,6 +40,8 @@ public class DomainManager {
     	setTicketRepo(new GenericDaoJpa<>(Ticket.class));
     	setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
     	setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
+    	setFaqRepo(new GenericDaoJpa<>(Faq.class));
+    	setContractRepo(new GenericDaoJpa<>(Contract.class));
     	setContractTypeRep(new GenericDaoJpa<>(ContractType.class));
     	openPersistentie();
 	}
@@ -60,6 +68,15 @@ public class DomainManager {
 	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
 		this.ticketRepo = ticketRepo;		
 	}
+	
+	private void setFaqRepo(GenericDao<Faq> faqRepo) {
+		this.faqRepo = faqRepo;
+	}
+	
+	private void setContractRepo(GenericDao<Contract> contractRepo) {
+		this.contractRepo = contractRepo;
+	}
+
 	
 	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
 		this.employeeRepo = employeeRepo;		
@@ -90,6 +107,21 @@ public class DomainManager {
         }
         return ticketList;
     }
+    
+    public List<Faq> getAllFaqs() {
+    	if(faqList == null) {
+    		faqList = faqRepo.getAll();
+    	}
+    	return faqList;
+    }
+    
+    public List<Contract> getAllContracts() {
+    	if (contractRepo == null) {
+    		contractList = contractRepo.getAll();
+    	}
+    	return contractList;
+    }
+   
     
     public List<Employee> getAllEmployees() {
         if(employeeList == null) {
