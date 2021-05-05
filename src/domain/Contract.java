@@ -19,10 +19,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-@Entity(name = "Contracts")
-@Table(name = "Contracts")
 
-@Access(AccessType.FIELD)
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
@@ -33,7 +30,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "Contract")
-@Table(name = "Contract")
+@Table(name = "Contracts")
+@Access(AccessType.FIELD)
 public class Contract {
 	
 	@Transient

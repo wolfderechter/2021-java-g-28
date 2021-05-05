@@ -13,7 +13,7 @@
 
 <fx:root maxHeight="701.0" maxWidth="785.0" type="GridPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane prefHeight="380.0" prefWidth="400.0">
+      <GridPane prefHeight="600.0" prefWidth="400.0">
          <columnConstraints>
              <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="286.0" minWidth="173.0" prefWidth="272.0" />
      		 <ColumnConstraints maxWidth="412.0" minWidth="299.0" prefWidth="313.0" />

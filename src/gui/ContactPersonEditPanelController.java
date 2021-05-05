@@ -67,8 +67,8 @@ public class ContactPersonEditPanelController extends GridPane implements Proper
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        nrCol.setCellValueFactory(cellData -> cellData.getValue().getCompany().getContracts());
-		tvContracts.setItems(dc.getAllContracts());
+        //nrCol.setCellValueFactory(cellData -> cellData.getValue().getCompany().getContracts());
+		//tvContracts.setItems(dc.getAllContracts());
      
         fields();
     }
