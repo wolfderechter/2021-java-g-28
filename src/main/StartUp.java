@@ -6,6 +6,7 @@ import domain.DomainController;
 import gui.AccountPanelController;
 import gui.ContactPersonPanelController;
 import gui.DashboardPanelController;
+import gui.FaqPanelController;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,12 +24,8 @@ public class StartUp extends Application {
 			root = new AccountPanelController();
 		} else {
 			root = new DashboardPanelController(new ContactPerson(),new DomainController());
-		}
-		DomainController dc = new DomainController();
+		}		
 		
-		//root = new ContactPersonPanelController(dc);
-		
-
 		Scene scene = new Scene(root);
 
 		stage.setScene(scene);

@@ -1,9 +1,15 @@
 package gui;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Observable;
 
+import domain.Company;
 import domain.ContactPerson;
 import domain.DomainController;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -13,7 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class ContactPersonPanelController extends BorderPane {
+public class ContactPersonPanelController extends BorderPane  implements PropertyChangeListener{
 
 	@FXML
     private TableView<ContactPerson> tvContactPersons;
@@ -48,32 +54,36 @@ public class ContactPersonPanelController extends BorderPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-      
-        ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(dc.getAllContactPersons().get(0));
-        cpepc.setDisable(true);
-        setRight(cpepc);
+	  
+       
       //  System.out.println(dc.getAllContactPersons());
-        userNameCol.setCellValueFactory(cellData -> cellData.getValue().getUserNameProp());
-        firstNameCol.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProp());
-        lastNameCol.setCellValueFactory(cellData -> cellData.getValue().getLastNameProp());
-        companyCol.setCellValueFactory(cellData -> cellData.getValue().getCompanyProp());
-        tvContactPersons.setItems(this.dc.getAllContactPersons());
+        userNameCol.setCellValueFactory(cellData -> cellData.getValue().getUser().UserName());
+        firstNameCol.setCellValueFactory(cellData -> cellData.getValue().FirstName());
+        lastNameCol.setCellValueFactory(cellData -> cellData.getValue().LastName());
+        companyCol.setCellValueFactory(cellData -> cellData.getValue().getCompany().CompanyName());
+        tvContactPersons.setItems(dc.getAllContactPersons());
+        ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(dc);
+        dc.addContactPersonListener(cpepc);
+        setRight(cpepc);
         tvContactPersons.getSelectionModel().selectedItemProperty()
         .addListener((observableValue, previousContactPerson, selectedContactPerson) -> 
         {
 		
 			if (selectedContactPerson!= null) {
 				int index = tvContactPersons.getSelectionModel().getSelectedIndex();
-				displaySelectedContactPersonDetails(selectedContactPerson);
+				dc.setContactPerson(selectedContactPerson);
 				}
 			}
 		);
 	
 	}
-        private void displaySelectedContactPersonDetails(ContactPerson selectedContactPerson) {
-        	ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(selectedContactPerson);
-        	setRight(cpepc);
-        }   
-	
-	
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+       
 }
+	
+

@@ -16,11 +16,15 @@ public class DomainManager {
 
 	private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
+	private GenericDao<Faq> faqRepo;
+	private GenericDao<Contract> contractRepo;
 	//private GenericDao<Employee> employeeRepo;
 	
 	//observable list?
 	private List<Ticket> ticketList;
 	private List<ContactPerson> contactPersonList;
+	private List<Faq> faqList;
+	private List<Contract> contractList;
 	
 	//TIJDELIJK -> login
 	public final String PERSISTENCE_UNIT_NAME = "project2";
@@ -31,6 +35,8 @@ public class DomainManager {
     	setTicketRepo(new GenericDaoJpa<>(Ticket.class));
     	//setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
     	setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
+    	setFaqRepo(new GenericDaoJpa<>(Faq.class));
+    	setContractRepo(new GenericDaoJpa<>(Contract.class));
     	openPersistentie();
 	}
 
@@ -53,6 +59,14 @@ public class DomainManager {
 	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
 		this.ticketRepo = ticketRepo;		
 	}
+	
+	private void setFaqRepo(GenericDao<Faq> faqRepo) {
+		this.faqRepo = faqRepo;
+	}
+	
+	private void setContractRepo(GenericDao<Contract> contractRepo) {
+		this.contractRepo = contractRepo;
+	}
 
 	//goede methode
 //	public void closePersistentie() {
@@ -73,6 +87,21 @@ public class DomainManager {
         }
         return ticketList;
     }
+    
+    public List<Faq> getAllFaqs() {
+    	if(faqList == null) {
+    		faqList = faqRepo.getAll();
+    	}
+    	return faqList;
+    }
+    
+    public List<Contract> getAllContracts() {
+    	if (contractRepo == null) {
+    		contractList = contractRepo.getAll();
+    	}
+    	return contractList;
+    }
+   
     
     public ContactPerson getContactPersonByUsername(String username) {
         TypedQuery<ContactPerson> query1 = em.createNamedQuery("ContactPerson.getContactpersonByUsername", ContactPerson.class).setParameter("username", username);

@@ -16,10 +16,15 @@ public class DomainController {
 	private DomainManager dm = new DomainManager();
 
 	private Ticket ticket;
+	private ContactPerson contactPerson;
+	private Faq faq;
 	private PropertyChangeSupport ticketSubject;
+	private PropertyChangeSupport contactPersonSubject;
 
 	private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
+	private GenericDao<Faq> faqRepo;
+	private GenericDao<Contract> contractRepo;
 	// private GenericDao<Employee> employeeRepo;
 
 	// observable list?
@@ -28,7 +33,10 @@ public class DomainController {
 
 	public DomainController() {
 		ticketSubject = new PropertyChangeSupport(this);
+		contactPersonSubject = new PropertyChangeSupport(this);
 		setTicketRepo(new GenericDaoJpa<>(Ticket.class));
+		setFaqRepo(new GenericDaoJpa<>(Faq.class));
+		setContractRepo(new GenericDaoJpa<>(Contract.class));
 		// setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
 		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
 		
@@ -41,6 +49,14 @@ public class DomainController {
 
 	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
 		this.ticketRepo = ticketRepo;
+	}
+	
+	private void setFaqRepo(GenericDao<Faq> faqRepo) {
+		this.faqRepo = faqRepo;
+	}
+	
+	private void setContractRepo(GenericDao<Contract> contractRepo) {
+		this.contractRepo = contractRepo;
 	}
 
 	public void close() {
@@ -59,18 +75,37 @@ public class DomainController {
         GenericDaoJpa.commitTransaction();
 		
 	}
+	
+	public void setContactPerson(ContactPerson contactPerson) {
+		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);
+		this.contactPerson = contactPerson;
+	}
+	
+	public void updateContactPerson(ContactPerson contactPerson) {
+		GenericDaoJpa.startTransaction();
+		contactPersonRepo.update(contactPerson);
+        GenericDaoJpa.commitTransaction();	
+	}
+	
+	
+	
 
 	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd
 	// worden
 	public void addTicketListener(PropertyChangeListener pcl) {
 		ticketSubject.addPropertyChangeListener(pcl);
 	}
-
+	
+	public void addContactPersonListener(PropertyChangeListener pcl) {
+		contactPersonSubject.addPropertyChangeListener(pcl);
+	}
+	
 	public void removePropertyChangeListener(PropertyChangeListener pcl) {
 		ticketSubject.removePropertyChangeListener(pcl);
 	}
 
 	public ObservableList<ContactPerson> getAllContactPersons() {
+		
 		List<ContactPerson> li = dm.getAllContactPersons();
 		ObservableList<ContactPerson> obListContactPersons = FXCollections.observableList(li);
 		return obListContactPersons;
@@ -84,6 +119,19 @@ public class DomainController {
 		ObservableList<Ticket> obListTickets = FXCollections.observableList(li);
 		return obListTickets;
 	}
+	
+	public ObservableList<Faq> getAllFaqs() {
+		List<Faq> li = dm.getAllFaqs();
+		ObservableList<Faq> obListFaqs = FXCollections.observableList(li);
+		return obListFaqs;
+	}
+	
+	public ObservableList<Contract> getAllContracts() {
+		List<Contract> li = dm.getAllContracts();
+		ObservableList<Contract> obListContracts = FXCollections.observableList(li);
+		return obListContracts;
+	}
+	
 
 	// nodig voor login
 	public ContactPerson getContactPersonByUsername(String username) {

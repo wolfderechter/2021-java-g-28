@@ -1,6 +1,10 @@
 package domain;
 
+import java.beans.Transient;
 import java.util.List;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,27 +17,39 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-@Entity
+@Entity(name = "ContactPerson")
 @Table(name = "ContactPersons")
 @NamedQueries({
 	@NamedQuery(name = "ContactPerson.getContactpersonByUsername" , query = "SELECT c FROM ContactPerson c WHERE c.user.userName = :username"),
-	@NamedQuery(name = "ContactPerson.getAll" , query = "SELECT c FROM ContactPerson c")
+	@NamedQuery(name = "ContactPerson.getAll" , query = "SELECT d FROM ContactPerson d ")
 
 })
+@Access(AccessType.FIELD)
 public class ContactPerson extends Account {
 
+	
+	
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
 	private int id;
-	@Column(name = "FirstName")
-	private String firstName;
-	@Column(name = "LastName")
-	private String lastName;
 
+
+	
+	
+	private StringProperty firstName;
+	
+	private StringProperty lastName;
+
+
+	//private StringProperty companyName;
+	
 	@ManyToOne
 	@JoinColumn(name = "UserId")
 	private User user;
@@ -41,12 +57,18 @@ public class ContactPerson extends Account {
 	private List<Notification> notifications;
 	@ManyToOne
 	@JoinColumn(name = "CompanyNr")
+//	private ObjectProperty<Company> company;
 	private Company company;
+	@OneToMany
+	private List<Contract> contracts;
+	
 	
 	public ContactPerson() {
 		
 	}
 	
+
+
 	public ContactPerson(int id, String firstName, String lastName, Company company, List<Notification> notifications) {
 		
 		setId(id);
@@ -56,7 +78,16 @@ public class ContactPerson extends Account {
 		setNotifications(notifications);
 		
 	}
-
+	
+	public StringProperty FirstName() {
+		return firstName;
+	}
+	
+	public StringProperty LastName() {
+		return lastName;
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -64,22 +95,34 @@ public class ContactPerson extends Account {
 	private void setId(int id) {
 		this.id = id;
 	}
+	
+	public User getUser() {
+		return user;
+	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	@Access(AccessType.PROPERTY)
 	public String getFirstName() {
-		return firstName;
+		return firstName.getValue();
 	}
 
 	private void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.firstName = new SimpleStringProperty(firstName);
 	}
 
+	@Access(AccessType.PROPERTY)
 	public String getLastName() {
-		return lastName;
+		return lastName.getValue();
 	}
 
 	private void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.lastName = new SimpleStringProperty(lastName);;
 	}
+	
+
 
 	public Company getCompany() {
 		return company;
@@ -96,26 +139,17 @@ public class ContactPerson extends Account {
 	private void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
 	}
+
+
+
+	public List<Contract> getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
+	}
 	
-	//gui screen
-	public StringProperty getUserNameProp() {
-		return new SimpleStringProperty(this, "userNameProp", user.getUserName()); 
-	}
-
-	public StringProperty getFirstNameProp() {
-		return new SimpleStringProperty(this, "firstNameProp", firstName);
-	}
-
-	public StringProperty getLastNameProp() {
-		return new SimpleStringProperty(this, "lastNameProp", lastName);
-	}
-		
-	public StringProperty getCompanyProp() {
-		return new SimpleStringProperty(this, "companyProp", company.getCompanyName());
-	}
-
-//	public StringProperty getStatusProp() {
-//		return new SimpleStringProperty(this, "statusProp", status.ToString());
-//	}
+	
 	
 }
