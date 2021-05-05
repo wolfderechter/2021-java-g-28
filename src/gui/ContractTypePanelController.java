@@ -38,7 +38,7 @@ public class ContractTypePanelController extends BorderPane{
         tvContractTypes.setItems(this.dc.getAllContractTypes());
 		//toevoegen edit panel
 		ContractTypeEditPanelController cepc = new ContractTypeEditPanelController(this.dc);
-		this.setRight(tvContractTypes);
+		setRight(cepc);
 		tvContractTypes.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, vorigContractType, selectedContractType) -> 
 		{

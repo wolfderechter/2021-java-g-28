@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class ContractTypeEditPanelController extends GridPane{
+public class ContractTypeEditPanelController extends GridPane {
 	@FXML
 	private TextField txtCreationMethod;
 	@FXML
@@ -40,7 +40,7 @@ public class ContractTypeEditPanelController extends GridPane{
 	
 	public ContractTypeEditPanelController(DomainController dc) {
 		this.dc = dc;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ContractTypePanel.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ContractTypeEditPanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);
         try {

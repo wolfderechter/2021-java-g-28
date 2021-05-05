@@ -9,6 +9,7 @@ import java.net.URL;
 import domain.Account;
 import domain.ContactPerson;
 import domain.DomainController;
+import domain.LoginController;
 import domain.SupportManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -55,6 +56,7 @@ public class AccountPanelController extends GridPane {
         txtUsername.setOnAction(this::signIn);
         pwfPassword.setOnAction(this::signIn);
         btnSignIn.setOnAction(this::signIn);
+        
 	}
 	
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
