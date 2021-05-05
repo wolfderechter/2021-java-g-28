@@ -35,8 +35,35 @@ public class ContractType {
     @OneToMany(mappedBy = "Type", cascade = CascadeType.PERSIST)
     private List<Contract> contracts;
     
+    //constructors
     protected ContractType() {}
     
+    
+    
+    
+    
+    
+    
+    
+    public ContractType(String name, ContractTypeCreationMethod creationMethod, boolean outsideBusinessHours,
+			int maxResponseTime, int minDuration, double price) {
+    	setName(name);
+		CreationMethod = creationMethod;
+		OutsideBusinessHours = outsideBusinessHours;
+		MaxResponseTime = maxResponseTime;
+		MinDuration = minDuration;
+		Price = price;
+		Active = true;
+	}
+
+
+
+
+
+
+
+
+	//property's
     public IntegerProperty Amount() {
 		return new SimpleIntegerProperty((int) contracts.stream().count());
 	}
@@ -49,6 +76,7 @@ public class ContractType {
 			return new SimpleBooleanProperty(Active);
 	}
 	
+	//setters and getters
 	@Id
 	@Access(AccessType.PROPERTY)
 	public String getName() {
@@ -112,7 +140,10 @@ public class ContractType {
 	}
 
 	public void setName(String name) {
-		this.name = new SimpleStringProperty(name);
+		if(name.isEmpty() || name == null)
+			throw new IllegalArgumentException("Contract Type Name mag niet leeg zijn");
+			
+			this.name = new SimpleStringProperty(name);
 	}
 	
     

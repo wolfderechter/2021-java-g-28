@@ -16,13 +16,14 @@ public class DomainController {
 	private DomainManager dm = new DomainManager();
 
 	private Ticket ticket;
+	private Employee employee;
 	private PropertyChangeSupport ticketSubject;
-	
+	private PropertyChangeSupport employeeSubject;
+
 
 	private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
-
-	// private GenericDao<Employee> employeeRepo;
+	private GenericDao<Employee> employeeRepo;
 
 	// observable list?
 	//private List<Ticket> ticketList;
@@ -31,7 +32,7 @@ public class DomainController {
 	public DomainController() {
 		ticketSubject = new PropertyChangeSupport(this);
 		setTicketRepo(new GenericDaoJpa<>(Ticket.class));
-		// setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
+		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
 		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
 		
 	}
@@ -44,7 +45,10 @@ public class DomainController {
 	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
 		this.ticketRepo = ticketRepo;
 	}
-
+	
+	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
+		this.employeeRepo = employeeRepo;
+	}
 
 	public void close() {
 		GenericDaoJpa.closePersistency();
@@ -104,17 +108,42 @@ public class DomainController {
 		return obListContractTypes;
 	}
 	
+	//voor het aantal behandelde tickets per contractType
+	public int getProcessedTicketPerContractType(ContractType type) {
+		
+	}
+	
 	// nodig voor login
 	public ContactPerson getContactPersonByUsername(String username) {
 		ContactPerson cp = dm.getContactPersonByUsername(username);
 		return cp;
 	}
 
-	public SupportManager getSupportManagerByUsername(String username) {
-		SupportManager sm = dm.getSupportManagerByUsername(username);
+	public Employee getEmployeeByUsername(String username) {
+		Employee sm = dm.getEmployeeByUsername(username);
 		return sm;
 	}
 
+	public void updateEmployee(Employee employee) {
+		employeeSubject.firePropertyChange("employee", this.employee, employee);
+		GenericDaoJpa.startTransaction();
+		employeeRepo.update(employee);
+        GenericDaoJpa.commitTransaction();
+	}
+	public void setEmployee(Employee employee) {
+		employeeSubject.firePropertyChange("employee", this.employee, employee);
+		this.employee = employee;
+	}
 	
-
+	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd worden
+	public void addEmployeeListener(PropertyChangeListener pcl) {
+		employeeSubject.addPropertyChangeListener(pcl);
+	}
+	
+	
+	public ObservableList<Employee> getAllEmployees() {
+		List<Employee> li = dm.getAllEmployees();
+		ObservableList<Employee> obListEmployees = FXCollections.observableList(li);
+		return obListEmployees;
+	}
 }

@@ -25,7 +25,7 @@ public class Company {
     private String CompanyAdress;
     private String CompanyName;
     private Date CustomerInitDate;
-//    public List<Contract> Contracts;
+    //private List<Contract> Contracts;
     @OneToMany(mappedBy ="company")
     private List<ContactPerson> ContactPersons;
 	public int getCompanyNr() {
