@@ -3,18 +3,21 @@ package gui;
 import java.io.IOException;
 
 import domain.ContractType;
+import domain.ContractTypeCreationMethod;
 import domain.DomainController;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class ContractTypeEditPanelController extends GridPane {
 	@FXML
-	private TextField txtCreationMethod;
+	private ComboBox<ContractTypeCreationMethod> cmbCreationMethod;
 	@FXML
 	private TextField txtName;
 	@FXML
@@ -36,6 +39,7 @@ public class ContractTypeEditPanelController extends GridPane {
 	private Button btnCancel;
 	
 	private DomainController dc;
+	
 	private ContractType cType;
 	
 	public ContractTypeEditPanelController(DomainController dc) {
@@ -47,14 +51,16 @@ public class ContractTypeEditPanelController extends GridPane {
             loader.load();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
-        }		
+        }
+        
 	}
 	
 	public void changeContractType(ContractType ct) {
 		this.cType = ct;
 		txtName.setText(cType.getName());
 		txtMaxResponse.setText(Integer.toString(cType.getMaxResponseTime()));
-		txtCreationMethod.setText(cType.getCreationMethod().toString());
+		cmbCreationMethod.setItems(FXCollections.observableArrayList(ContractTypeCreationMethod.values()));
+		cmbCreationMethod.getSelectionModel().select(cType.getCreationMethod());
 		chk24HSupport.setSelected(cType.isOutsideBusinessHours());
 		chkActive.setSelected(cType.isActive());
 		txtDuration.setText(Integer.toString(cType.getMinDuration()));

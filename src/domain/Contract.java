@@ -23,6 +23,8 @@ public class Contract {
     @ManyToOne()
     @JoinColumn(name="TypeName")
     public ContractType Type;
+    @ManyToOne()
+    @JoinColumn(name="CompanyNr")
     public Company Company;
 
     
