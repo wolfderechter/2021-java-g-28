@@ -1,44 +1,79 @@
 package gui;
 
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 
 import domain.ContactPerson;
+import domain.DomainController;
 import domain.Employee;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class EmployeeEditPanelController extends GridPane{
     @FXML
     private TextField TxFieldFirstName;
-
     @FXML
-    private TextField TxFieldLastName;
-    
+    private TextField TxFieldLastName;  
     @FXML
     private TextField TxFieldAdress;
-
     @FXML
-    private TextField TxFieldTelephone;
-
+    private TextField TxFieldDateInService;
     @FXML
     private TextField TxFieldEmail;
-
+	@FXML
+	private Button btnSave;
+	@FXML
+	private Button btnCancel;
 	
-    public EmployeeEditPanelController(Employee employee) {
+	private DomainController dc;
+	private Employee employee;
+	
+    public EmployeeEditPanelController(DomainController domainC) {
+    	this.dc = domainC;
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeEditPanel.fxml"));
         loader.setController(this);
-       loader.setRoot(this);
+        loader.setRoot(this);
         try {
             loader.load();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
-        }
-        
-      // TxFieldCustomerNr.setText(contactPerson.getId());
-       TxFieldFirstName.setText(employee.getFirstNameProp().getValue().toString());
-        
+        }  
     }
+    
+	private void saveEmployeeDetails(ActionEvent actionEvent) {
+		this.dc.updateEmployee(employee);
+	}
+		
+	private void cancelEmployeeDetails(ActionEvent actionEvent) {
+		resetFields();
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		this.employee = (Employee) evt.getNewValue();
+		resetFields();
+	}
+	
+	private void resetFields() {
+		//Mag niet gewijzigd worden van employee
+
+		//Mag wel gewijzigd worden van employee
+		TxFieldFirstName.setText(employee.getFirstName());
+		TxFieldFirstName.setDisable(true);
+		TxFieldLastName.setText(employee.getLastName());
+		TxFieldLastName.setDisable(true);
+		
+		TxFieldAdress.setText(employee.getAdress());
+		TxFieldAdress.setDisable(true);
+		TxFieldDateInService.setText(employee.getDateInService().toString());
+		TxFieldDateInService.setDisable(true);
+		
+		btnSave.setOnAction(this::saveEmployeeDetails);
+		btnCancel.setOnAction(this::cancelEmployeeDetails);
+	}
     
 }

@@ -18,13 +18,12 @@ public class StartUp extends Application {
 		boolean runWithLogin = false;
 
 		Parent root;
-
+		DomainController dc = new DomainController();
 		if (runWithLogin) {
 			root = new AccountPanelController();
 		} else {
-			root = new DashboardPanelController(new ContactPerson(),new DomainController());
+			root = new DashboardPanelController(new ContactPerson(),dc);
 		}
-		DomainController dc = new DomainController();
 		
 		//root = new ContactPersonPanelController(dc);
 		

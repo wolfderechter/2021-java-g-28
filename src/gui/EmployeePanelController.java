@@ -1,10 +1,13 @@
 package gui;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import domain.Account;
 import domain.ContactPerson;
 import domain.DomainController;
+import domain.Employee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -14,30 +17,30 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class EmployeePanelController extends BorderPane {
+public class EmployeePanelController extends BorderPane implements PropertyChangeListener{
 
 	@FXML
-    private TableView<Account> tvEmployees;
+    private TableView<Employee> tvEmployees;
 
 	@FXML
-    private TableColumn<Account, Integer> idCol;
+    private TableColumn<Employee, Number> idCol;
 
     @FXML
-    private TableColumn<Account, String> firstNameCol;
+    private TableColumn<Employee, String> firstNameCol;
 
     @FXML
-    private TableColumn<Account, String> lastNameCol;
+    private TableColumn<Employee, String> lastNameCol;
 
     @FXML
-    private TableColumn<Account, String> adressCol;
+    private TableColumn<Employee, String> adressCol;
 
 	@FXML
 	private Label lblUsername;
 	
 	private DomainController dc;
 	
-	public EmployeePanelController(DomainController dc) {
-		this.dc = dc;
+	public EmployeePanelController(DomainController domainC) {
+		this.dc = domainC;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeePanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);
@@ -47,31 +50,31 @@ public class EmployeePanelController extends BorderPane {
             throw new RuntimeException(ex);
         }
       
-        EmployeeEditPanelController eepc = new EmployeeEditPanelController(this.dc.getAllEmployees().get(0));
-        eepc.setDisable(true);
-        setRight(eepc);
-      //  System.out.println(dc.getAllContactPersons());
-        firstNameCol.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProp());
-        lastNameCol.setCellValueFactory(cellData -> cellData.getValue().getLastNameProp());
-        idCol.setCellValueFactory(cellData -> cellData.getValue().getId());
+        //Aanmaak TableView + opvullen met data
+        idCol.setCellValueFactory(cellData -> cellData.getValue().Id());
+        firstNameCol.setCellValueFactory(cellData -> cellData.getValue().FirstName());
+        lastNameCol.setCellValueFactory(cellData -> cellData.getValue().LastName());
         
-        tvEmployees.setItems(this.dc.getAllEmployees());
+        tvEmployees.setItems(dc.getAllEmployees());
+        //Editpanel aanmaken + opvullen met eerste Employee
+        //EmployeeEditPanelController eepc = new EmployeeEditPanelController(dc);
+        //setRight(eepc);
         tvEmployees.getSelectionModel().selectedItemProperty()
         .addListener((observableValue, previousEmployee, selectedEmployee) -> 
         {
-		
 			if (selectedEmployee != null) {
 				int index = tvEmployees.getSelectionModel().getSelectedIndex();
-				displaySelectedContactPersonDetails(selectedEmployee);
+				dc.setEmployee(selectedEmployee);
 				}
 			}
 		);
 	
 	}
-        private void displaySelectedEmployeeDetails(Account selectedEmployee) {
-        	EmployeeEditPanelController eepc = new EmployeeEditPanelController(selectedEmployee);
-        	setRight(eepc);
-        }   
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub	
+	}
 	
 	
 }

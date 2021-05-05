@@ -14,7 +14,7 @@
 
 <fx:root type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TableView fx:id="tvEmployees" prefHeight="360.0" prefWidth="500.0">
+      <TableView prefHeight="360.0" prefWidth="500.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="75.0" text="EmployeeId" />
           <TableColumn prefWidth="75.0" text="Username" />

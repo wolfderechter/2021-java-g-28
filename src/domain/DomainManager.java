@@ -17,13 +17,14 @@ public class DomainManager {
 	private GenericDao<Ticket> ticketRepo;
 	private GenericDao<ContactPerson> contactPersonRepo;
 	private GenericDao<ContractType> contractTypeRepo;
-	//private GenericDao<Employee> employeeRepo;
+	private GenericDao<Employee> employeeRepo;
 	
 	//observable list?
 	private List<Ticket> ticketList;
 	private List<ContactPerson> contactPersonList;
 	private List<ContractType> contractTypeList;
-	
+	private List<Employee> employeeList;
+
 	//TIJDELIJK -> login
 	public final String PERSISTENCE_UNIT_NAME = "project2";
     private EntityManager em;
@@ -31,7 +32,7 @@ public class DomainManager {
 
     public DomainManager() {
     	setTicketRepo(new GenericDaoJpa<>(Ticket.class));
-    	//setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
+    	setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
     	setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
     	setContractTypeRep(new GenericDaoJpa<>(ContractType.class));
     	openPersistentie();
@@ -59,7 +60,10 @@ public class DomainManager {
 	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
 		this.ticketRepo = ticketRepo;		
 	}
-
+	
+	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
+		this.employeeRepo = employeeRepo;		
+	}
 	//goede methode
 //	public void closePersistentie() {
 //        GenericDaoJpa.closePersistency();
@@ -87,15 +91,22 @@ public class DomainManager {
         return ticketList;
     }
     
+    public List<Employee> getAllEmployees() {
+        if(employeeList == null) {
+        	employeeList = employeeRepo.getAll();
+        }
+        return employeeList;
+    }
+    
     public ContactPerson getContactPersonByUsername(String username) {
         TypedQuery<ContactPerson> query1 = em.createNamedQuery("ContactPerson.getContactpersonByUsername", ContactPerson.class).setParameter("username", username);
         ContactPerson cp = query1.getSingleResult();
         return cp;
     }
     
-    public SupportManager getSupportManagerByUsername(String username) {
-    	TypedQuery<SupportManager> query1 = em.createNamedQuery("SupportManager.getSupportManagerByUsername", SupportManager.class).setParameter("username", username);
-        SupportManager sm = query1.getSingleResult();
+    public Employee getEmployeeByUsername(String username) {
+    	TypedQuery<Employee> query1 = em.createNamedQuery("Employee.getEmployeeByUsername", Employee.class).setParameter("username", username);
+        Employee sm = query1.getSingleResult();
         return sm;
     }
 
