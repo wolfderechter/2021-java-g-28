@@ -104,6 +104,11 @@ public class DomainController {
 		return obListContractTypes;
 	}
 	
+	//voor het aantal behandelde tickets per contractType
+	public int getProcessedTicketPerContractType(ContractType type) {
+		
+	}
+	
 	// nodig voor login
 	public ContactPerson getContactPersonByUsername(String username) {
 		ContactPerson cp = dm.getContactPersonByUsername(username);
