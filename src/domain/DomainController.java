@@ -1,40 +1,40 @@
 package domain;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.List;
-
-import javax.persistence.Persistence;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import repository.GenericDao;
-import repository.GenericDaoJpa;
+//import java.beans.PropertyChangeListener;
+//import java.beans.PropertyChangeSupport;
+//import java.util.List;
+//
+//import javax.persistence.Persistence;
+//
+//import javafx.collections.FXCollections;
+//import javafx.collections.ObservableList;
+//import repository.GenericDao;
+//import repository.GenericDaoJpa;
 
 public class DomainController {
 
-	private DomainManager dm = new DomainManager();
+//	private DomainManager dm = new DomainManager();
 
 
 	//private Ticket ticket;
-	private Employee employee;
+//	private Employee employee;
 	//private PropertyChangeSupport ticketSubject;
 
 
-	private ContactPerson contactPerson;
-	private Faq faq;
+//	private ContactPerson contactPerson;
+//	private Faq faq;
 
 
-	private PropertyChangeSupport contactPersonSubject;
+//	private PropertyChangeSupport contactPersonSubject;
 
-	private PropertyChangeSupport employeeSubject;
+//	private PropertyChangeSupport employeeSubject;
 
 
 	//private GenericDao<Ticket> ticketRepo;
-	private GenericDao<ContactPerson> contactPersonRepo;
-	private GenericDao<Faq> faqRepo;
-	private GenericDao<Contract> contractRepo;
-	private GenericDao<Employee> employeeRepo;
+//	private GenericDao<ContactPerson> contactPersonRepo;
+//	private GenericDao<Faq> faqRepo;
+//	private GenericDao<Contract> contractRepo;
+//	private GenericDao<Employee> employeeRepo;
 
 	// observable list?
 	//private List<Ticket> ticketList;
@@ -46,40 +46,40 @@ public class DomainController {
 		//setTicketRepo(new GenericDaoJpa<>(Ticket.class));
 
 	
-		contactPersonSubject = new PropertyChangeSupport(this);
+//		contactPersonSubject = new PropertyChangeSupport(this);
 
 
-		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
-		setFaqRepo(new GenericDaoJpa<>(Faq.class));
-		setContractRepo(new GenericDaoJpa<>(Contract.class));
-		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
+//		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
+//		setFaqRepo(new GenericDaoJpa<>(Faq.class));
+//		setContractRepo(new GenericDaoJpa<>(Contract.class));
+//		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
 		
 	}
 
 	// alles voor repo's
-	private void setContactPersonRepo(GenericDao<ContactPerson> contactPersonRepo) {
-		this.contactPersonRepo = contactPersonRepo;
-	}
+//	private void setContactPersonRepo(GenericDao<ContactPerson> contactPersonRepo) {
+//		this.contactPersonRepo = contactPersonRepo;
+//	}
 
 //	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
 //		this.ticketRepo = ticketRepo;
 //	}
 	
-	private void setFaqRepo(GenericDao<Faq> faqRepo) {
-		this.faqRepo = faqRepo;
-	}
+//	private void setFaqRepo(GenericDao<Faq> faqRepo) {
+//		this.faqRepo = faqRepo;
+//	}
 	
-	private void setContractRepo(GenericDao<Contract> contractRepo) {
-		this.contractRepo = contractRepo;
-	}
+//	private void setContractRepo(GenericDao<Contract> contractRepo) {
+//		this.contractRepo = contractRepo;
+//	}
 	
-	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
-		this.employeeRepo = employeeRepo;
-	}
+//	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
+//		this.employeeRepo = employeeRepo;
+//	}
 
-	public void close() {
-		GenericDaoJpa.closePersistency();
-	}
+//	public void close() {
+//		GenericDaoJpa.closePersistency();
+//	}
 
 	// bij het zetten van de ticket wordt de ticket in de editticketpanel geset
 //	public void setTicket(Ticket ticket) {
@@ -116,28 +116,28 @@ public class DomainController {
 
 
 	
-	public void setContactPerson(ContactPerson contactPerson) {
-		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);
-		this.contactPerson = contactPerson;
-	}
-	
-	public void updateContactPerson(ContactPerson contactPerson) {
-		GenericDaoJpa.startTransaction();
-		contactPersonRepo.update(contactPerson);
-        GenericDaoJpa.commitTransaction();	
-	}
-
-	public void addContactPersonListener(PropertyChangeListener pcl) {
-		contactPersonSubject.addPropertyChangeListener(pcl);
-	}
-	
-
-	public ObservableList<ContactPerson> getAllContactPersons() {
-		
-		List<ContactPerson> li = dm.getAllContactPersons();
-		ObservableList<ContactPerson> obListContactPersons = FXCollections.observableList(li);
-		return obListContactPersons;
-	}
+//	public void setContactPerson(ContactPerson contactPerson) {
+//		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);
+//		this.contactPerson = contactPerson;
+//	}
+//	
+//	public void updateContactPerson(ContactPerson contactPerson) {
+//		GenericDaoJpa.startTransaction();
+//		contactPersonRepo.update(contactPerson);
+//        GenericDaoJpa.commitTransaction();	
+//	}
+//
+//	public void addContactPersonListener(PropertyChangeListener pcl) {
+//		contactPersonSubject.addPropertyChangeListener(pcl);
+//	}
+//	
+//
+//	public ObservableList<ContactPerson> getAllContactPersons() {
+//		
+//		List<ContactPerson> li = dm.getAllContactPersons();
+//		ObservableList<ContactPerson> obListContactPersons = FXCollections.observableList(li);
+//		return obListContactPersons;
+//	}
 
 	// nodig voor lijst van tickets voor tableview van ticketPanel
 //	public ObservableList<Ticket> getAllTickets() {
@@ -148,12 +148,12 @@ public class DomainController {
 //		return obListTickets;
 //	}
 	
-	//nodig voor lijst van contractTypes voor tableview van ContractTypePanel
-	public ObservableList<ContractType> getAllContractTypes() {
-		List<ContractType> li = dm.getAllContractTypes();
-		ObservableList<ContractType> obListContractTypes = FXCollections.observableList(li);
-		return obListContractTypes;
-	}
+//	//nodig voor lijst van contractTypes voor tableview van ContractTypePanel
+//	public ObservableList<ContractType> getAllContractTypes() {
+//		List<ContractType> li = dm.getAllContractTypes();
+//		ObservableList<ContractType> obListContractTypes = FXCollections.observableList(li);
+//		return obListContractTypes;
+//	}
 	
 	//voor het aantal behandelde tickets per contractType
 //	public int getProcessedTicketPerContractType(ContractType type) {
@@ -161,50 +161,50 @@ public class DomainController {
 //	}
 	
 	
-	public ObservableList<Faq> getAllFaqs() {
-		List<Faq> li = dm.getAllFaqs();
-		ObservableList<Faq> obListFaqs = FXCollections.observableList(li);
-		return obListFaqs;
-	}
+//	public ObservableList<Faq> getAllFaqs() {
+//		List<Faq> li = dm.getAllFaqs();
+//		ObservableList<Faq> obListFaqs = FXCollections.observableList(li);
+//		return obListFaqs;
+//	}
 	
-	public ObservableList<Contract> getAllContracts() {
-		List<Contract> li = dm.getAllContracts();
-		ObservableList<Contract> obListContracts = FXCollections.observableList(li);
-		return obListContracts;
-	}
+//	public ObservableList<Contract> getAllContracts() {
+//		List<Contract> li = dm.getAllContracts();
+//		ObservableList<Contract> obListContracts = FXCollections.observableList(li);
+//		return obListContracts;
+//	}
 	
 
 	// nodig voor login
-	public ContactPerson getContactPersonByUsername(String username) {
-		ContactPerson cp = dm.getContactPersonByUsername(username);
-		return cp;
-	}
+//	public ContactPerson getContactPersonByUsername(String username) {
+//		ContactPerson cp = dm.getContactPersonByUsername(username);
+//		return cp;
+//	}
 
-	public Employee getEmployeeByUsername(String username) {
-		Employee sm = dm.getEmployeeByUsername(username);
-		return sm;
-	}
+//	public Employee getEmployeeByUsername(String username) {
+//		Employee sm = dm.getEmployeeByUsername(username);
+//		return sm;
+//	}
 
-	public void updateEmployee(Employee employee) {
-		employeeSubject.firePropertyChange("employee", this.employee, employee);
-		GenericDaoJpa.startTransaction();
-		employeeRepo.update(employee);
-        GenericDaoJpa.commitTransaction();
-	}
-	public void setEmployee(Employee employee) {
-		employeeSubject.firePropertyChange("employee", this.employee, employee);
-		this.employee = employee;
-	}
-	
-	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd worden
-	public void addEmployeeListener(PropertyChangeListener pcl) {
-		employeeSubject.addPropertyChangeListener(pcl);
-	}
-	
-	
-	public ObservableList<Employee> getAllEmployees() {
-		List<Employee> li = dm.getAllEmployees();
-		ObservableList<Employee> obListEmployees = FXCollections.observableList(li);
-		return obListEmployees;
-	}
+//	public void updateEmployee(Employee employee) {
+//		employeeSubject.firePropertyChange("employee", this.employee, employee);
+//		GenericDaoJpa.startTransaction();
+//		employeeRepo.update(employee);
+//        GenericDaoJpa.commitTransaction();
+//	}
+//	public void setEmployee(Employee employee) {
+//		employeeSubject.firePropertyChange("employee", this.employee, employee);
+//		this.employee = employee;
+//	}
+//	
+//	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd worden
+//	public void addEmployeeListener(PropertyChangeListener pcl) {
+//		employeeSubject.addPropertyChangeListener(pcl);
+//	}
+//	
+//	
+//	public ObservableList<Employee> getAllEmployees() {
+//		List<Employee> li = dm.getAllEmployees();
+//		ObservableList<Employee> obListEmployees = FXCollections.observableList(li);
+//		return obListEmployees;
+//	}
 }

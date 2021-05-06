@@ -41,9 +41,9 @@ public class LoginController {
 		if(role.equals("administrator")) {
 			AdministratorController ac = new AdministratorController();
 			//vervangen door lambda
-			Administrator cp = ac.getAdministratorByUsername(username);
-			ap.close();
-			return cp;
+			//Administrator cp = ac.getAdministratorByUsername(username);
+			//ap.close();
+			//return cp;
 		} 
 		
 		if(role.equals("supportmanager")) {
@@ -54,10 +54,10 @@ public class LoginController {
 		}
 		
 		if(role.equals("technician")) {
-			TechnicianController tc = new TechnicianController();
-			Technician tn = new tc.getTechnicianByUsername(username);
-			tc.close();
-			return tn;
+			//TechnicianController tc = new TechnicianController();
+			//Technician tn = new tc.getTechnicianByUsername(username);
+			//tc.close();
+			//return tn;
 		}
 	}
 	

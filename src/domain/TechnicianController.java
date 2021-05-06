@@ -14,6 +14,7 @@ public class TechnicianController extends Controller {
 	private Ticket ticket;
 	private PropertyChangeSupport ticketSubject;
 	private GenericDao<Ticket> ticketRepo;
+	private DomainManager dm = new DomainManager();
 
 	public TechnicianController() {
 		ticketSubject = new PropertyChangeSupport(this);
@@ -32,7 +33,6 @@ public class TechnicianController extends Controller {
 	public void setTicket(Ticket ticket) {
 		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 		this.ticket = ticket;
-
 	}
 
 	public void updateTicket(Ticket ticket) {
