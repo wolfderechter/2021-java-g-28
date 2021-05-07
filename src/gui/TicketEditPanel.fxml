@@ -135,6 +135,6 @@
       </Label>
    </children>
    <padding>
-      <Insets bottom="100.0" left="100.0" right="100.0" top="10.0" />
+      <Insets bottom="100.0" right="100.0" top="10.0" />
    </padding>
 </fx:root>

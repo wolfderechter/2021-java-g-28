@@ -24,7 +24,9 @@ public interface ITicket {
 	String getTitle();
 
 	TicketStatusEnum getStatus();
-
+	
+	TicketTypeEnum getType();
+	
 	Date getDateCreation();
 
 	String getDescription();
@@ -34,5 +36,6 @@ public interface ITicket {
 	String getPicturePath();
 
 	List<Reaction> getReactions();
+	
 
 }

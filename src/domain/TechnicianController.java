@@ -2,9 +2,13 @@ package domain;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
@@ -12,6 +16,8 @@ import repository.GenericDaoJpa;
 public class TechnicianController extends Controller {
 
 	private Ticket ticket;
+	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
+	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
 	private PropertyChangeSupport ticketSubject;
 	private GenericDao<Ticket> ticketRepo;
 	private DomainManager dm = new DomainManager();
@@ -64,15 +70,36 @@ public class TechnicianController extends Controller {
 	public void removePropertyChangeListener(PropertyChangeListener pcl) {
 		ticketSubject.removePropertyChangeListener(pcl);
 	}
-
+	
 	// nodig voor lijst van tickets voor tableview van ticketPanel
-	public ObservableList<ITicket> getAllTickets() {
-		// WEGGGG
-		// dm.getAllContactPersons();
+	public ObservableList<ITicket> getFilteredTickets() {
 		ObservableList<Ticket> li = dm.getAllTickets();
-		
+		li = li.stream().filter(t->this.selectedFilterTypes.contains(t.getType()))
+				.filter(t->this.selectedFilterStatusen.contains(t.getStatus()))
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
 		return (ObservableList<ITicket>) (Object) li;
 	}
+	//deze methode gaat de lijst filteren die in table van tickets wordt gestoken
+	public void addStatusFilterOnTickets(List<? extends TicketStatusEnum> added) {
+		this.selectedFilterStatusen.addAll(added);
+		
+	}
+
+	public void removeStatusFilterOnTickets(List<? extends TicketStatusEnum> removed) {
+		this.selectedFilterStatusen.removeAll(removed);
+	}
+
+	public void addTypeFilterOnTickets(List<? extends TicketTypeEnum> added) {
+		this.selectedFilterTypes.addAll(added);
+	}
+	
+	public void removeTypeFilterOnTickets(List<? extends TicketTypeEnum> removed) {
+		this.selectedFilterTypes.removeAll(removed);
+	}
+	
+	
+	
+	
 
 	// voor het aantal behandelde tickets per contractType
 //	public int getProcessedTicketPerContractType(ContractType type) {

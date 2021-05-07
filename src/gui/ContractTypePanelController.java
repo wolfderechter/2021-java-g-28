@@ -24,8 +24,8 @@ public class ContractTypePanelController extends BorderPane{
 	
 	private SupportManagerController dc;
 	
-	public ContractTypePanelController(Controller dc2) {
-		this.dc = (SupportManagerController) dc2;
+	public ContractTypePanelController(SupportManagerController dc2) { 
+		this.dc =  dc2;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ContractTypePanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);

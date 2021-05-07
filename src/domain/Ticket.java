@@ -32,6 +32,7 @@ public class Ticket implements ITicket {
 	private ObjectProperty<TicketStatusEnum> status;
 	private Date dateCreation;
 	private String description;
+	private TicketTypeEnum type;
 	@ManyToOne()
 	@JoinColumn(name = "contactPersonId")
 	private ContactPerson contactPerson;
@@ -143,5 +144,13 @@ public class Ticket implements ITicket {
 
 	public void setReactions(List<Reaction> reactions) {
 		this.reactions = reactions;
+	}
+
+	public TicketTypeEnum getType() {
+		return type;
+	}
+
+	public void setType(TicketTypeEnum type) {
+		this.type = type;
 	}
 }
