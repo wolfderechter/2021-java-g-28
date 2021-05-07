@@ -1,8 +1,12 @@
 package main;
 
 
+import domain.Account;
 import domain.ContactPerson;
+import domain.Controller;
 import domain.DomainController;
+import domain.Technician;
+import domain.TechnicianController;
 import gui.AccountPanelController;
 import gui.ContactPersonPanelController;
 import gui.DashboardPanelController;
@@ -19,11 +23,13 @@ public class StartUp extends Application {
 		boolean runWithLogin = false;
 
 		Parent root;
-		DomainController dc = new DomainController();
+		Controller dc = new TechnicianController();
+		Account g = new Technician();
+		
 		if (runWithLogin) {
 			root = new AccountPanelController();
 		} else {
-			root = new DashboardPanelController(new ContactPerson(),dc);
+			root = new DashboardPanelController(g,dc);
 		}
 		
 		Scene scene = new Scene(root);

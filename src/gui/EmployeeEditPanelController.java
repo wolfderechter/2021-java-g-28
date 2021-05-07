@@ -3,6 +3,7 @@ package gui;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 
+import domain.AdministratorController;
 import domain.ContactPerson;
 import domain.DomainController;
 import domain.Employee;
@@ -29,10 +30,10 @@ public class EmployeeEditPanelController extends GridPane{
 	@FXML
 	private Button btnCancel;
 	
-	private DomainController dc;
+	private AdministratorController dc;
 	private Employee employee;
 	
-    public EmployeeEditPanelController(DomainController domainC) {
+    public EmployeeEditPanelController(AdministratorController domainC) {
     	this.dc = domainC;
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeEditPanel.fxml"));
         loader.setController(this);
