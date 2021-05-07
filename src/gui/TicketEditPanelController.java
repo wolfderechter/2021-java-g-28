@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import domain.DomainController;
+import domain.ITicket;
 import domain.Reaction;
 import domain.TechnicianController;
 import domain.Ticket;
@@ -53,7 +54,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	@FXML
 	private TextArea txtReactionText;
 
-	private Ticket ticket;
+	private ITicket ticket;
 
 	private TechnicianController dc;
 
@@ -70,9 +71,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	}
 
 	private void saveTicketDetails(ActionEvent actionEvent) {
-		ticket.setStatus(CmbFieldStatus.getSelectionModel().getSelectedItem());
-		ticket.setDescription(TxAreaDescription.getText());
-		this.dc.updateTicket(ticket);
+		this.dc.updateTicket(CmbFieldStatus.getSelectionModel().getSelectedItem(),TxAreaDescription.getText());
 	}
 
 	private void cancelTicketDetails(ActionEvent actionEvent) {
@@ -81,7 +80,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		this.ticket = (Ticket) evt.getNewValue();
+		this.ticket = (ITicket) evt.getNewValue();
 		resetFields();
 	}
 
@@ -119,10 +118,8 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 			}
 		}
 	);
-		System.out.println(ticket.TicketNr());
-		System.out.println(ticket.getReactions());
 	}
-	
+	//veranderen door een knop methode
 	@FXML
 	private void addReaction(ActionEvent event) {
 		// naam van filosoof aan de gebruiker vragen

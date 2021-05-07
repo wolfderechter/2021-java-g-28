@@ -30,16 +30,21 @@ public class TechnicianController extends Controller {
 	}
 
 	// bij het zetten van de ticket wordt de ticket in de editticketpanel geset
-	public void setTicket(Ticket ticket) {
+	public void setTicket(int ticketNr) {
+		Ticket ticket = dm.getAllTickets().stream().filter(t->t.getTicketNr() == ticketNr).findFirst().orElse(null);
 		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 		this.ticket = ticket;
+		
 	}
 
-	public void updateTicket(Ticket ticket) {
-		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
+	public void updateTicket(TicketStatusEnum status,String descrip) {
+		//changes in de edit panel toepassen
+		ticket.setStatus(status);
+		ticket.setDescription(descrip);
+		//ticket changen in de panel
 		GenericDaoJpa.startTransaction();
 		ticketRepo.update(ticket);
-		GenericDaoJpa.commitTransaction();
+        GenericDaoJpa.commitTransaction();
 	}
 
 	public void addReaction(String text) {
@@ -61,17 +66,17 @@ public class TechnicianController extends Controller {
 	}
 
 	// nodig voor lijst van tickets voor tableview van ticketPanel
-	public ObservableList<Ticket> getAllTickets() {
+	public ObservableList<ITicket> getAllTickets() {
 		// WEGGGG
 		// dm.getAllContactPersons();
-		List<Ticket> li = dm.getAllTickets();
-		ObservableList<Ticket> obListTickets = FXCollections.observableList(li);
-		return obListTickets;
+		ObservableList<Ticket> li = dm.getAllTickets();
+		
+		return (ObservableList<ITicket>) (Object) li;
 	}
 
 	// voor het aantal behandelde tickets per contractType
-	public int getProcessedTicketPerContractType(ContractType type) {
-
-	}
+//	public int getProcessedTicketPerContractType(ContractType type) {
+//
+//	}
 
 }

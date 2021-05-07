@@ -7,6 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
 
@@ -23,7 +25,7 @@ public class DomainManager {
 	private GenericDao<Employee> employeeRepo;
 	
 	//observable list?
-	private List<Ticket> ticketList;
+	private ObservableList<Ticket> ticketList;
 	private List<ContactPerson> contactPersonList;
 	private List<ContractType> contractTypeList;
 	private List<Employee> employeeList;
@@ -101,9 +103,9 @@ public class DomainManager {
         return contractTypeList;
     }
     
-    public List<Ticket> getAllTickets() {
+    public ObservableList<Ticket> getAllTickets() {
         if(ticketList == null) {
-        	ticketList = ticketRepo.getAll();
+        	ticketList = FXCollections.observableArrayList(ticketRepo.getAll());
         }
         return ticketList;
     }

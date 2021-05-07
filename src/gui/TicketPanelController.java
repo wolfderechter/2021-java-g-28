@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import domain.Controller;
 import domain.DomainController;
+import domain.ITicket;
 import domain.SupportManagerController;
 import domain.TechnicianController;
 import domain.Ticket;
@@ -24,16 +25,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class TicketPanelController extends BorderPane implements PropertyChangeListener{
+public class TicketPanelController extends BorderPane {
 
 	@FXML
-	private TableView<Ticket> tvTickets;
+	private TableView<ITicket> tvTickets;
 	@FXML
-	private TableColumn<Ticket, Number> ticketNrCol;
+	private TableColumn<ITicket, Number> ticketNrCol;
 	@FXML
-	private TableColumn<Ticket, TicketStatusEnum> statusCol;
+	private TableColumn<ITicket, TicketStatusEnum> statusCol;
 	@FXML
-	private TableColumn<Ticket, String>  titleCol;
+	private TableColumn<ITicket, String>  titleCol;
 	
 	private TechnicianController dc;
 	
@@ -61,18 +62,12 @@ public class TicketPanelController extends BorderPane implements PropertyChangeL
 			{
 			//Controleer of er een ticket is geselecteerd
 			if (selectedTicket!= null) {
-				int index = tvTickets.getSelectionModel().getSelectedIndex();
-				dc.setTicket(selectedTicket);
+				
+				dc.setTicket(selectedTicket.getTicketNr());
 				}
 			}
 		);
 		}
 
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-		
-	}
 }
 	

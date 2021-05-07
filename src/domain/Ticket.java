@@ -22,7 +22,7 @@ import javafx.beans.property.StringProperty;
 @Entity(name = "Tickets")
 @Table(name = "Tickets")
 @Access(AccessType.FIELD)
-public class Ticket {
+public class Ticket implements ITicket {
 
 	@Transient
 	private IntegerProperty ticketNr;
@@ -51,18 +51,22 @@ public class Ticket {
 		contactPerson.addNotification(title.getValue());
 	}
 
+	@Override
 	public IntegerProperty TicketNr() {
 		return ticketNr;
 	}
 
+	@Override
 	public StringProperty Title() {
 		return title;
 	}
 
+	@Override
 	public ObjectProperty<TicketStatusEnum> Status() {
 		return status;
 	}
 
+	@Override
 	@Id
 	@Access(AccessType.PROPERTY)
 	public int getTicketNr() {
@@ -74,6 +78,7 @@ public class Ticket {
 		this.ticketNr = new SimpleIntegerProperty(ticketNr);
 	}
 
+	@Override
 	@Access(AccessType.PROPERTY)
 	public String getTitle() {
 		return title.getValue();
@@ -83,6 +88,7 @@ public class Ticket {
 		this.title = new SimpleStringProperty(title);
 	}
 
+	@Override
 	@Access(AccessType.PROPERTY)
 	public TicketStatusEnum getStatus() {
 		return status.getValue();
@@ -93,6 +99,7 @@ public class Ticket {
 		this.status = new SimpleObjectProperty<TicketStatusEnum>(status);
 	}
 
+	@Override
 	public Date getDateCreation() {
 		return dateCreation;
 	}
@@ -101,6 +108,7 @@ public class Ticket {
 		this.dateCreation = dateCreation;
 	}
 
+	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -109,6 +117,7 @@ public class Ticket {
 		this.description = description;
 	}
 
+	@Override
 	public ContactPerson getContactPersonId() {
 		return contactPerson;
 	}
@@ -118,6 +127,7 @@ public class Ticket {
 		this.contactPerson = contactPersonId;
 	}
 
+	@Override
 	public String getPicturePath() {
 		return picturePath;
 	}
@@ -126,6 +136,7 @@ public class Ticket {
 		this.picturePath = picturePath;
 	}
 
+	@Override
 	public List<Reaction> getReactions() {
 		return reactions;
 	}
