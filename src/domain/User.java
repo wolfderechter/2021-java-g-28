@@ -30,7 +30,7 @@ public class User {
 	
 	public StringProperty UserName() {
 		return userName;
-	}
+	} 
 	
 	@Access(AccessType.PROPERTY)
 	public String getUserName() {
