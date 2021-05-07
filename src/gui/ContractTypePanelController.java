@@ -3,7 +3,9 @@ package gui;
 import java.io.IOException;
 
 import domain.ContractType;
+import domain.Controller;
 import domain.DomainController;
+import domain.SupportManagerController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableView;
@@ -20,10 +22,10 @@ public class ContractTypePanelController extends BorderPane{
 	@FXML
 	private TableColumn<ContractType,Number> colAmount;
 	
-	private DomainController dc;
+	private SupportManagerController dc;
 	
-	public ContractTypePanelController(DomainController dc) {
-		this.dc = dc;
+	public ContractTypePanelController(Controller dc2) {
+		this.dc = (SupportManagerController) dc2;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ContractTypePanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);

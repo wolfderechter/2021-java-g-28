@@ -5,6 +5,7 @@ import java.io.IOException;
 import domain.ContractType;
 import domain.ContractTypeCreationMethod;
 import domain.DomainController;
+import domain.SupportManagerController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,12 +39,12 @@ public class ContractTypeEditPanelController extends GridPane {
 	@FXML
 	private Button btnCancel;
 	
-	private DomainController dc;
+	private SupportManagerController dc;
 	
 	private ContractType cType;
 	
-	public ContractTypeEditPanelController(DomainController dc) {
-		this.dc = dc;
+	public ContractTypeEditPanelController(SupportManagerController dc2) {
+		this.dc = dc2;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ContractTypeEditPanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);

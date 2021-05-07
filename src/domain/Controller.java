@@ -1,5 +1,9 @@
 package domain;
 
-public abstract class Controller {
+import javafx.collections.ObservableList;
+
+public class Controller {
+
+
 
 }

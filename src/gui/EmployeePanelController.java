@@ -5,7 +5,9 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import domain.Account;
+import domain.AdministratorController;
 import domain.ContactPerson;
+import domain.Controller;
 import domain.DomainController;
 import domain.Employee;
 import javafx.fxml.FXML;
@@ -37,10 +39,10 @@ public class EmployeePanelController extends BorderPane implements PropertyChang
 	@FXML
 	private Label lblUsername;
 	
-	private DomainController dc;
+	private AdministratorController dc;
 	
-	public EmployeePanelController(DomainController domainC) {
-		this.dc = domainC;
+	public EmployeePanelController(Controller dc2) {
+		this.dc = (AdministratorController) dc2;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeePanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);

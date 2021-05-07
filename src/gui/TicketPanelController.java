@@ -4,7 +4,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
+import domain.Controller;
 import domain.DomainController;
+import domain.SupportManagerController;
+import domain.TechnicianController;
 import domain.Ticket;
 import domain.TicketStatusEnum;
 import javafx.beans.property.IntegerProperty;
@@ -32,10 +35,10 @@ public class TicketPanelController extends BorderPane implements PropertyChangeL
 	@FXML
 	private TableColumn<Ticket, String>  titleCol;
 	
-	private DomainController dc;
+	private TechnicianController dc;
 	
-	public TicketPanelController(DomainController domainC) {
-		this.dc= domainC;
+	public TicketPanelController(Controller dc2) {
+		this.dc= (TechnicianController) dc2;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketPanel.fxml"));
         loader.setController(this);
         loader.setRoot(this);

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import domain.DomainController;
 import domain.Reaction;
+import domain.TechnicianController;
 import domain.Ticket;
 import domain.TicketStatusEnum;
 import javafx.beans.property.ObjectProperty;
@@ -54,10 +55,10 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 
 	private Ticket ticket;
 
-	private DomainController dc;
+	private TechnicianController dc;
 
-	public TicketEditPanelController(DomainController dc) {
-		this.dc = dc;
+	public TicketEditPanelController(TechnicianController dc2) {
+		this.dc = dc2;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketEditPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
