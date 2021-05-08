@@ -22,9 +22,8 @@ public class DomainManager {
 	private GenericDao<ContactPerson> contactPersonRepo;
 	private GenericDao<Faq> faqRepo;
 	private GenericDao<Contract> contractRepo;
-	//private GenericDao<Employee> employeeRepo;
 	private GenericDao<ContractType> contractTypeRepo;
-	private GenericDao<Employee> employeeRepo;
+	//private GenericDao<Employee> employeeRepo;
 	
 	private GenericDao<Technician> technicianRepo;
 	private GenericDao<Administrator> adminsitratorRepo;
@@ -35,7 +34,7 @@ public class DomainManager {
 	private List<ContactPerson> contactPersonList;
 	private List<ContractType> contractTypeList;
 	private List<Employee> employeeList;
-
+	
 	private List<Faq> faqList;
 	private List<Contract> contractList;
 	
@@ -46,7 +45,7 @@ public class DomainManager {
 
     public DomainManager() {
     	setTicketRepo(new GenericDaoJpa<>(Ticket.class));
-    	setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
+    	//setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
     	setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
     	setFaqRepo(new GenericDaoJpa<>(Faq.class));
     	setContractRepo(new GenericDaoJpa<>(Contract.class));
@@ -90,9 +89,9 @@ public class DomainManager {
 		this.contractRepo = contractRepo;
 	}
 
-	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
-		this.employeeRepo = employeeRepo;		
-	}
+//	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
+//		this.employeeRepo = employeeRepo;		
+//	}
 	
 	private void setTechnicianRepo(GenericDao<Technician> technicianRepo) {
 		this.technicianRepo = technicianRepo;
@@ -149,10 +148,15 @@ public class DomainManager {
     
     public List<Employee> getAllEmployees() {
         if(employeeList == null) {
-        	employeeList = employeeRepo.getAll();
+        	//employeeList = supportmanagerRepo.getAll();
+        	//List<SupportManager> lis= supportmanagerRepo.getAll();
+        	//employeeList.addAll(supportmanagerRepo.getAll());
+        	employeeList.addAll(adminsitratorRepo.getAll());
+        	employeeList.addAll(technicianRepo.getAll());
         }
         return employeeList;
     }
+    
     
     public ContactPerson getContactPersonByUsername(String username) {
         TypedQuery<ContactPerson> query1 = em.createNamedQuery("ContactPerson.getContactpersonByUsername", ContactPerson.class).setParameter("username", username);

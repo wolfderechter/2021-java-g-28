@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import gui.tc;
 import javafx.event.ActionEvent;
 
 public class LoginController {
@@ -58,6 +57,7 @@ public class LoginController {
 			tc.close();
 			return tn;
 		}
+		return null;
 	}
 	
 	public Controller getController(String role) {

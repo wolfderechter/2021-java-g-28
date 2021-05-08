@@ -21,11 +21,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 @Entity
-@Table(name = "Technicians")
+@Table(name = "SupportManagers")
 @NamedQueries({
 	@NamedQuery(name = "Technician.getTechnicianByUsername" , query = "SELECT s FROM Technician s WHERE s.user.userName = :username")
 })
-public class Technician extends Employee {
+public class SupportManager {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

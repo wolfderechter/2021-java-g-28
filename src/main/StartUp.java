@@ -2,6 +2,8 @@ package main;
 
 
 import domain.Account;
+import domain.Administrator;
+import domain.AdministratorController;
 import domain.ContactPerson;
 import domain.Controller;
 import domain.DomainController;
@@ -23,8 +25,8 @@ public class StartUp extends Application {
 		boolean runWithLogin = false;
 
 		Parent root;
-		Controller dc = new TechnicianController();
-		Account g = new Technician();
+		Controller dc = new AdministratorController();
+		Account g = new Administrator();
 		
 		if (runWithLogin) {
 			root = new AccountPanelController();
