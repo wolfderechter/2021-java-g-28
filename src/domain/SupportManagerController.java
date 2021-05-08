@@ -68,8 +68,8 @@ public class SupportManagerController extends Controller {
 		return obListContracts;
 	}
 
-	public Employee getSupportManagerByUsername(String username) {
-		Employee sm = dm.getEmployeeByUsername(username, "SM");
+	public IEmployee getSupportManagerByUsername(String username) {
+		IEmployee sm = dm.getEmployeeByUsername(username, "SM");
 		return sm;
 	}
 

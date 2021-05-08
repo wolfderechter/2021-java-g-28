@@ -1,13 +1,12 @@
 package main;
 
 
-import domain.Administrator;
 import domain.AdministratorController;
 import domain.ContactPerson;
 import domain.Controller;
 import domain.DomainController;
 import domain.Employee;
-import domain.Technician;
+import domain.IEmployee;
 import domain.TechnicianController;
 import gui.AccountPanelController;
 import gui.ContactPersonPanelController;
@@ -26,7 +25,7 @@ public class StartUp extends Application {
 
 		Parent root;
 		Controller dc = new AdministratorController();
-		Employee g = new Employee();
+		IEmployee g = new Employee();
 		
 		if (runWithLogin) {
 			root = new AccountPanelController();

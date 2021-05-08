@@ -142,7 +142,7 @@ public class DomainManager {
         return cp;
     }
     
-    public Employee getEmployeeByUsername(String username, String role) {
+    public IEmployee getEmployeeByUsername(String username, String role) {
     	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username) && e.getRole().equals(role.toUpperCase())).findFirst().get();
 
     }

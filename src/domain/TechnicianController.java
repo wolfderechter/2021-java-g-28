@@ -99,7 +99,7 @@ public class TechnicianController extends Controller {
 		this.selectedFilterTypes.removeAll(removed);
 	}
 	
-	public Employee getTechnicianByUsername(String username) {
+	public IEmployee getTechnicianByUsername(String username) {
 		return dm.getEmployeeByUsername(username, "TE");
 	}
 	

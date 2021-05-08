@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import domain.Controller;
 import domain.DomainController;
+import domain.IEmployee;
 import domain.LoginController;
-import domain.Employee;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -64,7 +64,7 @@ public class AccountPanelController extends GridPane {
 			String isValid = validationAndRole[0];
 			String role = validationAndRole[1];
 			if (isValid.equals("true")) {
-				Employee signedInUser = getSignedInUser(role, txtUsername.getText());
+				IEmployee signedInUser = getSignedInUser(role, txtUsername.getText());
 				showDashboard(signedInUser, lc.getController(role));
 			} else {
 				lblLoginError.setText("Username or password incorrect");
@@ -76,7 +76,7 @@ public class AccountPanelController extends GridPane {
 	}
 
 	/**Shows dashboard**/
-	private void showDashboard(Employee signedInAccount, Controller controller) {
+	private void showDashboard(IEmployee signedInAccount, Controller controller) {
 		DashboardPanelController dpc = new DashboardPanelController(signedInAccount, controller);
 		Scene scene = new Scene(dpc);
 		Stage stage = (Stage) this.getScene().getWindow();
@@ -88,7 +88,7 @@ public class AccountPanelController extends GridPane {
 	}
 	
 	/**Returns signed in account**/
-	private Employee getSignedInUser(String role, String username) {
+	private IEmployee getSignedInUser(String role, String username) {
 		return lc.getSignedInUser(role, username);
 	}
 	

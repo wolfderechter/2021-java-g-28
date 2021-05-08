@@ -17,6 +17,7 @@
       <TableView fx:id="tvEmployees" prefHeight="360.0" prefWidth="500.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="75.0" text="EmployeeId" />
+            <TableColumn fx:id="dateInServiceCol" prefWidth="85.60003662109375" text="DateInService" />
           <TableColumn fx:id="userNameCol" prefWidth="75.0" text="Username" />
             <TableColumn fx:id="roleCol" prefWidth="75.0" text="Role" />
             <TableColumn fx:id="firstNameCol" prefWidth="75.0" text="Firstname" />
