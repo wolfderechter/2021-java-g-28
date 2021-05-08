@@ -46,10 +46,10 @@ public class LoginController {
 		} 
 		
 		if(role.equals("supportmanager")) {
-			//SupportManagerController spc = new SupportManagerController();
-			//SupportManager sm = spc.getSupportManagerByUsername(username);
-			//spc.close();
-			//return sm;
+			SupportManagerController spc = new SupportManagerController();
+			SupportManager sm = spc.getSupportManagerByUsername(username);
+			spc.close();
+			return sm;
 		}
 		
 		if(role.equals("technician")) {

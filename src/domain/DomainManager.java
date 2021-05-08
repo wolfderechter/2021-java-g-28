@@ -160,6 +160,7 @@ public class DomainManager {
         return cp;
     }
     
+    /**Returns accound by given usernamen and kind of account (sup, admin, tech) using generic methods**/
     public Account getAccountByUsername(String username, String kind) {
     	switch (kind.toLowerCase()) {
 		case "technician": return technicianRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
