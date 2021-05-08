@@ -100,7 +100,7 @@ public class TechnicianController extends Controller {
 	}
 	
 	public Technician getTechnicianByUsername(String username) {
-		return dm.getTechnicianByUsername(username);
+		return (Technician) dm.getAccountByUsername(username, "Technician");
 	}
 	
 	

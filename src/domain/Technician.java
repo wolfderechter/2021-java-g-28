@@ -38,6 +38,10 @@ public class Technician extends Account {
 	@JoinColumn(name = "UserId")
 	private User user;
 	
+	public User getUser() {
+		return this.user;
+	}
+	
 //	public int Id() {
 //		return id;
 //	}

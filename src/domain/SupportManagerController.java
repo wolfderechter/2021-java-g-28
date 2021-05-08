@@ -69,7 +69,7 @@ public class SupportManagerController extends Controller {
 	}
 
 	public SupportManager getSupportManagerByUsername(String username) {
-		SupportManager sm = dm.getSupportManagerByUsername(username);
+		SupportManager sm = (SupportManager) dm.getAccountByUsername(username, "SupportManager");
 		return sm;
 	}
 

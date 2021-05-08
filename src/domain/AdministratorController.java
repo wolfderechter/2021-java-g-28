@@ -93,9 +93,9 @@ public class AdministratorController extends Controller {
 		return obListEmployees;
 	}
 
-//	public Administrator getAdministratorByUsername(String username) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	public Administrator getAdministratorByUsername(String username) {
+		Administrator a = (Administrator) dm.getAccountByUsername(username, "Administrator");
+		return a;
+	}
 
 }

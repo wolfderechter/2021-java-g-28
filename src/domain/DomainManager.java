@@ -1,6 +1,8 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +26,10 @@ public class DomainManager {
 	private GenericDao<ContractType> contractTypeRepo;
 	private GenericDao<Employee> employeeRepo;
 	
+	private GenericDao<Technician> technicianRepo;
+	private GenericDao<Administrator> adminsitratorRepo;
+	private GenericDao<SupportManager> supportmanagerRepo;
+	
 	//observable list?
 	private ObservableList<Ticket> ticketList;
 	private List<ContactPerson> contactPersonList;
@@ -45,6 +51,12 @@ public class DomainManager {
     	setFaqRepo(new GenericDaoJpa<>(Faq.class));
     	setContractRepo(new GenericDaoJpa<>(Contract.class));
     	setContractTypeRep(new GenericDaoJpa<>(ContractType.class));
+    	
+    	//account repo's
+    	setTechnicianRepo(new GenericDaoJpa<>(Technician.class));
+    	setAdministratorRepo(new GenericDaoJpa<>(Administrator.class));
+    	setSupportManagerRepo(new GenericDaoJpa<>(SupportManager.class));
+    	
     	openPersistentie();
 	}
 
@@ -57,7 +69,6 @@ public class DomainManager {
         em.close();
         emf.close();
         GenericDaoJpa.closePersistency();
-
     }
     
     private void setContractTypeRep(GenericDao<ContractType> contractTypeRepo) {
@@ -79,9 +90,20 @@ public class DomainManager {
 		this.contractRepo = contractRepo;
 	}
 
-	
 	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
 		this.employeeRepo = employeeRepo;		
+	}
+	
+	private void setTechnicianRepo(GenericDao<Technician> technicianRepo) {
+		this.technicianRepo = technicianRepo;
+	}
+	
+	private void setAdministratorRepo(GenericDao<Administrator> adminRepo) {
+		this.adminsitratorRepo = adminRepo;
+	}
+	
+	private void setSupportManagerRepo(GenericDao<SupportManager> supRepo) {
+		this.supportmanagerRepo = supRepo;
 	}
 	//goede methode
 //	public void closePersistentie() {
@@ -138,15 +160,13 @@ public class DomainManager {
         return cp;
     }
     
-    public Employee getEmployeeByUsername(String username) {
-    	TypedQuery<Employee> query1 = em.createNamedQuery("Employee.getEmployeeByUsername", Employee.class).setParameter("username", username);
-        Employee sm = query1.getSingleResult();
-        return sm;
+    public Account getAccountByUsername(String username, String kind) {
+    	switch (kind.toLowerCase()) {
+		case "technician": return technicianRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
+		case "administrator": return adminsitratorRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
+		case "supportmanager": return supportmanagerRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + kind.toLowerCase());
+		}
     }
-    
-    public Technician getTechnicianByUsername(String username) {
-    	Technician t = em.createNamedQuery("Technician.getTechnicianByUsername", Technician.class).setParameter("username", username).getSingleResult();
-    	return t;
-    }
-
 }

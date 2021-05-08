@@ -64,10 +64,4 @@ public class GenericDaoJpa<T> implements GenericDao<T>{
 		T entity = em.find(type, id);
 		return entity != null;
 	}
-	
-//	@Override
-//	public T getByName(String name) {
-//		T entity = em.createQuery("select entity from " + type.getName() + " entity", type).getSingleResult();
-//		return entity;
-//	}
 }

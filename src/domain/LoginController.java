@@ -40,16 +40,15 @@ public class LoginController {
 	public Account getSignedInUser(String role, String username) {
 		if(role.equals("administrator")) {
 			AdministratorController ac = new AdministratorController();
-			//vervangen door lambda
-			//Administrator cp = ac.getAdministratorByUsername(username);
-			//ap.close();
-			//return cp;
+			Administrator cp = ac.getAdministratorByUsername(username);
+			ac.close();
+			return cp;
 		} 
 		
 		if(role.equals("supportmanager")) {
-			SupportManagerController spc = new SupportManagerController();
+			//SupportManagerController spc = new SupportManagerController();
 			//SupportManager sm = spc.getSupportManagerByUsername(username);
-			spc.close();
+			//spc.close();
 			//return sm;
 		}
 		
