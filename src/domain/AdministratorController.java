@@ -14,13 +14,13 @@ public class AdministratorController extends Controller {
 	private Employee employee;
 	private PropertyChangeSupport employeeSubject;
 	private DomainManager dm = new DomainManager();
-	private GenericDao<Employee> employeeRepo;
+	//private GenericDao<Employee> employeeRepo;
 	private ContactPerson contactPerson;
 	private PropertyChangeSupport contactPersonSubject;
 	private GenericDao<ContactPerson> contactPersonRepo;
 	
 	public AdministratorController() {
-		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
+		//setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
 		contactPersonSubject = new PropertyChangeSupport(this);
 		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
 	}
@@ -57,23 +57,23 @@ public class AdministratorController extends Controller {
 		this.contactPersonRepo = contactPersonRepo;
 	}
 	
-	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
-		this.employeeRepo = employeeRepo;
-	}
+//	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
+//		this.employeeRepo = employeeRepo;
+//	}
 	
 	public void close() {
 		GenericDaoJpa.closePersistency();
 	}
 	
-	public Employee getEmployeeByUsername(String username) {
-		Employee sm = dm.getEmployeeByUsername(username);
-		return sm;
-	}
+//	public Employee getEmployeeByUsername(String username) {
+//		Employee sm = dm.getEmployeeByUsername(username);
+//		return sm;
+//	}
 	
 	public void updateEmployee(Employee employee) {
 		employeeSubject.firePropertyChange("employee", this.employee, employee);
 		GenericDaoJpa.startTransaction();
-		employeeRepo.update(employee);
+		//employeeRepo.update(employee);
         GenericDaoJpa.commitTransaction();
 	}
 	public void setEmployee(Employee employee) {

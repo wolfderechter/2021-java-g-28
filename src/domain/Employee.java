@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -16,24 +17,25 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 @Entity
 @Table(name = "Employees")
 @NamedQueries({
-	@NamedQuery(name = "Employee.getEmployeeByUsername" , query = "SELECT s FROM Employee s WHERE s.user.userName = :username")
+	//@NamedQuery(name = "Employee.getEmployeeByUsername" , query = "SELECT s FROM Employee s WHERE s.user.userName = :username")
 })
 @Access(AccessType.FIELD)
-public class Employee extends Account {
+public abstract class Employee extends Account {
 
-	
-	@Transient
 	private IntegerProperty id;
-	//@Transient
-	//private StringProperty adress;
-	//private Date dateInService;
+	@Transient
+	private StringProperty adress;
+	@Transient
+	private ObjectProperty<Date> dateInService;
 	@Transient
 	private StringProperty firstName;
 	@Transient
@@ -62,8 +64,6 @@ public class Employee extends Account {
 	public StringProperty FirstName() {
 		return firstName;
 	}
-	@Id
-	@Access(AccessType.PROPERTY)
 	public String getFirstName() {
 		return firstName.getValue();
 	}
@@ -75,12 +75,32 @@ public class Employee extends Account {
 	public StringProperty LastName() {
 		return lastName;
 	}
-	@Id
-	@Access(AccessType.PROPERTY)
 	public String getLastName() {
 		return lastName.getValue();
 	}
 	public void setLastName(String lastName) {
 		this.lastName = new SimpleStringProperty(lastName);
+	}
+	
+	
+	public StringProperty Adress() {
+		return adress;
+	}
+	public String getAdress() {
+		return adress.getValue();
+	}
+	public void setAdress(String adress) {
+		this.adress = new SimpleStringProperty(adress);
+	}
+	
+	
+	public ObjectProperty<Date> DateInService() {
+		return dateInService;
+	}
+	public Date getDateInService() {
+		return dateInService.getValue();
+	}
+	public void setDateInService(Date dateInService) {
+		this.dateInService.set(dateInService);
 	}
 }

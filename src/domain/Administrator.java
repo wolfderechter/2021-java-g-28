@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-public class Administrator extends Account {
+public class Administrator extends Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
