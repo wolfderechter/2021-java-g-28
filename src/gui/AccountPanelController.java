@@ -61,9 +61,9 @@ public class AccountPanelController extends GridPane {
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
 	private void signIn(ActionEvent event) {
 		try {
-			String[] get = lc.getValidationAndRole(txtUsername.getText(), pwfPassword.getText());
-			String isValid = get[0];
-			String role = get[1];
+			String[] validationAndRole = lc.getValidationAndRole(txtUsername.getText(), pwfPassword.getText());
+			String isValid = validationAndRole[0];
+			String role = validationAndRole[1];
 			if (isValid.equals("true")) {
 				Account signedInUser = getSignedInUser(role, txtUsername.getText());
 				showDashboard(signedInUser, lc.getController(role));

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.mockito.internal.stubbing.answers.Returns;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -97,7 +99,9 @@ public class TechnicianController extends Controller {
 		this.selectedFilterTypes.removeAll(removed);
 	}
 	
-	
+	public Technician getTechnicianByUsername(String username) {
+		return dm.getTechnicianByUsername(username);
+	}
 	
 	
 

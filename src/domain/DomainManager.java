@@ -143,5 +143,10 @@ public class DomainManager {
         Employee sm = query1.getSingleResult();
         return sm;
     }
+    
+    public Technician getTechnicianByUsername(String username) {
+    	Technician t = em.createNamedQuery("Technician.getTechnicianByUsername", Technician.class).setParameter("username", username).getSingleResult();
+    	return t;
+    }
 
 }

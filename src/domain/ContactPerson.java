@@ -33,23 +33,12 @@ import javafx.beans.property.StringProperty;
 @Access(AccessType.FIELD)
 public class ContactPerson extends Account {
 
-	
-	
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
 	private int id;
-
-
-	
-	
 	private StringProperty firstName;
-	
 	private StringProperty lastName;
-
-
-	//private StringProperty companyName;
-	
 	@ManyToOne
 	@JoinColumn(name = "UserId")
 	private User user;

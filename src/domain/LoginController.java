@@ -48,16 +48,16 @@ public class LoginController {
 		
 		if(role.equals("supportmanager")) {
 			SupportManagerController spc = new SupportManagerController();
-			SupportManager sm = spc.getSupportManagerByUsername(username);
+			//SupportManager sm = spc.getSupportManagerByUsername(username);
 			spc.close();
-			return sm;
+			//return sm;
 		}
 		
 		if(role.equals("technician")) {
-			//TechnicianController tc = new TechnicianController();
-			//Technician tn = new tc.getTechnicianByUsername(username);
-			//tc.close();
-			//return tn;
+			TechnicianController tc = new TechnicianController();
+			Technician tn = tc.getTechnicianByUsername(username);
+			tc.close();
+			return tn;
 		}
 	}
 	
