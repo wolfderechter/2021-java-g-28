@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-import domain.Account;
 import domain.AdministratorController;
 import domain.ContactPerson;
 import domain.Controller;
@@ -29,10 +28,16 @@ public class EmployeePanelController extends BorderPane implements PropertyChang
 
     @FXML
     private TableColumn<Employee, String> firstNameCol;
-
+    
+    @FXML
+    private TableColumn<Employee, String> userNameCol;
+    
     @FXML
     private TableColumn<Employee, String> lastNameCol;
-
+    
+    @FXML
+    private TableColumn<Employee, String> roleCol;
+    
     @FXML
     private TableColumn<Employee, String> adressCol;
 
@@ -56,7 +61,9 @@ public class EmployeePanelController extends BorderPane implements PropertyChang
         idCol.setCellValueFactory(cellData -> cellData.getValue().Id());
         firstNameCol.setCellValueFactory(cellData -> cellData.getValue().FirstName());
         lastNameCol.setCellValueFactory(cellData -> cellData.getValue().LastName());
-        
+        roleCol.setCellValueFactory(cellData -> cellData.getValue().Role());
+        userNameCol.setCellValueFactory(cellData -> cellData.getValue().getUser().UserName());
+
         tvEmployees.setItems(dc.getAllEmployees());
         //Editpanel aanmaken + opvullen met eerste Employee
         //EmployeeEditPanelController eepc = new EmployeeEditPanelController(dc);

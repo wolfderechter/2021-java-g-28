@@ -53,11 +53,7 @@ public class EmployeeEditPanelController extends GridPane{
 		resetFields();
 	}
 	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		this.employee = (Employee) evt.getNewValue();
-		resetFields();
-	}
+
 	
 	private void resetFields() {
 		//Mag niet gewijzigd worden van employee

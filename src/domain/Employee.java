@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,27 +26,27 @@ import javafx.beans.property.StringProperty;
 
 @Entity
 @Table(name = "Employees")
-@NamedQueries({
-	//@NamedQuery(name = "Employee.getEmployeeByUsername" , query = "SELECT s FROM Employee s WHERE s.user.userName = :username")
-})
 @Access(AccessType.FIELD)
-public abstract class Employee extends Account {
+public class Employee {
 
 	private IntegerProperty id;
 	@Transient
 	private StringProperty adress;
 	@Transient
 	private ObjectProperty<Date> dateInService;
-	@Transient
 	private StringProperty firstName;
-	@Transient
 	private StringProperty lastName;
+	private StringProperty role;
 	@ManyToOne
 	@JoinColumn(name = "UserId")
 	private User user;
 	
 	public Employee() {
 		
+	}
+	
+	public User getUser() {
+		return user;
 	}
 	
 	public IntegerProperty Id() {
@@ -64,6 +65,7 @@ public abstract class Employee extends Account {
 	public StringProperty FirstName() {
 		return firstName;
 	}
+	@Access(AccessType.PROPERTY)
 	public String getFirstName() {
 		return firstName.getValue();
 	}
@@ -75,6 +77,7 @@ public abstract class Employee extends Account {
 	public StringProperty LastName() {
 		return lastName;
 	}
+	@Access(AccessType.PROPERTY)
 	public String getLastName() {
 		return lastName.getValue();
 	}
@@ -86,6 +89,7 @@ public abstract class Employee extends Account {
 	public StringProperty Adress() {
 		return adress;
 	}
+	@Access(AccessType.PROPERTY)
 	public String getAdress() {
 		return adress.getValue();
 	}
@@ -102,5 +106,18 @@ public abstract class Employee extends Account {
 	}
 	public void setDateInService(Date dateInService) {
 		this.dateInService.set(dateInService);
+	}
+	
+	
+	
+	public StringProperty Role() {
+		return role;
+	}
+	@Access(AccessType.PROPERTY)
+	public String getRole() {
+		return role.getValue();
+	}
+	public void setRole(String role) {
+		this.role = new SimpleStringProperty(role);
 	}
 }
