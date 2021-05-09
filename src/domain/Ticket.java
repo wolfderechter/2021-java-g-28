@@ -52,10 +52,10 @@ public class Ticket implements ITicket {
 	private Company company;
 
 
-	@ManyToOne
-	@JoinColumn(name = "employeeId")
-	private Employee employee;
-	
+//	@ManyToOne
+//	@JoinColumn(name = "employeeId")
+//	private Employee employee;
+//	
 	protected Ticket() {
 
 	}
@@ -197,13 +197,13 @@ public class Ticket implements ITicket {
 	}
 
 	
-	public Employee getEmployee() {
-		return this.employee;
-	}
-	
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
+//	public Employee getEmployee() {
+//		return this.employee;
+//	}
+//	
+//	public void setEmployee(Employee employee) {
+//		this.employee = employee;
+//	}
 
 	public Company getCompany() {
 		return company;

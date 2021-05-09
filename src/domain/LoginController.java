@@ -30,15 +30,21 @@ public class LoginController {
 		return result.toString();
 	}
 	
-	public String[] getValidationAndRole(String username, String password) throws IOException {
-		return get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
-				username, password)).split("-");
+	public String getValidation(String username, String password) throws IOException {
+		
+		String deezString = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
+				username, password));
+		System.out.println(deezString);
+		return deezString;
 	}
 	
 	/**Returns signed in account**/
-	public IEmployee getSignedInUser(String role, String username) {
+	public IEmployee getSignedInUser(String username) {
 		DomainManager d = new DomainManager();
 		IEmployee e = d.getEmployeeByUsername(username);
+		if(e == null) {
+			throw new IllegalArgumentException("Customers can't login");
+		}
 		//d.closePersistentie();
 		return e;
 	}

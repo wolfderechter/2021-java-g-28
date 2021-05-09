@@ -60,12 +60,15 @@ public class AccountPanelController extends GridPane {
 	/**Checks if credentials are valid and signs user in and shows dashboard, if not valid, shows error message on screen**/
 	private void signIn(ActionEvent event) {
 		try {
-			String[] validationAndRole = lc.getValidationAndRole(txtUsername.getText(), pwfPassword.getText());
-			String isValid = validationAndRole[0];
-			String role = validationAndRole[1];
+			String isValid = lc.getValidation(txtUsername.getText(), pwfPassword.getText());
+			
 			if (isValid.equals("true")) {
-				IEmployee signedInUser = getSignedInUser(role, txtUsername.getText());
-				showDashboard(lc.getController(signedInUser));
+				try {
+					IEmployee signedInUser = getSignedInUser(txtUsername.getText());
+					showDashboard(lc.getController(signedInUser));
+				} catch (IllegalArgumentException e) {
+					lblLoginError.setText(e.toString());
+				}
 			} else {
 				lblLoginError.setText("Username or password incorrect");
 				txtUsername.requestFocus();
@@ -87,8 +90,8 @@ public class AccountPanelController extends GridPane {
 	}
 	
 	/**Returns signed in account**/
-	private IEmployee getSignedInUser(String role, String username) {
-		return lc.getSignedInUser(role, username);
+	private IEmployee getSignedInUser(String username) {
+		return lc.getSignedInUser(username);
 	}
 	
 	private void createAndShowPopupConnection() {

@@ -152,7 +152,7 @@ public class DomainManager {
     
 
     public IEmployee getEmployeeByUsername(String username) {
-    	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
+    	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().orElse(null);
     }
 
 	public ObservableList<Employee> getEmployeesByName(String name) {

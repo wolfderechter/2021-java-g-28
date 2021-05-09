@@ -2,7 +2,9 @@ package domain;
 
 import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,8 @@ public class SupportManagerController extends Controller {
 	private Faq faq;
 	private GenericDao<Faq> faqRepo;
 	private GenericDao<Contract> contractRepo;
+	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
+	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
 
 	public SupportManagerController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
@@ -82,6 +86,16 @@ public class SupportManagerController extends Controller {
 			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson);
 			dm.createTicket(ticket);
 			setTicket(ticket.getTicketNr());
+	}
+	
+	@Override
+	// nodig voor lijst van tickets voor tableview van ticketPanel
+	public ObservableList<ITicket> getFilteredTickets() {
+		ObservableList<Ticket> li = dm.getAllTickets();
+		li = li.stream().filter(t->this.selectedFilterTypes.contains(t.getType()))
+				.filter(t->this.selectedFilterStatusen.contains(t.getStatus()))
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		return (ObservableList<ITicket>) (Object) li;
 	}
 
 }

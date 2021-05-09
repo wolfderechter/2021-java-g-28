@@ -40,7 +40,6 @@ public class TechnicianController extends Controller {
 		Ticket ticket = dm.getAllTickets().stream().filter(t->t.getTicketNr() == ticketNr).findFirst().orElse(null);
 		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 		this.ticket = ticket;
-		
 	}
 
 	@Override

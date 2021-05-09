@@ -53,6 +53,17 @@ public class DashboardPanelController extends GridPane {
 			btnCustomer.setDisable(true);
 		}
 		
+		if(dc.getEmployee().getRole().equals("TE")) {
+			btnCustomer.setDisable(true);
+			btnEmployee.setDisable(true);
+			btnContractType.setDisable(true);
+		}
+		
+		if(dc.getEmployee().getRole().equals("AD")) {
+			btnTickets.setDisable(true);
+			btnContractType.setDisable(true);
+		}
+		
 		lblUsername.setText(dc.getEmployee().getUser().getUserName());
 		btnCustomer.setOnAction(this::displayCustomers);
 		btnTickets.setOnAction(this::displayTickets);
