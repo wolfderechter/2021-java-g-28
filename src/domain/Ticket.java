@@ -43,6 +43,10 @@ public class Ticket implements ITicket {
 	@OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
 	private List<Reaction> reactions;
 
+	@ManyToOne
+	@JoinColumn(name = "employeeId")
+	private Employee employee;
+	
 	protected Ticket() {
 
 	}
@@ -152,5 +156,13 @@ public class Ticket implements ITicket {
 
 	public void setType(TicketTypeEnum type) {
 		this.type = type;
+	}
+	
+	public Employee getEmployee() {
+		return this.employee;
+	}
+	
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 }

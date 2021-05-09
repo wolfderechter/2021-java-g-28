@@ -23,9 +23,6 @@ public class AdministratorController extends Controller {
 	private GenericDao<Company> companyRepo;
 	private PropertyChangeSupport companySubject;
 	
-	
-	
-	
 	public AdministratorController() {
 		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
 		setCompanyRepo(new GenericDaoJpa<>(Company.class));

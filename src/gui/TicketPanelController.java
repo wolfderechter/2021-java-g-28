@@ -2,7 +2,9 @@ package gui;
 
 import java.io.IOException;
 import domain.Controller;
+import domain.IEmployee;
 import domain.ITicket;
+import domain.SupportManagerController;
 import domain.TechnicianController;
 import domain.TicketStatusEnum;
 import domain.TicketTypeEnum;
@@ -33,9 +35,17 @@ public class TicketPanelController extends BorderPane {
 	private ListView<TicketTypeEnum> lstTypes;
 
 	private TechnicianController dc;
+	private SupportManagerController dc2;
 
-	public TicketPanelController(Controller dc2) {
-		this.dc = (TechnicianController) dc2;
+	public TicketPanelController(Controller dc2, IEmployee emp) {
+		switch (emp.getRole()) {
+		case "TE": this.dc = (TechnicianController) dc2; break;
+		case "SM": this.dc2 = (SupportManagerController) dc2;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + emp.getRole());
+		}
+		
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);

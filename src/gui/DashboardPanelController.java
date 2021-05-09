@@ -32,10 +32,12 @@ public class DashboardPanelController extends GridPane {
 	
 
 	private Controller dc;
+	private IEmployee signedInEmployee;
 
 	public DashboardPanelController(IEmployee signedInAccount, Controller controller) {
 
 		this.dc = controller;
+		this.signedInEmployee = signedInAccount;
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardPanel.fxml"));
 		loader.setController(this);
@@ -62,7 +64,7 @@ public class DashboardPanelController extends GridPane {
 
 	private void displayTickets(ActionEvent event) {
 		setActiveButtonColor(btnTickets);
-		TicketPanelController tpc = new TicketPanelController(dc);
+		TicketPanelController tpc = new TicketPanelController(dc, signedInEmployee);
 		bpDashboard.setCenter(tpc);
 	}
 	private void displayContractType(ActionEvent event) {
