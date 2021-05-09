@@ -125,7 +125,7 @@
             <BorderPane fx:id="bpDashboard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
          </children>
          <padding>
-            <Insets left="200.0" />
+            <Insets left="20.0" />
          </padding>
       </VBox>
    </children>

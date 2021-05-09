@@ -1,7 +1,9 @@
 package domain;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,24 +14,22 @@ import javax.persistence.Table;
 public class Notification {
 	 
 	@Id
-	@Column(name = "NotificationId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int notificationId;
-	@Column(name = "Action")
 	private String action;
-	@Column(name = "TicketName")
     private  String  ticketName;
-	@Column(name = "IsRead")
     private boolean isRead;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ContactPersonId")
     private ContactPerson contactPerson;
 	
-	public Notification() {}
+	protected Notification() {}
 	
 	public Notification(String action,String notificationTitle,ContactPerson person) {
 		this.action=action;
 		this.ticketName = notificationTitle;
 		this.contactPerson = person;
+		this.isRead=false;
 		
 	}
 }

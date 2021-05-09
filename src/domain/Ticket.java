@@ -111,6 +111,8 @@ public class Ticket implements ITicket {
 	}
 
 	public void setTitle(String title) {
+		if(title ==null || title.isEmpty()  || title.isBlank())
+			throw new IllegalArgumentException("Title can't be empty");
 		this.title = new SimpleStringProperty(title);
 	}
 
@@ -121,7 +123,9 @@ public class Ticket implements ITicket {
 	}
 
 	public void setStatus(TicketStatusEnum status) {
-
+		if(status == null) {
+			throw new IllegalArgumentException("Status can't be empty");
+		}
 		this.status = new SimpleObjectProperty<TicketStatusEnum>(status);
 	}
 
@@ -131,6 +135,9 @@ public class Ticket implements ITicket {
 	}
 
 	public void setDateCreation(LocalDate dateCreation) {
+		if(dateCreation == null) {
+			throw new IllegalArgumentException("A date needs to be selected");
+		}
 		this.dateCreation = dateCreation;
 	}
 
@@ -140,6 +147,9 @@ public class Ticket implements ITicket {
 	}
 
 	public void setDescription(String description) {
+		if(dateCreation == null) {
+			throw new IllegalArgumentException("You need to add a description");
+		}
 		this.description = description;
 	}
 
@@ -176,6 +186,9 @@ public class Ticket implements ITicket {
 	}
 
 	public void setType(TicketTypeEnum type) {
+		if(type == null) {
+			throw new IllegalArgumentException("You need to add a Type needs to be selected");
+		}
 		this.type = type;
 	}
 

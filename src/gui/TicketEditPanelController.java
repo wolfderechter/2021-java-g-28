@@ -16,6 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -150,27 +152,23 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	}
 	
 	private void createTicket(ActionEvent event) {
+		try {
 		dc.createTicket(dpDateCreate.getValue(),txFieldTitle.getText(),txAreaDescription.getText(),cmbType.getSelectionModel().selectedItemProperty().getValue(),
 				cmbContactPerson.getSelectionModel().selectedItemProperty().getValue());
+		}catch(Exception ex) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning Dialog");
+			alert.setHeaderText("Something went wrong adding the ticket");
+			alert.setContentText(ex.getMessage());
+			alert.showAndWait();
+		}
 		
 	}
 	
-	//veranderen door een knop methode
-	@FXML
 	private void addReaction(ActionEvent event) {
-		// naam van filosoof aan de gebruiker vragen
-		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Enter details");
-		dialog.setHeaderText("Add Reaction");
-		dialog.setContentText("Enter Reaction:");
-		dialog.showAndWait().ifPresent(response -> {
-			if (!response.isBlank()) {
-				// voeg nieuwe filosoof toe in model
-				dc.addReaction(response);
-				// zie volgende slide
+				dc.addReaction(txtReactionText.getText());
 				lstReactions.getSelectionModel().selectLast(); 
-			}
-		});
+		
 	}
-
+	
 }

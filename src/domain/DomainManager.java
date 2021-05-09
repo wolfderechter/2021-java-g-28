@@ -23,8 +23,7 @@ public class DomainManager {
 	private GenericDao<ContractType> contractTypeRepo;
 	private GenericDao<Employee> employeeRepo;
 	private GenericDao<Company> companyRepo;
-	private GenericDao<Reaction> reactionRepo;
-	private GenericDao<Notification> notifRepo;
+
 	// observable list?
 
 	private ObservableList<Ticket> ticketList;
@@ -48,10 +47,7 @@ public class DomainManager {
 		setContractRepo(new GenericDaoJpa<>(Contract.class));
 		setContractTypeRep(new GenericDaoJpa<>(ContractType.class));
 		setCompanyRepo(new GenericDaoJpa<>(Company.class));
-		setReactionrepo(new GenericDaoJpa<>(Reaction.class));
-		setNotifRepo(new GenericDaoJpa<>(Notification.class));
 		openPersistentie();
-
 	}
 
 	
@@ -64,14 +60,6 @@ public class DomainManager {
 		em.close();
 		emf.close();
 		GenericDaoJpa.closePersistency();
-	}
-	private void setNotifRepo(GenericDao<Notification> notifRepo) {
-		this.notifRepo = notifRepo;
-		
-	}
-
-	private void setReactionrepo(GenericDao<Reaction> reactionRepo) {
-		this.reactionRepo = reactionRepo;
 	}
 
 
@@ -109,8 +97,6 @@ public class DomainManager {
 //        GenericDaoJpa.closePersistency();
 //    }
 
-    
-    
     public List<ContactPerson> getAllContactPersons() {
         if(contactPersonList == null) {
         	contactPersonList = contactPersonRepo.getAll();
@@ -126,9 +112,7 @@ public class DomainManager {
     }
     
     public ObservableList<Ticket> getAllTickets() {
-        if(ticketList == null) {
-        	ticketList = FXCollections.observableArrayList(ticketRepo.getAll());
-        }
+        ticketList = FXCollections.observableArrayList(ticketRepo.getAll());
         return ticketList;
     }
     
@@ -161,8 +145,7 @@ public class DomainManager {
     }
     
     public ContactPerson getContactPersonByUsername(String username) {
-        TypedQuery<ContactPerson> query1 = em.createNamedQuery("ContactPerson.getContactpersonByUsername", ContactPerson.class).setParameter("username", username);
-        ContactPerson cp = query1.getSingleResult();
+    	ContactPerson cp = contactPersonRepo.getAll().stream().filter(c->c.getUser().getUserName() == username).findFirst().orElse(null);
         return cp;
     }
     
@@ -200,9 +183,4 @@ public class DomainManager {
 		GenericDaoJpa.commitTransaction();
 	}
 
-	public void createReaction(Reaction reaction) {
-		GenericDaoJpa.startTransaction();
-		reactionRepo.insert(reaction);
-		GenericDaoJpa.commitTransaction();
-	}
 }

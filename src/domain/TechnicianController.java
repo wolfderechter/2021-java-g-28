@@ -5,16 +5,9 @@ import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import org.mockito.internal.stubbing.answers.Returns;
-
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import repository.GenericDao;
 import repository.GenericDaoJpa;
 
 public class TechnicianController extends Controller {
@@ -52,8 +45,10 @@ public class TechnicianController extends Controller {
 
 	public void addReaction(String text) {
 		// nog te vervangen met ingelogde usernaam
-		Reaction reaction =ticket.addReaction(text, false, "Nathan Supp Test");
-		dm.createReaction(reaction);
+		ticket.addReaction(text, false, "Nathan Supp Test");
+		dm.updateTicket(ticket);
+		
+		
 	}
 
 	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd
