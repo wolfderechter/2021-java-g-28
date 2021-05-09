@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import domain.Controller;
 import domain.DomainController;
 import domain.IEmployee;
+import domain.SupportManagerController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -67,7 +68,7 @@ public class DashboardPanelController extends GridPane {
 	}
 	private void displayContractType(ActionEvent event) {
 		setActiveButtonColor(btnContractType);
-		ContractTypePanelController ctpc = new ContractTypePanelController(dc);
+		ContractTypePanelController ctpc = new ContractTypePanelController((SupportManagerController) dc);
 		bpDashboard.setCenter(ctpc);
 	}
 	

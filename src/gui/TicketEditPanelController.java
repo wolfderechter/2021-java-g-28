@@ -4,9 +4,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.stream.Collectors;
+
+import domain.Company;
+import domain.ContactPerson;
 import domain.ITicket;
 import domain.TechnicianController;
 import domain.TicketStatusEnum;
+import domain.TicketTypeEnum;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -22,19 +27,21 @@ import javafx.scene.layout.GridPane;
 
 public class TicketEditPanelController extends GridPane implements PropertyChangeListener {
 	@FXML
-	private TextField TxFieldTicketNr;
+	private TextField txFieldTicketNr;
 	@FXML
-	private TextField TxFieldTitle;
+	private TextField txFieldTitle;
 	@FXML
-	private ComboBox<TicketStatusEnum> CmbFieldStatus;
+	private ComboBox<TicketStatusEnum> cmbFieldStatus;
 	@FXML
-	private TextArea TxAreaDescription;
+	private ComboBox<TicketTypeEnum> cmbType;
 	@FXML
-	private TextField TxFieldCompName;
+	private ComboBox<String> cmbCompany;
 	@FXML
-	private TextField TxFieldContPersName;
+	private ComboBox<String> cmbContactPerson;
 	@FXML
-	private TextField TxFieldCreDate;
+	private TextArea txAreaDescription;
+	@FXML
+	private DatePicker dpDateCreate;
 	@FXML
 	private Button btnSave;
 	@FXML
@@ -43,6 +50,8 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	private ListView<String> lstReactions;
 	@FXML
 	private Button btnAddReaction;
+	@FXML 
+	private Button btnCreateTicket;
 	@FXML
 	private TextArea txtReactionText;
 
@@ -63,7 +72,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	}
 
 	private void saveTicketDetails(ActionEvent actionEvent) {
-		this.dc.updateTicket(CmbFieldStatus.getSelectionModel().getSelectedItem(),TxAreaDescription.getText());
+		this.dc.updateTicket(cmbFieldStatus.getSelectionModel().getSelectedItem(),txAreaDescription.getText());
 	}
 
 	private void cancelTicketDetails(ActionEvent actionEvent) {
@@ -78,26 +87,33 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 
 	private void resetFields() {
 		//ticket info
-		TxFieldTicketNr.setText(ticket.TicketNr().getValue().toString());
-		TxFieldTicketNr.setDisable(true);
-		TxFieldTitle.setText(ticket.Title().getValue());
-		TxFieldTitle.setDisable(true);
-		CmbFieldStatus.setItems(FXCollections.observableArrayList(TicketStatusEnum.values()));
-		CmbFieldStatus.getSelectionModel().select(ticket.getStatus());
-		TxAreaDescription.setText(ticket.getDescription());
-		TxFieldContPersName.setText(String.format("%s %s", ticket.getContactPersonId().getFirstName(),
-				ticket.getContactPersonId().getLastName()));
-		TxFieldContPersName.setDisable(true);
-		TxFieldCompName.setText(ticket.getContactPersonId().getCompany().getCompanyName());
-		TxFieldCompName.setDisable(true);
-		TxFieldCreDate.setText(ticket.getDateCreation().toString());
-		TxFieldCreDate.setDisable(true);
+		btnCreateTicket.setVisible(true);
+		btnSave.setText("Save");
+		txFieldTitle.setText(ticket.Title().getValue());
+		cmbFieldStatus.setItems(FXCollections.observableArrayList(TicketStatusEnum.values()));
+		cmbFieldStatus.getSelectionModel().select(ticket.getStatus());
+		cmbType.setItems(FXCollections.observableArrayList(TicketTypeEnum.values()));
+		cmbType.getSelectionModel().select(ticket.getType());
+		txAreaDescription.setText(ticket.getDescription());
+		cmbCompany.setItems(FXCollections.observableArrayList(dc.getAllCompanyNames()));
+		cmbCompany.getSelectionModel().select(ticket.getContactPerson().getCompany().getCompanyName());
+		cmbCompany.setDisable(true);
+		cmbContactPerson.setItems(FXCollections.observableArrayList(dc.getContactPersonFromCompanyName(cmbCompany.getSelectionModel().getSelectedItem())));
+		cmbContactPerson.getSelectionModel().select(ticket.getContactPerson().getUser().getUserName());
+		cmbContactPerson.setDisable(true);
+		dpDateCreate.setValue(ticket.getDateCreation());
+		dpDateCreate.setDisable(true);
 		//button acties
 		btnSave.setOnAction(this::saveTicketDetails);
 		btnCancel.setOnAction(this::cancelTicketDetails);
+		btnCreateTicket.setOnAction(this::createTicketStart);
+		lstReactions.setVisible(true);
+		txtReactionText.setVisible(true);
+		
 		//listview reacties
 		//lstReactions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		btnAddReaction.setOnAction(this::addReaction);
+		btnAddReaction.setVisible(true);
 		ObservableList<String> reactions = FXCollections.observableArrayList(ticket.getReactions().stream().map(r->r.getNameUserReaction()).collect(Collectors.toList()));
 		
 		lstReactions.setItems(reactions);
@@ -112,6 +128,33 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		}
 	);
 	}
+	
+	private void createTicketStart(ActionEvent event) {
+		txFieldTitle.clear();
+		txAreaDescription.clear();
+		dpDateCreate.setValue(null);
+		dpDateCreate.setDisable(false);
+		cmbFieldStatus.setDisable(true);
+		cmbFieldStatus.getSelectionModel().select(TicketStatusEnum.Created);
+		cmbCompany.setDisable(false);
+		cmbContactPerson.setDisable(false);
+		cmbType.getSelectionModel().select(null);;
+		//button acties
+		btnSave.setOnAction(this::createTicket);
+		btnCancel.setOnAction(this::cancelTicketDetails);
+		btnSave.setText("Create ticket");
+		btnCreateTicket.setVisible(false);
+		btnAddReaction.setVisible(false);
+		lstReactions.setVisible(false);
+		txtReactionText.setVisible(false);
+	}
+	
+	private void createTicket(ActionEvent event) {
+		dc.createTicket(dpDateCreate.getValue(),txFieldTitle.getText(),txAreaDescription.getText(),cmbType.getSelectionModel().selectedItemProperty().getValue(),
+				cmbContactPerson.getSelectionModel().selectedItemProperty().getValue());
+		
+	}
+	
 	//veranderen door een knop methode
 	@FXML
 	private void addReaction(ActionEvent event) {

@@ -2,7 +2,7 @@ package domain;
 
 public enum TicketTypeEnum {
 	
-            ProductionStopped1,
+            ProductionStopped,
             ProductionWillStop, 
             NoImpact
 }
