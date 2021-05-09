@@ -11,6 +11,7 @@ import domain.ContactPerson;
 import domain.Controller;
 import domain.DomainController;
 import domain.Employee;
+import domain.IEmployee;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +26,7 @@ import javafx.scene.layout.BorderPane;
 public class EmployeePanelController extends BorderPane {
 
 	@FXML
-    private TableView<Employee> tvEmployees;
+    private TableView<IEmployee> tvEmployees;
 
 	@FXML
     private TableColumn<Employee, Number> idCol;

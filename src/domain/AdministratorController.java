@@ -124,9 +124,9 @@ public class AdministratorController extends Controller {
 	}
 	
 
-	public ObservableList<Employee> getAllEmployees() {
+	public ObservableList<IEmployee> getAllEmployees() {
 		ObservableList<Employee> li = dm.getAllEmployees();
-		return li;
+		return (ObservableList<IEmployee>) (Object) li;
 	}
 
 	public IEmployee getAdministratorByUsername(String username) {
@@ -156,8 +156,8 @@ public class AdministratorController extends Controller {
 		
 	}
 
-	public ObservableList<Employee> getEmployeesByName(String name) {
+	public ObservableList<IEmployee> getEmployeesByName(String name) {
 		ObservableList<Employee> li = dm.getEmployeesByName(name);
-		return li;
+		return (ObservableList<IEmployee>) (Object) li;
 	}
 }
