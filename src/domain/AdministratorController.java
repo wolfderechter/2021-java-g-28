@@ -46,10 +46,11 @@ public class AdministratorController extends Controller {
 		
 	}
 	
-	public void updateContactPerson(String firstName, String lastName) {
+	public void updateContactPerson(String firstName, String lastName, String email) {
 		
 		contactPerson.setFirstName(firstName);
 		contactPerson.setLastName(lastName);
+		contactPerson.setEmail(email);
 
 		GenericDaoJpa.startTransaction();
 		contactPersonRepo.update(contactPerson);
@@ -156,5 +157,10 @@ public class AdministratorController extends Controller {
 		employeeRepo.update(employee);
 		GenericDaoJpa.commitTransaction();
 		
+	}
+
+	public ObservableList<Employee> getEmployeesByName(String name) {
+		ObservableList<Employee> li = dm.getEmployeesByName(name);
+		return li;
 	}
 }

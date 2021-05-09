@@ -47,6 +47,7 @@ public class Company implements ICompany {
 	@OneToMany(mappedBy ="Company", cascade = CascadeType.PERSIST)
     private List<ContactPerson> contactPersons;
     
+    public Boolean status;
     
     public Company() {
     	
@@ -119,6 +120,15 @@ public class Company implements ICompany {
 	public void setContracts(List<Contract> contracts) {
 		contracts = contracts;
 	}
+	
+	public boolean getStatus() {
+		return this.status;
+	}
+	
+	public void setStatus(Boolean role) {
+		this.status = status;
+	}
+	
     
     
 }

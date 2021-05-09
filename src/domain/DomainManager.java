@@ -3,6 +3,7 @@ package domain;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -159,4 +160,13 @@ public class DomainManager {
     	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username) && e.getRole().equals(role.toUpperCase())).findFirst().get();
 
     }
+
+	public ObservableList<Employee> getEmployeesByName(String name) {
+		if(employeeList == null) {
+	    	employeeList = FXCollections.observableArrayList(employeeRepo.getAll());
+		}
+    	return employeeList.stream()
+    			.filter(e -> e.getFirstName().toLowerCase().contains(name.toLowerCase()) || e.getLastName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+	}
 }

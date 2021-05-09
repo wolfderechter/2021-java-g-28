@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,6 +50,9 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	    private Button btnSave;
 	    
 	    @FXML
+	    private Button btnCancel;
+	    
+	    @FXML
 	    private ListView<String> lstNamen;
 
 	    @FXML
@@ -62,6 +66,13 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	 
 	    @FXML
 	    private TableColumn<Contract, ContractEnumStatus> statusCol;
+	    
+	    @FXML
+	    private TextField TxFieldUsername;
+
+	    @FXML
+	    private CheckBox checkBoxStatus;
+
     
     private ICompany company;
     
@@ -87,7 +98,7 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
     }
     
     private void saveContactPerson(ActionEvent actionEvent) {
-    	this.dc.updateContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText());
+    	this.dc.updateContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText(), TxFieldEMail.getText());
     }
     
 
@@ -99,7 +110,7 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	}
 	
 	
-	public void cancelDetails(PropertyChangeEvent evt) {
+	public void cancelDetails(ActionEvent actionEvent) {
 		fields();
 	}
 	
@@ -120,6 +131,7 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 				int index = lstNamen.getSelectionModel().getSelectedIndex();
 				TxFieldFirstName.setText(company.getContactPersons().get(index).getFirstName());
 				TxFieldLastName.setText(company.getContactPersons().get(index).getLastName());
+				TxFieldEMail.setText(company.getContactPersons().get(index).getEmail());
 				dc.setContactPerson(index);
 				}
 			}
@@ -130,6 +142,9 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
 		tvContracts.setItems(FXCollections.observableArrayList(this.company.getContracts()));
 		
+		TxFieldUsername.setText(company.getCompanyName());
+		checkBoxStatus.setSelected(company.getStatus());
+		btnCancel.setOnAction(this::cancelDetails);
 			
 			//TxFieldFirstName.setText(company.getContactPersons().getFirstName());
 			}
