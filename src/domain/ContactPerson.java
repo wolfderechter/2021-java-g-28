@@ -93,6 +93,7 @@ public class ContactPerson {
 	public User getUser() {
 		return user;
 	}
+	
 
 	public void setUser(User user) {
 		this.user = user;
@@ -103,7 +104,7 @@ public class ContactPerson {
 		return firstName.getValue();
 	}
 
-	private void setFirstName(String firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = new SimpleStringProperty(firstName);
 	}
 
@@ -112,7 +113,7 @@ public class ContactPerson {
 		return lastName.getValue();
 	}
 
-	private void setLastName(String lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = new SimpleStringProperty(lastName);;
 	}
 	

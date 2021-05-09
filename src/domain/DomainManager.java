@@ -24,6 +24,7 @@ public class DomainManager {
 	private GenericDao<Contract> contractRepo;
 	private GenericDao<ContractType> contractTypeRepo;
 	private GenericDao<Employee> employeeRepo;
+	private GenericDao<Company> companyRepo;
 	
 
 	//observable list?
@@ -31,7 +32,7 @@ public class DomainManager {
 	private List<ContactPerson> contactPersonList;
 	private List<ContractType> contractTypeList;
 	private ObservableList<Employee> employeeList;
-	
+	private ObservableList<Company> companyList;
 	private List<Faq> faqList;
 	private List<Contract> contractList;
 	
@@ -47,7 +48,7 @@ public class DomainManager {
     	setFaqRepo(new GenericDaoJpa<>(Faq.class));
     	setContractRepo(new GenericDaoJpa<>(Contract.class));
     	setContractTypeRep(new GenericDaoJpa<>(ContractType.class));
-    	    	
+    	setCompanyRepo(new GenericDaoJpa<>(Company.class));
     	openPersistentie();
 	}
 
@@ -79,6 +80,10 @@ public class DomainManager {
 	
 	private void setContractRepo(GenericDao<Contract> contractRepo) {
 		this.contractRepo = contractRepo;
+	}
+	
+	private void setCompanyRepo(GenericDao<Company> companyRepo) {
+		this.companyRepo = companyRepo;
 	}
 
 	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
@@ -113,6 +118,13 @@ public class DomainManager {
         return ticketList;
     }
     
+    public ObservableList<Company> getAllCompanies() {
+    	if(companyList == null) {
+    		companyList = FXCollections.observableArrayList(companyRepo.getAll());
+    	}
+    	return companyList;
+    }
+    
     public List<Faq> getAllFaqs() {
     	if(faqList == null) {
     		faqList = faqRepo.getAll();
@@ -120,12 +132,12 @@ public class DomainManager {
     	return faqList;
     }
     
-    public List<Contract> getAllContracts() {
-    	if (contractRepo == null) {
-    		contractList = contractRepo.getAll();
-    	}
-    	return contractList;
-    }
+//    public List<Contract> getAllContracts() {
+//    	if (contractRepo == null) {
+//    		contractList = contractRepo.getAll();
+//    	}
+//    	return contractList;
+//    }
    
     
     public ObservableList<Employee> getAllEmployees() {

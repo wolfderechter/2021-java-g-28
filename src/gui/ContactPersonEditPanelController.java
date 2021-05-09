@@ -1,64 +1,74 @@
 package gui;
 
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
+import domain.AdministratorController;
 import domain.Company;
 import domain.ContactPerson;
 import domain.Contract;
+import domain.ContractEnumStatus;
 import domain.DomainController;
+import domain.ICompany;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
-public class ContactPersonEditPanelController extends GridPane implements PropertyChangeListener{
-    @FXML
-    private TextField TxFieldName;
+public class ContactPersonEditPanelController extends VBox implements PropertyChangeListener{
+	  @FXML
+	    private TextField TxFieldCustomerNr;
 
-    @FXML
-    private TextField TxFieldStreet;
+	    @FXML
+	    private TextField TxFieldFirstName;
 
-    @FXML
-    private TextField TxFieldTelephone;
+	    @FXML
+	    private TextField TxFieldLastName;
 
-    @FXML
-    private TextField TxFieldCustomerNr;
+	    @FXML
+	    private TextField TxFieldEMail;
 
-    @FXML
-    private TextField TxField;
+	    @FXML
+	    private TextField TxFieldName;
+
+	    @FXML
+	    private TextField TxFieldAddress;
+	    
+	    @FXML
+	    private Button btnSave;
+	    
+	    @FXML
+	    private ListView<String> lstNamen;
+
+	    @FXML
+	    private TableView<Contract> tvContracts;
+
+	    @FXML
+	    private TableColumn<Contract, Number> nrCol;
+
+	    @FXML
+	    private TableColumn<Contract, String> nameCol;
+	 
+	    @FXML
+	    private TableColumn<Contract, ContractEnumStatus> statusCol;
     
-    @FXML
-    private TableColumn<ContactPerson, Number> nrCol;
-
-//    @FXML
-//    private TableColumn<?, ?> typeCol;
-//
-//    @FXML
-//    private TableColumn<?, ?> statusCol;
-//
-//    @FXML
-//    private TableColumn<?, ?> startdateCol;
-//
-//    @FXML
-//    private TableColumn<?, ?> enddateCol;
-
-    @FXML
-    private TextField TxFieldUsername;
-
-    @FXML
-    private TableView<Contract> tvContracts;
-
+    private ICompany company;
     
-    private ContactPerson contactPerson;
-    
-    private DomainController dc;
+    private AdministratorController dc;
 	
-    public ContactPersonEditPanelController(DomainController dc) {
-    	this.dc = dc;
+    public ContactPersonEditPanelController(AdministratorController dc2) {
+    	this.dc = dc2;
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactPersonEditPanel.fxml"));
         loader.setController(this);
        loader.setRoot(this);
@@ -67,27 +77,61 @@ public class ContactPersonEditPanelController extends GridPane implements Proper
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        //nrCol.setCellValueFactory(cellData -> cellData.getValue().getCompany().getContracts());
-		//tvContracts.setItems(dc.getAllContracts());
-     
+       
         fields();
     }
+    
+    private void saveCompany(ActionEvent actionEvent) {
+    	this.dc.updateCompany(TxFieldName.getText(), TxFieldAddress.getText());
+    	
+    }
+    
+    private void saveContactPerson(ActionEvent actionEvent) {
+    	this.dc.updateContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText());
+    }
+    
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 
-		this.contactPerson = (ContactPerson) evt.getNewValue();
+		this.company = (ICompany) evt.getNewValue();
+		fields();
+	}
+	
+	
+	public void cancelDetails(PropertyChangeEvent evt) {
 		fields();
 	}
 	
 	private void fields() {
-		if(contactPerson != null) {
-			TxFieldStreet.setText(contactPerson.getCompany().getCompanyAdress());
-			TxFieldName.setText(contactPerson.getCompany().getCompanyName());
-			TxFieldCustomerNr.setText("" + contactPerson.getId());
+		
+		if(company != null) {
+			TxFieldCustomerNr.setText(company.CompanyNr().getValue().toString());
 			TxFieldCustomerNr.setDisable(true);
-			TxFieldUsername.setText(contactPerson.getUser().getUserName());
+			TxFieldName.setText(company.getCompanyName());
+			TxFieldAddress.setText(company.getCompanyAdress());
+			btnSave.setOnAction(this::saveCompany);
+			ObservableList<String> namen = company.getContactPersons().stream().map(c->c.getFirstName() + c.getLastName()).collect(Collectors.toCollection(FXCollections::observableArrayList));
+			lstNamen.setItems(namen);
+			lstNamen.getSelectionModel().selectedItemProperty()
+			.addListener((observableValue, previousContactPerson, selectedContactPerson) -> 
+			{
+			if (selectedContactPerson!= null) {
+				int index = lstNamen.getSelectionModel().getSelectedIndex();
+				TxFieldFirstName.setText(company.getContactPersons().get(index).getFirstName());
+				TxFieldLastName.setText(company.getContactPersons().get(index).getLastName());
+				dc.setContactPerson(index);
+				}
+			}
+		);	
+		btnSave.setOnAction(this::saveContactPerson);
+		nrCol.setCellValueFactory(cellData -> cellData.getValue().ContractNr());
+		nameCol.setCellValueFactory(cellData -> cellData.getValue().getContractType().Name());
+		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
+		tvContracts.setItems(FXCollections.observableArrayList(this.company.getContracts()));
+		
 			
+			//TxFieldFirstName.setText(company.getContactPersons().getFirstName());
 			}
 	
 		

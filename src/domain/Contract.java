@@ -30,27 +30,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "Contract")
-@Table(name = "Contracts")
+@Table(name = "Contract")
 @Access(AccessType.FIELD)
 public class Contract {
 	
 	@Transient
 	public IntegerProperty contractNr;
-
-    public Date EndDate;
-    public Date StartDate;
-    public ContractEnumStatus Status;
+	@Transient
+	public ObjectProperty<ContractEnumStatus> status;
+	
+    public Date endDate;
+    public Date startDate;
+    
     @ManyToOne()
     @JoinColumn(name="TypeName")
-    public ContractType Type;
+    public ContractType type;
     @ManyToOne()
     @JoinColumn(name="CompanyNr")
-    public Company Company;
-    @Id
-    @Access(AccessType.PROPERTY)
-    public int getContractNr() {
-		return contractNr.intValue();
-	}
+    public Company company;
+    
+    
     public Contract() {
     	
     }
@@ -59,9 +58,32 @@ public class Contract {
     	return contractNr;
     }
     
+    public ObjectProperty<ContractEnumStatus> Status() {
+    	return status;
+    }
+    
+    @Access(AccessType.PROPERTY)
+    public ContractEnumStatus getStatus() {
+    	return status.getValue();
+    }
+    
+    public void setStatus(ContractEnumStatus status) {
+    	this.status = new SimpleObjectProperty<ContractEnumStatus>(status);
+    }
+
+    
+    @Id
+    @Access(AccessType.PROPERTY)
+    public int getContractNr() {
+		return contractNr.intValue();
+	}
 
 	public void setContractNr(int contractNr) {
 		this.contractNr = new SimpleIntegerProperty(contractNr);
+	}
+	
+	public ContractType getContractType() {
+		return type;
 	}
     
     

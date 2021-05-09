@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import gui.ContactPersonPanelController;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -25,11 +28,11 @@ import javafx.beans.property.StringProperty;
 @Table(name = "Companies")
 
 @Access(AccessType.FIELD)
-public class Company {
+public class Company implements ICompany {
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int CompanyNr;
+	private IntegerProperty companyNr;
    // private StringProperty companyAdress;
 	@Transient
 	private StringProperty companyAdress;
@@ -38,15 +41,19 @@ public class Company {
     private Date CustomerInitDate;
     
     @OneToMany(mappedBy ="Company")
-    public List<Contract> Contracts;
+    public List<Contract> contracts;
     
    
-	@OneToMany(mappedBy ="Company")
-    private List<ContactPerson> ContactPersons;
+	@OneToMany(mappedBy ="Company", cascade = CascadeType.PERSIST)
+    private List<ContactPerson> contactPersons;
     
     
     public Company() {
     	
+    }
+    
+    public IntegerProperty CompanyNr() {
+    	return companyNr;
     }
     
     public StringProperty CompanyName() {
@@ -58,8 +65,18 @@ public class Company {
     }
     
     
-    
+    @Override
+	@Id
     @Access(AccessType.PROPERTY)
+	public int getCompanyNr() {
+		return companyNr.intValue();
+	}
+	public void setCompanyNr(int companyNr) {
+		this.companyNr = new SimpleIntegerProperty(companyNr);
+	}
+	
+    @Override
+	@Access(AccessType.PROPERTY)
     public String getCompanyName() {
     	return companyName.getValue();
     }
@@ -67,13 +84,8 @@ public class Company {
     public void setCompanyName(String companyName) {
     	this.companyName = new SimpleStringProperty(companyName);
     }
-    
-	public int getCompanyNr() {
-		return CompanyNr;
-	}
-	public void setCompanyNr(int companyNr) {
-		CompanyNr = companyNr;
-	}
+      
+	@Override
 	@Access(AccessType.PROPERTY)
 	public String getCompanyAdress() {
 		return companyAdress.getValue();
@@ -82,31 +94,30 @@ public class Company {
 	public void setCompanyAdress(String companyAdress) {
 		this.companyAdress = new SimpleStringProperty(companyAdress);
 	}
-//	public String getCompanyName() {
-//		return CompanyName;
-//	}
-//	public void setCompanyName(String companyName) {
-//		CompanyName = companyName;
-//	}
+
+	@Override
 	public Date getCustomerInitDate() {
 		return CustomerInitDate;
 	}
 	public void setCustomerInitDate(Date customerInitDate) {
 		CustomerInitDate = customerInitDate;
 	}
+	
+	@Override
 	public List<ContactPerson> getContactPersons() {
-		return ContactPersons;
+		return contactPersons;
 	}
 	public void setContactPersons(List<ContactPerson> contactPersons) {
-		ContactPersons = contactPersons;
+		contactPersons = contactPersons;
 	}
 	
-	 public List<Contract> getContracts() {
-		return Contracts;
+	 @Override
+	public List<Contract> getContracts() {
+		return contracts;
 	}
 
 	public void setContracts(List<Contract> contracts) {
-		Contracts = contracts;
+		contracts = contracts;
 	}
     
     
