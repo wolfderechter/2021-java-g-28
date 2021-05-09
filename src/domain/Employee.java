@@ -23,26 +23,19 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-@Entity
-@Table(name = "Employees")
-@NamedQueries({
-	//@NamedQuery(name = "Employee.getEmployeeByUsername" , query = "SELECT s FROM Employee s WHERE s.user.userName = :username")
-})
-@Access(AccessType.FIELD)
+
 public abstract class Employee extends Account {
 
 	private IntegerProperty id;
-	@Transient
+
 	private StringProperty adress;
-	@Transient
+
 	private ObjectProperty<Date> dateInService;
-	@Transient
+
 	private StringProperty firstName;
-	@Transient
+
 	private StringProperty lastName;
-	@ManyToOne
-	@JoinColumn(name = "UserId")
-	private User user;
+
 	
 	public Employee() {
 		
@@ -51,8 +44,7 @@ public abstract class Employee extends Account {
 	public IntegerProperty Id() {
 		return id;
 	}
-	@Id
-	@Access(AccessType.PROPERTY)
+
 	public int getId() {
 		return id.intValue();
 	}

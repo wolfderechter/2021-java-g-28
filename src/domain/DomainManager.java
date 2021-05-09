@@ -151,7 +151,8 @@ public class DomainManager {
         	//employeeList = supportmanagerRepo.getAll();
         	//List<SupportManager> lis= supportmanagerRepo.getAll();
         	//employeeList.addAll(supportmanagerRepo.getAll());
-        	employeeList.addAll(adminsitratorRepo.getAll());
+        	List<Administrator> l = adminsitratorRepo.getAll();
+        	employeeList.addAll(l);
         	employeeList.addAll(technicianRepo.getAll());
         }
         return employeeList;
