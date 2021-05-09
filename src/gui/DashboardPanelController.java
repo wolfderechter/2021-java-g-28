@@ -3,9 +3,9 @@ package gui;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
-import domain.Account;
 import domain.Controller;
 import domain.DomainController;
+import domain.IEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -33,7 +33,7 @@ public class DashboardPanelController extends GridPane {
 
 	private Controller dc;
 
-	public DashboardPanelController(Account signedInAccount, Controller controller) {
+	public DashboardPanelController(IEmployee signedInAccount, Controller controller) {
 
 		this.dc = controller;
 

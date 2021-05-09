@@ -3,8 +3,9 @@ package gui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
-import domain.Account;
 import domain.AdministratorController;
 import domain.ContactPerson;
 import domain.Controller;
@@ -19,7 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class EmployeePanelController extends BorderPane implements PropertyChangeListener{
+public class EmployeePanelController extends BorderPane {
 
 	@FXML
     private TableView<Employee> tvEmployees;
@@ -29,13 +30,22 @@ public class EmployeePanelController extends BorderPane implements PropertyChang
 
     @FXML
     private TableColumn<Employee, String> firstNameCol;
-
+    
+    @FXML
+    private TableColumn<Employee, String> userNameCol;
+    
     @FXML
     private TableColumn<Employee, String> lastNameCol;
-
+    
+    @FXML
+    private TableColumn<Employee, String> roleCol;
+    
     @FXML
     private TableColumn<Employee, String> adressCol;
-
+    
+    @FXML
+    private TableColumn<Employee, LocalDate> dateInServiceCol;
+    
 	@FXML
 	private Label lblUsername;
 	
@@ -56,27 +66,28 @@ public class EmployeePanelController extends BorderPane implements PropertyChang
         idCol.setCellValueFactory(cellData -> cellData.getValue().Id());
         firstNameCol.setCellValueFactory(cellData -> cellData.getValue().FirstName());
         lastNameCol.setCellValueFactory(cellData -> cellData.getValue().LastName());
-        
+        roleCol.setCellValueFactory(cellData -> cellData.getValue().Role());
+        userNameCol.setCellValueFactory(cellData -> cellData.getValue().getUser().UserName());
+        dateInServiceCol.setCellValueFactory(cellData -> cellData.getValue().DateInService());
+
         tvEmployees.setItems(dc.getAllEmployees());
+
         //Editpanel aanmaken + opvullen met eerste Employee
-        //EmployeeEditPanelController eepc = new EmployeeEditPanelController(dc);
-        //setRight(eepc);
+        EmployeeEditPanelController eepc = new EmployeeEditPanelController(dc);
+        setRight(eepc);
         tvEmployees.getSelectionModel().selectedItemProperty()
         .addListener((observableValue, previousEmployee, selectedEmployee) -> 
         {
 			if (selectedEmployee != null) {
-				int index = tvEmployees.getSelectionModel().getSelectedIndex();
-				dc.setEmployee(selectedEmployee);
+				dc.setEmployee(selectedEmployee.getId());
+		        dc.addEmployeeListener(eepc);
+
 				}
 			}
 		);
 	
 	}
 
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub	
-	}
 	
 	
 }

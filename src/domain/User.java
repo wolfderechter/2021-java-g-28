@@ -24,9 +24,27 @@ public class User {
 	@Transient
 	private StringProperty userName;
 	
+	private String email;
+	
+	private String phoneNumber;
 	public User() {
 		
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setPhoneNumber(String phonenumber) {
+		this.phoneNumber = phonenumber;
+	}
+	
 	
 	public StringProperty UserName() {
 		return userName;
@@ -40,4 +58,6 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = new SimpleStringProperty(userName);
 	}
+
+
 }

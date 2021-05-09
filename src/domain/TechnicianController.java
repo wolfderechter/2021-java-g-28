@@ -99,8 +99,8 @@ public class TechnicianController extends Controller {
 		this.selectedFilterTypes.removeAll(removed);
 	}
 	
-	public Technician getTechnicianByUsername(String username) {
-		return (Technician) dm.getAccountByUsername(username, "Technician");
+	public IEmployee getTechnicianByUsername(String username) {
+		return dm.getEmployeeByUsername(username, "TE");
 	}
 	
 	

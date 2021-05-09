@@ -23,17 +23,14 @@ public class DomainManager {
 	private GenericDao<Faq> faqRepo;
 	private GenericDao<Contract> contractRepo;
 	private GenericDao<ContractType> contractTypeRepo;
-	//private GenericDao<Employee> employeeRepo;
+	private GenericDao<Employee> employeeRepo;
 	
-	private GenericDao<Technician> technicianRepo;
-	private GenericDao<Administrator> adminsitratorRepo;
-	private GenericDao<SupportManager> supportmanagerRepo;
-	
+
 	//observable list?
 	private ObservableList<Ticket> ticketList;
 	private List<ContactPerson> contactPersonList;
 	private List<ContractType> contractTypeList;
-	private List<Employee> employeeList;
+	private ObservableList<Employee> employeeList;
 	
 	private List<Faq> faqList;
 	private List<Contract> contractList;
@@ -45,17 +42,12 @@ public class DomainManager {
 
     public DomainManager() {
     	setTicketRepo(new GenericDaoJpa<>(Ticket.class));
-    	//setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
+    	setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
     	setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
     	setFaqRepo(new GenericDaoJpa<>(Faq.class));
     	setContractRepo(new GenericDaoJpa<>(Contract.class));
     	setContractTypeRep(new GenericDaoJpa<>(ContractType.class));
-    	
-    	//account repo's
-    	setTechnicianRepo(new GenericDaoJpa<>(Technician.class));
-    	setAdministratorRepo(new GenericDaoJpa<>(Administrator.class));
-    	setSupportManagerRepo(new GenericDaoJpa<>(SupportManager.class));
-    	
+    	    	
     	openPersistentie();
 	}
 
@@ -89,21 +81,11 @@ public class DomainManager {
 		this.contractRepo = contractRepo;
 	}
 
-//	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
-//		this.employeeRepo = employeeRepo;		
-//	}
-	
-	private void setTechnicianRepo(GenericDao<Technician> technicianRepo) {
-		this.technicianRepo = technicianRepo;
+	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
+		this.employeeRepo = employeeRepo;		
 	}
 	
-	private void setAdministratorRepo(GenericDao<Administrator> adminRepo) {
-		this.adminsitratorRepo = adminRepo;
-	}
-	
-	private void setSupportManagerRepo(GenericDao<SupportManager> supRepo) {
-		this.supportmanagerRepo = supRepo;
-	}
+
 	//goede methode
 //	public void closePersistentie() {
 //        GenericDaoJpa.closePersistency();
@@ -146,14 +128,9 @@ public class DomainManager {
     }
    
     
-    public List<Employee> getAllEmployees() {
+    public ObservableList<Employee> getAllEmployees() {
         if(employeeList == null) {
-        	//employeeList = supportmanagerRepo.getAll();
-        	//List<SupportManager> lis= supportmanagerRepo.getAll();
-        	//employeeList.addAll(supportmanagerRepo.getAll());
-        	List<Administrator> l = adminsitratorRepo.getAll();
-        	employeeList.addAll(l);
-        	employeeList.addAll(technicianRepo.getAll());
+        	employeeList = FXCollections.observableArrayList(employeeRepo.getAll());
         }
         return employeeList;
     }
@@ -165,14 +142,9 @@ public class DomainManager {
         return cp;
     }
     
-    /**Returns accound by given usernamen and kind of account (sup, admin, tech) using generic methods**/
-    public Account getAccountByUsername(String username, String kind) {
-    	switch (kind.toLowerCase()) {
-		case "technician": return technicianRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
-		case "administrator": return adminsitratorRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
-		case "supportmanager": return supportmanagerRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + kind.toLowerCase());
-		}
+
+    public IEmployee getEmployeeByUsername(String username, String role) {
+    	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username) && e.getRole().equals(role.toUpperCase())).findFirst().get();
+
     }
 }

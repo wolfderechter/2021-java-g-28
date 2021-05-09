@@ -31,7 +31,7 @@ import javafx.beans.property.StringProperty;
 
 })
 @Access(AccessType.FIELD)
-public class ContactPerson extends Account {
+public class ContactPerson {
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)

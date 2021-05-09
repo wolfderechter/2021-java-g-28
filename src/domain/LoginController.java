@@ -36,24 +36,24 @@ public class LoginController {
 	}
 	
 	/**Returns signed in account**/
-	public Account getSignedInUser(String role, String username) {
+	public IEmployee getSignedInUser(String role, String username) {
 		if(role.equals("administrator")) {
 			AdministratorController ac = new AdministratorController();
-			Administrator cp = ac.getAdministratorByUsername(username);
+			IEmployee cp = ac.getAdministratorByUsername(username);
 			ac.close();
 			return cp;
 		} 
 		
 		if(role.equals("supportmanager")) {
 			SupportManagerController spc = new SupportManagerController();
-			SupportManager sm = spc.getSupportManagerByUsername(username);
+			IEmployee sm = spc.getSupportManagerByUsername(username);
 			spc.close();
 			return sm;
 		}
 		
 		if(role.equals("technician")) {
 			TechnicianController tc = new TechnicianController();
-			Technician tn = tc.getTechnicianByUsername(username);
+			IEmployee tn = tc.getTechnicianByUsername(username);
 			tc.close();
 			return tn;
 		}
