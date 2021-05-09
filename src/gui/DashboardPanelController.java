@@ -47,6 +47,12 @@ public class DashboardPanelController extends GridPane {
 			throw new RuntimeException(ex);
 		}
 		// displayTickets(null);
+		
+		if(dc.getEmployee().getRole().equals("SM")){
+			btnEmployee.setDisable(true);
+			btnCustomer.setDisable(true);
+		}
+		
 		lblUsername.setText(dc.getEmployee().getUser().getUserName());
 		btnCustomer.setOnAction(this::displayCustomers);
 		btnTickets.setOnAction(this::displayTickets);

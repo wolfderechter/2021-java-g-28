@@ -39,7 +39,7 @@ public class LoginController {
 	public IEmployee getSignedInUser(String role, String username) {
 		DomainManager d = new DomainManager();
 		IEmployee e = d.getEmployeeByUsername(username);
-		d.closePersistentie();
+		//d.closePersistentie();
 		return e;
 	}
 	
