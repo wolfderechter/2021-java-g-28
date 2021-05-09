@@ -5,6 +5,7 @@ import domain.Controller;
 import domain.Employee;
 import domain.IEmployee;
 import domain.SupportManagerController;
+
 import domain.TechnicianController;
 import gui.AccountPanelController;
 import gui.DashboardPanelController;
@@ -17,27 +18,31 @@ public class StartUp extends Application {
 	@Override
 	public void start(Stage stage) {
 		// TESTING PURPOSE
-		boolean runWithLogin = false;
+		boolean runWithLogin = true;
 
 		Parent root;
 
-//		Controller dc = new AdministratorController();
-//		IEmployee g = new Employee();
-//		
 //		Controller dc = new TechnicianController();
 //		IEmployee g = new Employee();
+
+
 		
-		Controller dc = new AdministratorController();
 		IEmployee d = new Employee();
+		Controller dc = new AdministratorController(d);
 		
 //		Controller dc = new SupportManagerController();
 //		IEmployee f = new Employee();
 
+//		Controller dc = new AdministratorController();
+//		IEmployee d = new Employee();
+		root = new AccountPanelController();
+
 		
 		if (runWithLogin) {
-			root = new AccountPanelController();
+			
 		} else {
-			root = new DashboardPanelController(d,dc);
+
+			root = new DashboardPanelController(dc);
 		}
 		
 		Scene scene = new Scene(root);
@@ -46,9 +51,7 @@ public class StartUp extends Application {
 
 		stage.setTitle("Actemium | Sign In");
 
-		stage.setMaximized(true);
-
-		stage.setResizable(false);
+		stage.setFullScreen(true);
 
 		stage.show();
 	}

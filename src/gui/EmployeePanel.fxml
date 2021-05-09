@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minWidth="900.0" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TableView fx:id="tvEmployees" prefHeight="360.0" prefWidth="500.0">
+      <TableView fx:id="tvEmployees" minWidth="500.0" prefHeight="500.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="75.0" text="EmployeeId" />
             <TableColumn fx:id="dateInServiceCol" prefWidth="85.60003662109375" text="DateInService" />
@@ -43,7 +43,7 @@
                   <Label text="Filter:" />
                   <ChoiceBox prefWidth="100.0" />
                   <Pane HBox.hgrow="ALWAYS" />
-                  <TextField promptText="Search by name" />
+                  <TextField fx:id="txFieldSearch" promptText="Search by name" />
               </items>
             </ToolBar>
          </children>

@@ -11,19 +11,22 @@ import domain.ContactPerson;
 import domain.Controller;
 import domain.DomainController;
 import domain.Employee;
+import domain.IEmployee;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 public class EmployeePanelController extends BorderPane {
 
 	@FXML
-    private TableView<Employee> tvEmployees;
+    private TableView<IEmployee> tvEmployees;
 
 	@FXML
     private TableColumn<Employee, Number> idCol;
@@ -46,6 +49,10 @@ public class EmployeePanelController extends BorderPane {
     @FXML
     private TableColumn<Employee, LocalDate> dateInServiceCol;
     
+    //nav bar om te zoeken
+    @FXML
+    private TextField txFieldSearch;
+    
 	@FXML
 	private Label lblUsername;
 	
@@ -62,6 +69,11 @@ public class EmployeePanelController extends BorderPane {
             throw new RuntimeException(ex);
         }
       
+        //toevoegen van search
+        txFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+        	tvEmployees.setItems(dc.getEmployeesByName(newValue));
+        });
+        
         //Aanmaak TableView + opvullen met data
         idCol.setCellValueFactory(cellData -> cellData.getValue().Id());
         firstNameCol.setCellValueFactory(cellData -> cellData.getValue().FirstName());

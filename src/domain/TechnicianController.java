@@ -2,17 +2,12 @@ package domain;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import org.mockito.internal.stubbing.answers.Returns;
-
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import repository.GenericDao;
 import repository.GenericDaoJpa;
 
 public class TechnicianController extends Controller {
@@ -21,48 +16,50 @@ public class TechnicianController extends Controller {
 	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
 	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
 	private PropertyChangeSupport ticketSubject;
-	private GenericDao<Ticket> ticketRepo;
+	
 	private DomainManager dm = new DomainManager();
-
-	public TechnicianController() {
+	private IEmployee employee;
+	
+	public TechnicianController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
-		setTicketRepo(new GenericDaoJpa<>(Ticket.class));
+		this.employee = emp;
 	}
-
-	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
-		this.ticketRepo = ticketRepo;
+	
+	@Override
+	public IEmployee getEmployee() {
+		return this.employee;
 	}
 
 	public void close() {
 		GenericDaoJpa.closePersistency();
 	}
 
+	@Override
 	// bij het zetten van de ticket wordt de ticket in de editticketpanel geset
 	public void setTicket(int ticketNr) {
 		Ticket ticket = dm.getAllTickets().stream().filter(t->t.getTicketNr() == ticketNr).findFirst().orElse(null);
 		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
 		this.ticket = ticket;
-		
 	}
 
+	@Override
 	public void updateTicket(TicketStatusEnum status,String descrip) {
 		//changes in de edit panel toepassen
 		ticket.setStatus(status);
 		ticket.setDescription(descrip);
 		//ticket changen in de panel
-		GenericDaoJpa.startTransaction();
-		ticketRepo.update(ticket);
-        GenericDaoJpa.commitTransaction();
+		
 	}
 
 	public void addReaction(String text) {
 		// nog te vervangen met ingelogde usernaam
 		ticket.addReaction(text, false, "Nathan Supp Test");
-		GenericDaoJpa.startTransaction();
-		ticketRepo.update(ticket);
-		GenericDaoJpa.commitTransaction();
+		dm.updateTicket(ticket);
+		
+		
 	}
 
+	@Override
 	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd
 	// worden
 	public void addTicketListener(PropertyChangeListener pcl) {
@@ -73,6 +70,7 @@ public class TechnicianController extends Controller {
 		ticketSubject.removePropertyChangeListener(pcl);
 	}
 	
+	@Override
 	// nodig voor lijst van tickets voor tableview van ticketPanel
 	public ObservableList<ITicket> getFilteredTickets() {
 		ObservableList<Ticket> li = dm.getAllTickets();
@@ -81,27 +79,42 @@ public class TechnicianController extends Controller {
 				.collect(Collectors.toCollection(FXCollections::observableArrayList));
 		return (ObservableList<ITicket>) (Object) li;
 	}
+	
+	@Override
 	//deze methode gaat de lijst filteren die in table van tickets wordt gestoken
 	public void addStatusFilterOnTickets(List<? extends TicketStatusEnum> added) {
 		this.selectedFilterStatusen.addAll(added);
 		
 	}
 
+	@Override
 	public void removeStatusFilterOnTickets(List<? extends TicketStatusEnum> removed) {
 		this.selectedFilterStatusen.removeAll(removed);
 	}
 
+	@Override
 	public void addTypeFilterOnTickets(List<? extends TicketTypeEnum> added) {
 		this.selectedFilterTypes.addAll(added);
 	}
 	
+	@Override
 	public void removeTypeFilterOnTickets(List<? extends TicketTypeEnum> removed) {
 		this.selectedFilterTypes.removeAll(removed);
 	}
 	
-	public IEmployee getTechnicianByUsername(String username) {
-		return dm.getEmployeeByUsername(username, "TE");
+	@Override
+	public List<String> getAllCompanyNames() {
+		List<String> li = dm.getAllCompanies().stream().map(Company::getCompanyName).collect(Collectors.toList());
+		return li;
 	}
+
+	@Override
+	public List<String> getContactPersonFromCompanyName(String companyName) {
+		List<ContactPerson> li = dm.getAllCompanies().stream().filter(c->c.getCompanyName() == companyName).map(c->c.getContactPersons()).findFirst().orElse(null);
+		List<String> liString = li.stream().map(c->c.getUser().getUserName()).collect(Collectors.toList());
+		return liString;
+	}
+	
 	
 	
 

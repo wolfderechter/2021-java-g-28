@@ -27,14 +27,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
 @Entity
 @Table(name = "Employees")
 @Access(AccessType.FIELD)
 public class Employee implements IEmployee {
-
 	@Transient
 	private IntegerProperty id;
-	@Transient
+
 	private StringProperty adress;
 	
 	private ObjectProperty<LocalDate> dateInService;
@@ -45,6 +45,7 @@ public class Employee implements IEmployee {
 	@ManyToOne
 	@JoinColumn(name = "UserId")
 	private User user;
+
 	
 	public Employee() {
 		
@@ -75,6 +76,7 @@ public class Employee implements IEmployee {
 	public IntegerProperty Id() {
 		return id;
 	}
+
 	@Override
 	@Id
 	@Access(AccessType.PROPERTY)

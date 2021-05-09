@@ -59,4 +59,10 @@ public interface IEmployee {
 
 	Boolean getStatus();
 
+	void setPhoneNumber(String phonenumber);
+
+	void setEmail(String email);
+
+	void setUsername(String username);
+
 }

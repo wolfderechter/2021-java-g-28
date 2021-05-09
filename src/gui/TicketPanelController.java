@@ -2,7 +2,9 @@ package gui;
 
 import java.io.IOException;
 import domain.Controller;
+import domain.IEmployee;
 import domain.ITicket;
+import domain.SupportManagerController;
 import domain.TechnicianController;
 import domain.TicketStatusEnum;
 import domain.TicketTypeEnum;
@@ -10,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -32,10 +35,19 @@ public class TicketPanelController extends BorderPane {
 	@FXML
 	private ListView<TicketTypeEnum> lstTypes;
 
-	private TechnicianController dc;
+	private Controller dc;
 
 	public TicketPanelController(Controller dc2) {
-		this.dc = (TechnicianController) dc2;
+		
+		switch (dc2.getEmployee().getRole()) {
+		case "TE": this.dc = (TechnicianController) dc2; break;
+		case "SM": this.dc = (SupportManagerController) dc2; break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + dc.getEmployee().getRole());
+		}
+		
+		
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -50,12 +62,11 @@ public class TicketPanelController extends BorderPane {
 		lstStatussen.setItems(FXCollections.observableArrayList(TicketStatusEnum.values()));
 		lstStatussen.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		lstStatussen.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TicketStatusEnum>() {
-
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends TicketStatusEnum> c) {
 				while (c.next()) {
 					if (c.wasAdded()) {
-
+						
 						dc.addStatusFilterOnTickets(c.getAddedSubList());
 						vervangTableViewData();
 					}
@@ -73,7 +84,6 @@ public class TicketPanelController extends BorderPane {
 		lstTypes.setItems(FXCollections.observableArrayList(TicketTypeEnum.values()));
 		lstTypes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		lstTypes.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TicketTypeEnum>() {
-
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends TicketTypeEnum> c) {
 				while (c.next()) {
@@ -104,8 +114,7 @@ public class TicketPanelController extends BorderPane {
 					if (selectedTicket != null) {
 						dc.setTicket(selectedTicket.getTicketNr());
 					}
-				});
-
+				});		
 	}
 
 	private void vervangTableViewData() {
@@ -114,6 +123,5 @@ public class TicketPanelController extends BorderPane {
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
 		titleCol.setCellValueFactory(cellData -> cellData.getValue().Title());
 		tvTickets.setItems(dc.getFilteredTickets());
-
 	}
 }

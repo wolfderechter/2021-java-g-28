@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import domain.Controller;
 import domain.DomainController;
 import domain.IEmployee;
+import domain.SupportManagerController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -33,7 +34,7 @@ public class DashboardPanelController extends GridPane {
 
 	private Controller dc;
 
-	public DashboardPanelController(IEmployee signedInAccount, Controller controller) {
+	public DashboardPanelController(Controller controller) {
 
 		this.dc = controller;
 
@@ -46,7 +47,24 @@ public class DashboardPanelController extends GridPane {
 			throw new RuntimeException(ex);
 		}
 		// displayTickets(null);
-		lblUsername.setText("NathanT");
+		
+		if(dc.getEmployee().getRole().equals("SM")){
+			btnEmployee.setDisable(true);
+			btnCustomer.setDisable(true);
+		}
+		
+		if(dc.getEmployee().getRole().equals("TE")) {
+			btnCustomer.setDisable(true);
+			btnEmployee.setDisable(true);
+			btnContractType.setDisable(true);
+		}
+		
+		if(dc.getEmployee().getRole().equals("AD")) {
+			btnTickets.setDisable(true);
+			btnContractType.setDisable(true);
+		}
+		
+		lblUsername.setText(dc.getEmployee().getUser().getUserName());
 		btnCustomer.setOnAction(this::displayCustomers);
 		btnTickets.setOnAction(this::displayTickets);
 		btnFaq.setOnAction(this::displayFaq);
@@ -67,7 +85,7 @@ public class DashboardPanelController extends GridPane {
 	}
 	private void displayContractType(ActionEvent event) {
 		setActiveButtonColor(btnContractType);
-		ContractTypePanelController ctpc = new ContractTypePanelController(dc);
+		ContractTypePanelController ctpc = new ContractTypePanelController((SupportManagerController) dc);
 		bpDashboard.setCenter(ctpc);
 	}
 	

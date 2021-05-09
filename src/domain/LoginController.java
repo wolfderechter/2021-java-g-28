@@ -30,43 +30,32 @@ public class LoginController {
 		return result.toString();
 	}
 	
-	public String[] getValidationAndRole(String username, String password) throws IOException {
-		return get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
-				username, password)).split("-");
+	public String getValidation(String username, String password) throws IOException {
+		
+		String deezString = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
+				username, password));
+		System.out.println(deezString);
+		return deezString;
 	}
 	
 	/**Returns signed in account**/
-	public IEmployee getSignedInUser(String role, String username) {
-		if(role.equals("administrator")) {
-			AdministratorController ac = new AdministratorController();
-			IEmployee cp = ac.getAdministratorByUsername(username);
-			ac.close();
-			return cp;
-		} 
-		
-		if(role.equals("supportmanager")) {
-			SupportManagerController spc = new SupportManagerController();
-			IEmployee sm = spc.getSupportManagerByUsername(username);
-			spc.close();
-			return sm;
+	public IEmployee getSignedInUser(String username) {
+		DomainManager d = new DomainManager();
+		IEmployee e = d.getEmployeeByUsername(username);
+		if(e == null) {
+			throw new IllegalArgumentException("Customers can't login");
 		}
-		
-		if(role.equals("technician")) {
-			TechnicianController tc = new TechnicianController();
-			IEmployee tn = tc.getTechnicianByUsername(username);
-			tc.close();
-			return tn;
-		}
-		return null;
+		//d.closePersistentie();
+		return e;
 	}
 	
-	public Controller getController(String role) {
-		switch (role) {
-		case "administrator": return new AdministratorController();
-		case "supportmanager": return new SupportManagerController();
-		case "technician": return new TechnicianController();
+	public Controller getController(IEmployee emp) {
+		switch (emp.getRole()) {
+		case "AD": return new AdministratorController(emp);
+		case "SM": return new SupportManagerController(emp);
+		case "TE": return new TechnicianController(emp);
 		default:
-			throw new IllegalArgumentException("Unexpected value: " + role);
+			throw new IllegalArgumentException("Unexpected value: " + emp.getRole());
 		}
 	}
 }
