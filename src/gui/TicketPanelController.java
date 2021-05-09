@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -33,6 +34,7 @@ public class TicketPanelController extends BorderPane {
 	private ListView<TicketStatusEnum> lstStatussen;
 	@FXML
 	private ListView<TicketTypeEnum> lstTypes;
+
 
 	private TechnicianController dc;
 	private SupportManagerController dc2;
@@ -60,7 +62,6 @@ public class TicketPanelController extends BorderPane {
 		lstStatussen.setItems(FXCollections.observableArrayList(TicketStatusEnum.values()));
 		lstStatussen.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		lstStatussen.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TicketStatusEnum>() {
-
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends TicketStatusEnum> c) {
 				while (c.next()) {
@@ -83,7 +84,6 @@ public class TicketPanelController extends BorderPane {
 		lstTypes.setItems(FXCollections.observableArrayList(TicketTypeEnum.values()));
 		lstTypes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		lstTypes.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TicketTypeEnum>() {
-
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends TicketTypeEnum> c) {
 				while (c.next()) {
@@ -114,8 +114,7 @@ public class TicketPanelController extends BorderPane {
 					if (selectedTicket != null) {
 						dc.setTicket(selectedTicket.getTicketNr());
 					}
-				});
-
+				});		
 	}
 
 	private void vervangTableViewData() {
@@ -124,6 +123,5 @@ public class TicketPanelController extends BorderPane {
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
 		titleCol.setCellValueFactory(cellData -> cellData.getValue().Title());
 		tvTickets.setItems(dc.getFilteredTickets());
-
 	}
 }

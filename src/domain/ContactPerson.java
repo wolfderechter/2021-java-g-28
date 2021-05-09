@@ -25,11 +25,6 @@ import javafx.beans.property.StringProperty;
 
 @Entity(name = "ContactPerson")
 @Table(name = "ContactPersons")
-@NamedQueries({
-	@NamedQuery(name = "ContactPerson.getContactpersonByUsername" , query = "SELECT c FROM ContactPerson c WHERE c.user.userName = :username"),
-	@NamedQuery(name = "ContactPerson.getAll" , query = "SELECT d FROM ContactPerson d ")
-
-})
 @Access(AccessType.FIELD)
 public class ContactPerson {
 

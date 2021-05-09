@@ -1,19 +1,24 @@
 package domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -30,7 +35,7 @@ public class Ticket implements ITicket {
 	private StringProperty title;
 	@Transient
 	private ObjectProperty<TicketStatusEnum> status;
-	private Date dateCreation;
+	private LocalDate dateCreation;
 	private String description;
 	private TicketTypeEnum type;
 	@ManyToOne()
@@ -42,6 +47,10 @@ public class Ticket implements ITicket {
 	// private List<String> attachments;
 	@OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
 	private List<Reaction> reactions;
+	@ManyToOne()
+	@JoinColumn(name = "companyNr")
+	private Company company;
+
 
 	@ManyToOne
 	@JoinColumn(name = "employeeId")
@@ -50,10 +59,23 @@ public class Ticket implements ITicket {
 	protected Ticket() {
 
 	}
+	
+	public Ticket(LocalDate creaDate, String title, String description,
+			TicketTypeEnum type,ContactPerson contactperson) {
+		setDateCreation(creaDate);
+		setTitle(title);
+		setDescription(description);
+		setType(type);
+		setContactPerson(contactperson);
+		setStatus(TicketStatusEnum.Created);
+		
+	}
 
-	public void addReaction(String text, boolean isSolution, String nameUser) {
-		reactions.add(new Reaction(text, isSolution, nameUser, this));
+	public Reaction addReaction(String text, boolean isSolution, String nameUser) {
+		Reaction reaction = new Reaction(text, isSolution, nameUser, this);
+		reactions.add(reaction);
 		contactPerson.addNotification(title.getValue());
+		return reaction;
 	}
 
 	@Override
@@ -73,13 +95,16 @@ public class Ticket implements ITicket {
 
 	@Override
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Access(AccessType.PROPERTY)
-	public int getTicketNr() {
-		return ticketNr.intValue();
+	public Integer getTicketNr() {
+		if(ticketNr != null) {
+			return ticketNr.intValue();
+		}
+		return null;
 	}
 
-	public void setTicketNr(int ticketNr) {
-
+	public void setTicketNr(Integer ticketNr) {
 		this.ticketNr = new SimpleIntegerProperty(ticketNr);
 	}
 
@@ -105,11 +130,11 @@ public class Ticket implements ITicket {
 	}
 
 	@Override
-	public Date getDateCreation() {
+	public LocalDate getDateCreation() {
 		return dateCreation;
 	}
 
-	public void setDateCreation(Date dateCreation) {
+	public void setDateCreation(LocalDate dateCreation) {
 		this.dateCreation = dateCreation;
 	}
 
@@ -123,13 +148,13 @@ public class Ticket implements ITicket {
 	}
 
 	@Override
-	public ContactPerson getContactPersonId() {
+	public ContactPerson getContactPerson() {
 		return contactPerson;
 	}
 
-	public void setContactPersonId(ContactPerson contactPersonId) {
-
-		this.contactPerson = contactPersonId;
+	public void setContactPerson(ContactPerson contactperson) {
+		this.contactPerson = contactperson;
+		this.company = contactperson.getCompany();
 	}
 
 	@Override
@@ -157,6 +182,7 @@ public class Ticket implements ITicket {
 	public void setType(TicketTypeEnum type) {
 		this.type = type;
 	}
+
 	
 	public Employee getEmployee() {
 		return this.employee;
@@ -164,5 +190,14 @@ public class Ticket implements ITicket {
 	
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+
 	}
 }

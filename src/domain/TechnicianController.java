@@ -2,6 +2,7 @@ package domain;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.mockito.internal.stubbing.answers.Returns;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,16 +23,11 @@ public class TechnicianController extends Controller {
 	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
 	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
 	private PropertyChangeSupport ticketSubject;
-	private GenericDao<Ticket> ticketRepo;
+	
 	private DomainManager dm = new DomainManager();
 
 	public TechnicianController() {
 		ticketSubject = new PropertyChangeSupport(this);
-		setTicketRepo(new GenericDaoJpa<>(Ticket.class));
-	}
-
-	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
-		this.ticketRepo = ticketRepo;
 	}
 
 	public void close() {
@@ -50,17 +47,13 @@ public class TechnicianController extends Controller {
 		ticket.setStatus(status);
 		ticket.setDescription(descrip);
 		//ticket changen in de panel
-		GenericDaoJpa.startTransaction();
-		ticketRepo.update(ticket);
-        GenericDaoJpa.commitTransaction();
+		
 	}
 
 	public void addReaction(String text) {
 		// nog te vervangen met ingelogde usernaam
-		ticket.addReaction(text, false, "Nathan Supp Test");
-		GenericDaoJpa.startTransaction();
-		ticketRepo.update(ticket);
-		GenericDaoJpa.commitTransaction();
+		Reaction reaction =ticket.addReaction(text, false, "Nathan Supp Test");
+		dm.createReaction(reaction);
 	}
 
 	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd
@@ -102,6 +95,26 @@ public class TechnicianController extends Controller {
 	public IEmployee getTechnicianByUsername(String username) {
 		return dm.getEmployeeByUsername(username, "TE");
 	}
+
+	public void createTicket(LocalDate creaDate, String title, String description,
+			TicketTypeEnum type,String contactpersonName) {
+			ContactPerson contactperson = dm.getContactPersonByUsername(contactpersonName);
+			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson);
+			dm.createTicket(ticket);
+			setTicket(ticket.getTicketNr());
+	}
+	
+	public List<String> getAllCompanyNames() {
+		List<String> li = dm.getAllCompanies().stream().map(Company::getCompanyName).collect(Collectors.toList());
+		return li;
+	}
+
+	public List<String> getContactPersonFromCompanyName(String companyName) {
+		List<ContactPerson> li = dm.getAllCompanies().stream().filter(c->c.getCompanyName() == companyName).map(c->c.getContactPersons()).findFirst().orElse(null);
+		List<String> liString = li.stream().map(c->c.getUser().getUserName()).collect(Collectors.toList());
+		return liString;
+	}
+	
 	
 	
 

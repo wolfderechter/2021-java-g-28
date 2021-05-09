@@ -1,5 +1,6 @@
 package domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface ITicket {
 
 	ObjectProperty<TicketStatusEnum> Status();
 
-	int getTicketNr();
+	Integer getTicketNr();
 
 	String getTitle();
 
@@ -27,11 +28,11 @@ public interface ITicket {
 	
 	TicketTypeEnum getType();
 	
-	Date getDateCreation();
+	LocalDate getDateCreation();
 
 	String getDescription();
 
-	ContactPerson getContactPersonId();
+	ContactPerson getContactPerson();
 
 	String getPicturePath();
 
