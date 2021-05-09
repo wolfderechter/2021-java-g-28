@@ -33,12 +33,10 @@ public class DashboardPanelController extends GridPane {
 	
 
 	private Controller dc;
-	private IEmployee signedInEmployee;
 
-	public DashboardPanelController(IEmployee signedInAccount, Controller controller) {
+	public DashboardPanelController(Controller controller) {
 
 		this.dc = controller;
-		this.signedInEmployee = signedInAccount;
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardPanel.fxml"));
 		loader.setController(this);
@@ -49,7 +47,7 @@ public class DashboardPanelController extends GridPane {
 			throw new RuntimeException(ex);
 		}
 		// displayTickets(null);
-		lblUsername.setText("NathanT");
+		lblUsername.setText(dc.getEmployee().getUser().getUserName());
 		btnCustomer.setOnAction(this::displayCustomers);
 		btnTickets.setOnAction(this::displayTickets);
 		btnFaq.setOnAction(this::displayFaq);
@@ -65,7 +63,7 @@ public class DashboardPanelController extends GridPane {
 
 	private void displayTickets(ActionEvent event) {
 		setActiveButtonColor(btnTickets);
-		TicketPanelController tpc = new TicketPanelController(dc, signedInEmployee);
+		TicketPanelController tpc = new TicketPanelController(dc);
 		bpDashboard.setCenter(tpc);
 	}
 	private void displayContractType(ActionEvent event) {

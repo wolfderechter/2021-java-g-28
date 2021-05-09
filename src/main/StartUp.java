@@ -17,24 +17,24 @@ public class StartUp extends Application {
 	@Override
 	public void start(Stage stage) {
 		// TESTING PURPOSE
-		boolean runWithLogin = false;
+		boolean runWithLogin = true;
 
 		Parent root;
 		
-		Controller dc = new AdministratorController();
-		IEmployee g = new Employee();
+//		Controller dc = new AdministratorController();
+//		IEmployee g = new Employee();
 		
 //		Controller dc = new TechnicianController();
 //		IEmployee g = new Employee();
 		
 //		Controller dc = new AdministratorController();
 //		IEmployee d = new Employee();
-
+		root = new AccountPanelController();
 		
 		if (runWithLogin) {
-			root = new AccountPanelController();
+			
 		} else {
-			root = new DashboardPanelController(g,dc);
+			//root = new DashboardPanelController(g,dc);
 		}
 		
 		Scene scene = new Scene(root);
@@ -43,9 +43,7 @@ public class StartUp extends Application {
 
 		stage.setTitle("Actemium | Sign In");
 
-		stage.setMaximized(true);
-
-		stage.setResizable(false);
+		stage.setFullScreen(true);
 
 		stage.show();
 	}

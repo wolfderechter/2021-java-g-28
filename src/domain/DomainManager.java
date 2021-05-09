@@ -1,5 +1,6 @@
 package domain;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import java.util.stream.Collector;
@@ -167,8 +168,8 @@ public class DomainManager {
     }
     
 
-    public IEmployee getEmployeeByUsername(String username, String role) {
-    	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username) && e.getRole().equals(role.toUpperCase())).findFirst().get();
+    public IEmployee getEmployeeByUsername(String username) {
+    	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username)).findFirst().get();
     }
 
 	public ObservableList<Employee> getEmployeesByName(String name) {
@@ -204,6 +205,25 @@ public class DomainManager {
 	public void createReaction(Reaction reaction) {
 		GenericDaoJpa.startTransaction();
 		reactionRepo.insert(reaction);
+		GenericDaoJpa.commitTransaction();
+	}
+
+	public void updateContactPerson(String firstName, String lastName, String email, ContactPerson cp) {
+		GenericDaoJpa.startTransaction();
+		contactPersonRepo.update(cp);
+		GenericDaoJpa.commitTransaction();
+	}
+
+	public void updateCompany(String name, String address, Company company) {
+		GenericDaoJpa.startTransaction();
+		companyRepo.update(company);
+		GenericDaoJpa.commitTransaction();
+	}
+	
+	public void updateEmployee(Integer id, LocalDate date, String firstname, String lastname, String adress,
+			String role, String phonenumber, String email, String username, boolean status, IEmployee emp) {
+		GenericDaoJpa.startTransaction();
+		employeeRepo.update((Employee) emp);
 		GenericDaoJpa.commitTransaction();
 	}
 }

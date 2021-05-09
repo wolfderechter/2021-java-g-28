@@ -1,6 +1,7 @@
 package domain;
 
 import java.beans.PropertyChangeSupport;
+import java.time.LocalDate;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import repository.GenericDaoJpa;
 
 public class SupportManagerController extends Controller {
 
+	private IEmployee employee;
 	private Ticket ticket;
 	private PropertyChangeSupport ticketSubject;
 	private GenericDao<Ticket> ticketRepo;
@@ -18,15 +20,21 @@ public class SupportManagerController extends Controller {
 	private GenericDao<Faq> faqRepo;
 	private GenericDao<Contract> contractRepo;
 
-	public SupportManagerController() {
+	public SupportManagerController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
 		setTicketRepo(new GenericDaoJpa<>(Ticket.class));
 		setFaqRepo(new GenericDaoJpa<>(Faq.class));
 		setContractRepo(new GenericDaoJpa<>(Contract.class));
+		this.employee = emp;
 	}
 	
 	private void setFaqRepo(GenericDao<Faq> faqRepo) {
 		this.faqRepo = faqRepo;
+	}
+	
+	@Override
+	public IEmployee getEmployee() {
+		return this.employee;
 	}
 	
 	public ObservableList<Faq> getAllFaqs() {
@@ -67,10 +75,13 @@ public class SupportManagerController extends Controller {
 		ObservableList<Contract> obListContracts = FXCollections.observableList(li);
 		return obListContracts;
 	}
-
-	public IEmployee getSupportManagerByUsername(String username) {
-		IEmployee sm = dm.getEmployeeByUsername(username, "SM");
-		return sm;
+	
+	public void createTicket(LocalDate creaDate, String title, String description,
+			TicketTypeEnum type,String contactpersonName) {
+			ContactPerson contactperson = dm.getContactPersonByUsername(contactpersonName);
+			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson);
+			dm.createTicket(ticket);
+			setTicket(ticket.getTicketNr());
 	}
 
 }

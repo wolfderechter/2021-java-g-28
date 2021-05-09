@@ -65,7 +65,7 @@ public class AccountPanelController extends GridPane {
 			String role = validationAndRole[1];
 			if (isValid.equals("true")) {
 				IEmployee signedInUser = getSignedInUser(role, txtUsername.getText());
-				showDashboard(signedInUser, lc.getController(role));
+				showDashboard(lc.getController(signedInUser));
 			} else {
 				lblLoginError.setText("Username or password incorrect");
 				txtUsername.requestFocus();
@@ -76,13 +76,12 @@ public class AccountPanelController extends GridPane {
 	}
 
 	/**Shows dashboard**/
-	private void showDashboard(IEmployee signedInAccount, Controller controller) {
-		DashboardPanelController dpc = new DashboardPanelController(signedInAccount, controller);
+	private void showDashboard(Controller controller) {
+		DashboardPanelController dpc = new DashboardPanelController(controller);
 		Scene scene = new Scene(dpc);
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
-		stage.setMaximized(true);
-		stage.setResizable(false);
+		stage.setFullScreen(true);
 		stage.setTitle("Actemium | Dashboard");
 		stage.show();
 	}

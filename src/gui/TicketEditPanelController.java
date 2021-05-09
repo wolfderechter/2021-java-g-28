@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 
 import domain.Company;
 import domain.ContactPerson;
+import domain.Controller;
+import domain.IEmployee;
 import domain.ITicket;
+import domain.SupportManagerController;
 import domain.TechnicianController;
 import domain.TicketStatusEnum;
 import domain.TicketTypeEnum;
@@ -57,10 +60,15 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 
 	private ITicket ticket;
 
-	private TechnicianController dc;
+	private Controller dc;
 
-	public TicketEditPanelController(TechnicianController dc2) {
-		this.dc = dc2;
+	public TicketEditPanelController(Controller dc2) {
+		switch (dc2.getEmployee().getRole()) {
+		case "TE": this.dc = (TechnicianController) dc2; break;
+		case "SM": this.dc = (SupportManagerController) dc2; break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + dc2.getEmployee().getRole());
+		}
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketEditPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);

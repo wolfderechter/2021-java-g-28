@@ -11,26 +11,25 @@ import repository.GenericDao;
 import repository.GenericDaoJpa;
 
 public class AdministratorController extends Controller {
-
-	private GenericDao<Employee> employeeRepo;
-	private Employee employee;
+	
+	//private Employee employee;
 	private PropertyChangeSupport employeeSubject;
 	private DomainManager dm = new DomainManager();
 	private ContactPerson contactPerson;
 	private PropertyChangeSupport contactPersonSubject;
-	private GenericDao<ContactPerson> contactPersonRepo;
 	private Company company;
-	private GenericDao<Company> companyRepo;
 	private PropertyChangeSupport companySubject;
+	private IEmployee employee;
 	
-	public AdministratorController() {
-		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
-		setCompanyRepo(new GenericDaoJpa<>(Company.class));
+	public AdministratorController(IEmployee emp) {
 		companySubject = new PropertyChangeSupport(this);
 		contactPersonSubject = new PropertyChangeSupport(this);
-		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
-		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
 		employeeSubject = new PropertyChangeSupport(this);
+	}
+	
+	@Override
+	public IEmployee getEmployee() {
+		return this.employee;
 	}
 
 	public ContactPerson getContactPersonByUsername(String username) {
@@ -39,19 +38,16 @@ public class AdministratorController extends Controller {
 	}
 	public void setContactPerson(int contactPersonIndex) {
 		this.contactPerson = this.company.getContactPersons().get(contactPersonIndex);
-		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);
-		
+		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);	
 	}
 	
-	public void updateContactPerson(String firstName, String lastName, String email) {
+public void updateContactPerson(String firstName, String lastName, String email) {
 		
 		contactPerson.setFirstName(firstName);
 		contactPerson.setLastName(lastName);
 		contactPerson.setEmail(email);
 
-		GenericDaoJpa.startTransaction();
-		contactPersonRepo.update(contactPerson);
-		GenericDaoJpa.commitTransaction();
+		dm.updateContactPerson(firstName, lastName, email, contactPerson);
 	}
 	
 
@@ -74,15 +70,9 @@ public class AdministratorController extends Controller {
 		company.setCompanyName(name);
 		
 		
-		GenericDaoJpa.startTransaction();
-		companyRepo.update(company);
-		GenericDaoJpa.commitTransaction();
+		dm.updateCompany(name, address, company);
 	}
 	
-	
-	private void setCompanyRepo(GenericDao<Company> companyRepo) {
-		this.companyRepo = companyRepo;
-	}
 	
 	public void addCompanyListener(PropertyChangeListener pcl) {
 		companySubject.addPropertyChangeListener(pcl);
@@ -92,13 +82,8 @@ public class AdministratorController extends Controller {
 		companySubject.removePropertyChangeListener(pcl);
 	}
 
-	private void setContactPersonRepo(GenericDao<ContactPerson> contactPersonRepo) {
-		this.contactPersonRepo = contactPersonRepo;
-	}
-
-
 	public void close() {
-		GenericDaoJpa.closePersistency();
+		dm.closePersistentie();
 	}
 
 //	public Employee getEmployeeByUsername(String username) {
@@ -129,15 +114,6 @@ public class AdministratorController extends Controller {
 		return (ObservableList<IEmployee>) (Object) li;
 	}
 
-	public IEmployee getAdministratorByUsername(String username) {
-		IEmployee a = dm.getEmployeeByUsername(username, "AD");
-		return a;
-	}
-
-	public void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
-		this.employeeRepo = employeeRepo;
-	}
-
 	public void updateEmployee(Integer id, LocalDate date, String firstname, String lastname, String adress,
 			String role, String phonenumber, String email, String username, boolean status) {
 		employee.setId(id);
@@ -150,9 +126,9 @@ public class AdministratorController extends Controller {
 		employee.setEmail(email);
 		employee.setUsername(username);
 		employee.setStatus(status);
-		GenericDaoJpa.startTransaction();
-		employeeRepo.update(employee);
-		GenericDaoJpa.commitTransaction();
+		
+		dm.updateEmployee(id, date, firstname, lastname, adress,
+				role, phonenumber, email, username, status, employee);
 		
 	}
 

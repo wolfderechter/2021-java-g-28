@@ -25,15 +25,23 @@ public class TechnicianController extends Controller {
 	private PropertyChangeSupport ticketSubject;
 	
 	private DomainManager dm = new DomainManager();
-
-	public TechnicianController() {
+	private IEmployee employee;
+	
+	public TechnicianController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
+		this.employee = emp;
+	}
+	
+	@Override
+	public IEmployee getEmployee() {
+		return this.employee;
 	}
 
 	public void close() {
 		GenericDaoJpa.closePersistency();
 	}
 
+	@Override
 	// bij het zetten van de ticket wordt de ticket in de editticketpanel geset
 	public void setTicket(int ticketNr) {
 		Ticket ticket = dm.getAllTickets().stream().filter(t->t.getTicketNr() == ticketNr).findFirst().orElse(null);
@@ -42,6 +50,7 @@ public class TechnicianController extends Controller {
 		
 	}
 
+	@Override
 	public void updateTicket(TicketStatusEnum status,String descrip) {
 		//changes in de edit panel toepassen
 		ticket.setStatus(status);
@@ -56,6 +65,7 @@ public class TechnicianController extends Controller {
 		dm.createReaction(reaction);
 	}
 
+	@Override
 	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd
 	// worden
 	public void addTicketListener(PropertyChangeListener pcl) {
@@ -66,6 +76,7 @@ public class TechnicianController extends Controller {
 		ticketSubject.removePropertyChangeListener(pcl);
 	}
 	
+	@Override
 	// nodig voor lijst van tickets voor tableview van ticketPanel
 	public ObservableList<ITicket> getFilteredTickets() {
 		ObservableList<Ticket> li = dm.getAllTickets();
@@ -74,41 +85,36 @@ public class TechnicianController extends Controller {
 				.collect(Collectors.toCollection(FXCollections::observableArrayList));
 		return (ObservableList<ITicket>) (Object) li;
 	}
+	
+	@Override
 	//deze methode gaat de lijst filteren die in table van tickets wordt gestoken
 	public void addStatusFilterOnTickets(List<? extends TicketStatusEnum> added) {
 		this.selectedFilterStatusen.addAll(added);
 		
 	}
 
+	@Override
 	public void removeStatusFilterOnTickets(List<? extends TicketStatusEnum> removed) {
 		this.selectedFilterStatusen.removeAll(removed);
 	}
 
+	@Override
 	public void addTypeFilterOnTickets(List<? extends TicketTypeEnum> added) {
 		this.selectedFilterTypes.addAll(added);
 	}
 	
+	@Override
 	public void removeTypeFilterOnTickets(List<? extends TicketTypeEnum> removed) {
 		this.selectedFilterTypes.removeAll(removed);
 	}
 	
-	public IEmployee getTechnicianByUsername(String username) {
-		return dm.getEmployeeByUsername(username, "TE");
-	}
-
-	public void createTicket(LocalDate creaDate, String title, String description,
-			TicketTypeEnum type,String contactpersonName) {
-			ContactPerson contactperson = dm.getContactPersonByUsername(contactpersonName);
-			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson);
-			dm.createTicket(ticket);
-			setTicket(ticket.getTicketNr());
-	}
-	
+	@Override
 	public List<String> getAllCompanyNames() {
 		List<String> li = dm.getAllCompanies().stream().map(Company::getCompanyName).collect(Collectors.toList());
 		return li;
 	}
 
+	@Override
 	public List<String> getContactPersonFromCompanyName(String companyName) {
 		List<ContactPerson> li = dm.getAllCompanies().stream().filter(c->c.getCompanyName() == companyName).map(c->c.getContactPersons()).findFirst().orElse(null);
 		List<String> liString = li.stream().map(c->c.getUser().getUserName()).collect(Collectors.toList());
