@@ -25,6 +25,7 @@ public class AdministratorController extends Controller {
 		companySubject = new PropertyChangeSupport(this);
 		contactPersonSubject = new PropertyChangeSupport(this);
 		employeeSubject = new PropertyChangeSupport(this);
+		this.employee = emp;
 	}
 	
 	@Override

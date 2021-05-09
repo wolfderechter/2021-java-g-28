@@ -63,12 +63,13 @@ public class AccountPanelController extends GridPane {
 			String isValid = lc.getValidation(txtUsername.getText(), pwfPassword.getText());
 			
 			if (isValid.equals("true")) {
+				IEmployee signedInUser = null;
 				try {
-					IEmployee signedInUser = getSignedInUser(txtUsername.getText());
-					showDashboard(lc.getController(signedInUser));
+					signedInUser = getSignedInUser(txtUsername.getText());
 				} catch (IllegalArgumentException e) {
 					lblLoginError.setText(e.toString());
 				}
+				showDashboard(lc.getController(signedInUser));
 			} else {
 				lblLoginError.setText("Username or password incorrect");
 				txtUsername.requestFocus();

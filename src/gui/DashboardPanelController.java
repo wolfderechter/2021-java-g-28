@@ -47,7 +47,7 @@ public class DashboardPanelController extends GridPane {
 			throw new RuntimeException(ex);
 		}
 		// displayTickets(null);
-		
+		System.out.println(dc.getEmployee().getRole());
 		if(dc.getEmployee().getRole().equals("SM")){
 			btnEmployee.setDisable(true);
 			btnCustomer.setDisable(true);

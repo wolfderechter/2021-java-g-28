@@ -32,10 +32,8 @@ public class LoginController {
 	
 	public String getValidation(String username, String password) throws IOException {
 		
-		String deezString = get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
+		return get(String.format("https://localhost:44350/Account/IsValidUserJava/%s/%s",
 				username, password));
-		System.out.println(deezString);
-		return deezString;
 	}
 	
 	/**Returns signed in account**/
@@ -50,6 +48,7 @@ public class LoginController {
 	}
 	
 	public Controller getController(IEmployee emp) {
+		System.out.println(emp.getRole());
 		switch (emp.getRole()) {
 		case "AD": return new AdministratorController(emp);
 		case "SM": return new SupportManagerController(emp);
