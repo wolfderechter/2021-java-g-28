@@ -158,4 +158,9 @@ public class AdministratorController extends Controller {
 		GenericDaoJpa.commitTransaction();
 		
 	}
+
+	public ObservableList<Employee> getEmployeesByName(String name) {
+		ObservableList<Employee> li = dm.getEmployeesByName(name);
+		return li;
+	}
 }

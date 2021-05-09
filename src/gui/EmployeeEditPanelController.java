@@ -48,6 +48,7 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 	@FXML
 	private Button btnCancel;
 	
+	
 	private AdministratorController dc;
 	private IEmployee employee;
 	
@@ -97,7 +98,6 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 		txFieldPhoneNumber.setText(employee.getPhoneNumber());
 		txFieldEmail.setText(employee.getEmail());
 		txFieldUsername.setText(employee.getUser().getUserName());
-		txFieldUsername.setDisable(true);
 		chBoxStatus.setSelected(employee.getStatus());
 
 		btnSave.setOnAction(this::saveEmployeeDetails);
