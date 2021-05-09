@@ -46,10 +46,11 @@ public class AdministratorController extends Controller {
 		
 	}
 	
-	public void updateContactPerson(String firstName, String lastName) {
+	public void updateContactPerson(String firstName, String lastName, String email) {
 		
 		contactPerson.setFirstName(firstName);
 		contactPerson.setLastName(lastName);
+		contactPerson.setEmail(email);
 
 		GenericDaoJpa.startTransaction();
 		contactPersonRepo.update(contactPerson);

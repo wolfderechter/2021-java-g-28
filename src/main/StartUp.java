@@ -4,6 +4,7 @@ import domain.AdministratorController;
 import domain.Controller;
 import domain.Employee;
 import domain.IEmployee;
+import domain.TechnicianController;
 import gui.AccountPanelController;
 import gui.DashboardPanelController;
 import javafx.application.Application;
@@ -23,10 +24,10 @@ public class StartUp extends Application {
 		IEmployee g = new Employee();
 		
 //		Controller dc = new TechnicianController();
-//		Account g = new Technician();
+//		IEmployee g = new Employee();
 		
 //		Controller dc = new AdministratorController();
-//		Account d = new Administrator();
+//		IEmployee d = new Employee();
 
 		
 		if (runWithLogin) {

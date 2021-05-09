@@ -51,13 +51,12 @@ public class ContactPerson {
 	@OneToMany
 	private List<Contract> contracts;
 	
-	
 	public ContactPerson() {
 		
 	}
 	
 
-
+	
 	public ContactPerson(int id, String firstName, String lastName, Company company, List<Notification> notifications) {
 		
 		setId(id);
@@ -97,6 +96,14 @@ public class ContactPerson {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public String getEmail() {
+		return user.getEmail();
+	}
+	
+	public void setEmail(String email) {
+		user.setEmail(email);
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -144,6 +151,7 @@ public class ContactPerson {
 	public void setContracts(List<Contract> contracts) {
 		this.contracts = contracts;
 	}
+	
 	
 	
 	

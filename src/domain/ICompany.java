@@ -36,4 +36,6 @@ public interface ICompany {
 
 	List<Contract> getContracts();
 
+
+	boolean getStatus();
 }
