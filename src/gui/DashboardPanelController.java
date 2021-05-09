@@ -73,8 +73,8 @@ public class DashboardPanelController extends GridPane {
 	
 	private void displayFaq(ActionEvent event) {
 		setActiveButtonColor(btnFaq);
-		//Controller c = new Controller(dc);
-		//bpDashboard.setCenter(...);
+		FaqPanelController fpc = new FaqPanelController(dc);
+		bpDashboard.setCenter(fpc);
 	}
 
 	private void displayEmployees(ActionEvent event) {

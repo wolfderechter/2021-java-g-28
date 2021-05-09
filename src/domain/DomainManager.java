@@ -3,6 +3,7 @@ package domain;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,8 +34,8 @@ public class DomainManager {
 	private List<ContractType> contractTypeList;
 	private ObservableList<Employee> employeeList;
 	private ObservableList<Company> companyList;
-	private List<Faq> faqList;
-	private List<Contract> contractList;
+	private ObservableList<Faq> faqList;
+	
 	
 	//TIJDELIJK -> login
 	public final String PERSISTENCE_UNIT_NAME = "project2";
@@ -125,9 +126,9 @@ public class DomainManager {
     	return companyList;
     }
     
-    public List<Faq> getAllFaqs() {
+    public ObservableList<Faq> getAllFaqs() {
     	if(faqList == null) {
-    		faqList = faqRepo.getAll();
+    		faqList = FXCollections.observableArrayList(faqRepo.getAll());
     	}
     	return faqList;
     }
@@ -158,4 +159,12 @@ public class DomainManager {
     	return employeeRepo.getAll().stream().filter(e -> e.getUser().getUserName().equals(username) && e.getRole().equals(role.toUpperCase())).findFirst().get();
 
     }
+
+	public ObservableList<Company> getCompaniesByName(String name) {
+		if(companyList == null) {
+			companyList = FXCollections.observableArrayList(companyRepo.getAll());
+		} 
+	return companyList.stream().filter(c->c.getCompanyName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+	}
 }

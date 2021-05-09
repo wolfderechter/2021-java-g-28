@@ -4,6 +4,7 @@ import domain.AdministratorController;
 import domain.Controller;
 import domain.Employee;
 import domain.IEmployee;
+import domain.SupportManagerController;
 import domain.TechnicianController;
 import gui.AccountPanelController;
 import gui.DashboardPanelController;
@@ -20,20 +21,23 @@ public class StartUp extends Application {
 
 		Parent root;
 
-		Controller dc = new AdministratorController();
-		IEmployee g = new Employee();
-		
+//		Controller dc = new AdministratorController();
+//		IEmployee g = new Employee();
+//		
 //		Controller dc = new TechnicianController();
 //		IEmployee g = new Employee();
 		
-//		Controller dc = new AdministratorController();
-//		IEmployee d = new Employee();
+		Controller dc = new AdministratorController();
+		IEmployee d = new Employee();
+		
+//		Controller dc = new SupportManagerController();
+//		IEmployee f = new Employee();
 
 		
 		if (runWithLogin) {
 			root = new AccountPanelController();
 		} else {
-			root = new DashboardPanelController(g,dc);
+			root = new DashboardPanelController(d,dc);
 		}
 		
 		Scene scene = new Scene(root);

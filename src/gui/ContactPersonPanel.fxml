@@ -29,7 +29,7 @@
             </Label>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField alignment="BOTTOM_RIGHT" />
+                  <TextField fx:id="txFieldSearch" />
                </children>
             </HBox>
          </children>

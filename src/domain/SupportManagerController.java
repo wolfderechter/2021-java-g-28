@@ -14,7 +14,7 @@ public class SupportManagerController extends Controller {
 	private PropertyChangeSupport ticketSubject;
 	private GenericDao<Ticket> ticketRepo;
 	private DomainManager dm = new DomainManager();
-	private Faq faq;
+	private IFaq faq;
 	private GenericDao<Faq> faqRepo;
 	private GenericDao<Contract> contractRepo;
 
@@ -29,10 +29,10 @@ public class SupportManagerController extends Controller {
 		this.faqRepo = faqRepo;
 	}
 	
-	public ObservableList<Faq> getAllFaqs() {
-		List<Faq> li = dm.getAllFaqs();
-		ObservableList<Faq> obListFaqs = FXCollections.observableList(li);
-		return obListFaqs;
+	public ObservableList<IFaq> getAllFaqs() {
+		ObservableList<Faq> li = dm.getAllFaqs();
+		
+		return (ObservableList<IFaq>) (Object) li;
 	}
 	
 	private void setContractRepo(GenericDao<Contract> contractRepo) {
@@ -62,11 +62,6 @@ public class SupportManagerController extends Controller {
 		return obListContractTypes;
 	}
 
-	public ObservableList<Contract> getAllContracts() {
-		List<Contract> li = dm.getAllContracts();
-		ObservableList<Contract> obListContracts = FXCollections.observableList(li);
-		return obListContracts;
-	}
 
 	public IEmployee getSupportManagerByUsername(String username) {
 		IEmployee sm = dm.getEmployeeByUsername(username, "SM");

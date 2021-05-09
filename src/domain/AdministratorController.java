@@ -47,14 +47,18 @@ public class AdministratorController extends Controller {
 	}
 	
 	public void updateContactPerson(String firstName, String lastName, String email) {
+		if(contactPerson != null) {
+			contactPerson.setFirstName(firstName);
+			contactPerson.setLastName(lastName);
+			contactPerson.setEmail(email);
+			
+			GenericDaoJpa.startTransaction();
+			contactPersonRepo.update(contactPerson);
+			GenericDaoJpa.commitTransaction();
+		}
 		
-		contactPerson.setFirstName(firstName);
-		contactPerson.setLastName(lastName);
-		contactPerson.setEmail(email);
 
-		GenericDaoJpa.startTransaction();
-		contactPersonRepo.update(contactPerson);
-		GenericDaoJpa.commitTransaction();
+		
 	}
 	
 
@@ -67,8 +71,6 @@ public class AdministratorController extends Controller {
 //	
 	public ObservableList<ICompany> getAllCompanies() {
 		ObservableList<Company> li = dm.getAllCompanies();
-	
-		
 		return (ObservableList<ICompany>) (Object) li;
 	}
 	
@@ -80,6 +82,13 @@ public class AdministratorController extends Controller {
 		GenericDaoJpa.startTransaction();
 		companyRepo.update(company);
 		GenericDaoJpa.commitTransaction();
+		
+		
+	}
+	
+	public ObservableList<ICompany> getCompaniesByName(String name) {
+		ObservableList<Company> li = dm.getCompaniesByName(name);
+		return (ObservableList<ICompany>) (Object) li;
 	}
 	
 	

@@ -94,11 +94,12 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
     
     private void saveCompany(ActionEvent actionEvent) {
     	this.dc.updateCompany(TxFieldName.getText(), TxFieldAddress.getText());
-    	
+    
     }
     
     private void saveContactPerson(ActionEvent actionEvent) {
-    	this.dc.updateContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText(), TxFieldEMail.getText());
+    		this.dc.updateContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText(), TxFieldEMail.getText());
+
     }
     
 
@@ -116,12 +117,13 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	
 	private void fields() {
 		
+		
+		
 		if(company != null) {
 			TxFieldCustomerNr.setText(company.CompanyNr().getValue().toString());
 			TxFieldCustomerNr.setDisable(true);
 			TxFieldName.setText(company.getCompanyName());
 			TxFieldAddress.setText(company.getCompanyAdress());
-			btnSave.setOnAction(this::saveCompany);
 			ObservableList<String> namen = company.getContactPersons().stream().map(c->c.getFirstName() + c.getLastName()).collect(Collectors.toCollection(FXCollections::observableArrayList));
 			lstNamen.setItems(namen);
 			lstNamen.getSelectionModel().selectedItemProperty()
@@ -135,8 +137,12 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 				dc.setContactPerson(index);
 				}
 			}
-		);	
-		btnSave.setOnAction(this::saveContactPerson);
+		);
+			
+		btnSave.setOnAction(e-> {
+				this.saveCompany(e);
+				this.saveContactPerson(e);
+			});
 		nrCol.setCellValueFactory(cellData -> cellData.getValue().ContractNr());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().getContractType().Name());
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());

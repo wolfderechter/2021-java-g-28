@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -39,6 +40,9 @@ public class ContactPersonPanelController extends BorderPane {
 	@FXML 
 	private TextArea TextAreaTest;
 	
+	 @FXML
+	  private TextField txFieldSearch;
+	
 	private AdministratorController dc;
 	
 	public ContactPersonPanelController(Controller dc2) {
@@ -52,7 +56,10 @@ public class ContactPersonPanelController extends BorderPane {
             throw new RuntimeException(ex);
         }
      
-      //  System.out.println(dc.getAllContactPersons());
+        txFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+        	tvCompany.setItems(dc.getCompaniesByName(newValue));
+        	});
+        
         nameCol.setCellValueFactory(cellData -> cellData.getValue().CompanyName());
         addressCol.setCellValueFactory(cellData -> cellData.getValue().CompanyAdress());
         tvCompany.setItems(dc.getAllCompanies());

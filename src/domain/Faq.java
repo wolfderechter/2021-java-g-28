@@ -15,37 +15,47 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 
-@Entity(name = "Faqs")
-@Table(name = "Faqs")
-@NamedQueries({
-	@NamedQuery(name = "Faq.getAll", query = "SELECT f FROM Faqs f")
-})
+@Entity(name = "Faq")
+@Table(name = "Faq")
+
 
 @Access(AccessType.FIELD)
-public class Faq {
+public class Faq implements IFaq {
 
 	@Id
 	@Column(name = "id")
 	 public int Id;
-     public StringProperty problem;
-     public List<String> solution;
+	
+   //  public StringProperty problem;
+     public String problem;
+     public String[] solution;
      
      protected Faq() {
     	 
      }
      
-     public StringProperty Problem() {
+//     public StringProperty Problem() {
+//    	 return problem;
+//     }
+//     
+//     @Override
+//	@Access(AccessType.PROPERTY)
+     public String getProblem() {
     	 return problem;
      }
      
-     @Access(AccessType.PROPERTY)
-     public String getProblem() {
-    	 return problem.getValue();
-     }
-     
      public void setProblem(String problem) {
-    	 this.problem = new SimpleStringProperty(problem);
+    	 this.problem = problem;
      }
+
+	public String[] getSolution() {
+		return solution;
+	}
+
+	public void setSolution(String[] solution) {
+		this.solution = solution;
+	}
+     
      
      
      }
