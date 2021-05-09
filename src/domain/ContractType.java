@@ -19,7 +19,7 @@ import javafx.beans.property.StringProperty;
 
 
 @Entity(name = "ContractTypes")
-@Table(name = "ContractTypes")
+@Table(name = "ContactTypes")
 @Access(AccessType.FIELD)
 public class ContractType {
 	@Transient
@@ -38,13 +38,6 @@ public class ContractType {
     //constructors
     protected ContractType() {}
     
-    
-    
-    
-    
-    
-    
-    
     public ContractType(String name, ContractTypeCreationMethod creationMethod, boolean outsideBusinessHours,
 			int maxResponseTime, int minDuration, double price) {
     	setName(name);
@@ -54,14 +47,7 @@ public class ContractType {
 		MinDuration = minDuration;
 		Price = price;
 		Active = true;
-	}
-
-
-
-
-
-
-
+    }
 
 	//property's
     public IntegerProperty Amount() {

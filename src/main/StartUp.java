@@ -1,17 +1,11 @@
 package main;
 
-
 import domain.AdministratorController;
-import domain.ContactPerson;
 import domain.Controller;
-import domain.DomainController;
 import domain.Employee;
 import domain.IEmployee;
-import domain.TechnicianController;
 import gui.AccountPanelController;
-import gui.ContactPersonPanelController;
 import gui.DashboardPanelController;
-import gui.FaqPanelController;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,8 +18,16 @@ public class StartUp extends Application {
 		boolean runWithLogin = false;
 
 		Parent root;
+
 		Controller dc = new AdministratorController();
 		IEmployee g = new Employee();
+		
+//		Controller dc = new TechnicianController();
+//		Account g = new Technician();
+		
+//		Controller dc = new AdministratorController();
+//		Account d = new Administrator();
+
 		
 		if (runWithLogin) {
 			root = new AccountPanelController();
