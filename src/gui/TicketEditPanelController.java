@@ -97,6 +97,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 
 	private void resetFields() {
 		//ticket info
+		txtReactionText.clear();
 		btnCreateTicket.setVisible(true);
 		btnSave.setText("Save");
 		txFieldTitle.setText(ticket.Title().getValue());

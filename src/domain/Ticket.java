@@ -1,6 +1,7 @@
 package domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Access;
@@ -42,9 +43,9 @@ public class Ticket implements ITicket {
 	@JoinColumn(name = "contactPersonId")
 	private ContactPerson contactPerson;
 	private String picturePath;
-	// @Column(name = "FirstName")
-	// @ManyToOne(mappedBy = "Attachments")
-	// private List<String> attachments;
+
+	 private List<String> attachments = new ArrayList<>();
+	 
 	@OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
 	private List<Reaction> reactions;
 	@ManyToOne()
@@ -57,7 +58,7 @@ public class Ticket implements ITicket {
 //	private Employee employee;
 //	
 	protected Ticket() {
-
+		
 	}
 	
 	public Ticket(LocalDate creaDate, String title, String description,

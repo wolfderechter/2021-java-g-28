@@ -48,12 +48,12 @@ public class TechnicianController extends Controller {
 		ticket.setStatus(status);
 		ticket.setDescription(descrip);
 		//ticket changen in de panel
-		
+		dm.updateTicket(ticket);
 	}
 
 	public void addReaction(String text) {
 		// nog te vervangen met ingelogde usernaam
-		ticket.addReaction(text, false, "Nathan Supp Test");
+		ticket.addReaction(text, false, employee.getUser().getUserName());
 		dm.updateTicket(ticket);
 		
 		
