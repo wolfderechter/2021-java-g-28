@@ -107,6 +107,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		//lstReactions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		btnAddReaction.setOnAction(this::addReaction);
 		ObservableList<String> reactions = FXCollections.observableArrayList(ticket.getReactions().stream().map(r->r.getNameUserReaction()).collect(Collectors.toList()));
+		
 		lstReactions.setItems(reactions);
 		lstReactions.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, vorigReactie, selectedReactie) -> 

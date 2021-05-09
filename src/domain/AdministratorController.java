@@ -18,9 +18,17 @@ public class AdministratorController extends Controller {
 	private ContactPerson contactPerson;
 	private PropertyChangeSupport contactPersonSubject;
 	private GenericDao<ContactPerson> contactPersonRepo;
+	private Company company;
+	private GenericDao<Company> companyRepo;
+	private PropertyChangeSupport companySubject;
+	
+	
+	
 	
 	public AdministratorController() {
 		setEmployeeRepo(new GenericDaoJpa<>(Employee.class));
+		setCompanyRepo(new GenericDaoJpa<>(Company.class));
+		companySubject = new PropertyChangeSupport(this);
 		contactPersonSubject = new PropertyChangeSupport(this);
 		setContactPersonRepo(new GenericDaoJpa<>(ContactPerson.class));
 	}
@@ -30,27 +38,59 @@ public class AdministratorController extends Controller {
 		return cp;
 	}
 	
-	public void setContactPerson(ContactPerson contactPerson) {
+	public void setContactPerson(int contactPersonIndex) {
+		this.contactPerson = this.company.getContactPersons().get(contactPersonIndex);
 		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);
-		this.contactPerson = contactPerson;
+		
 	}
 	
-	public void updateContactPerson(ContactPerson contactPerson) {
+	public void updateContactPerson(String firstName, String lastName) {
+		
+		contactPerson.setFirstName(firstName);
+		contactPerson.setLastName(lastName);
+		
 		GenericDaoJpa.startTransaction();
 		contactPersonRepo.update(contactPerson);
         GenericDaoJpa.commitTransaction();	
 	}
-
-	public void addContactPersonListener(PropertyChangeListener pcl) {
-		contactPersonSubject.addPropertyChangeListener(pcl);
-	}
 	
 
-	public ObservableList<ContactPerson> getAllContactPersons() {
+//	public ObservableList<ContactPerson> getAllContactPersons() {
+//		
+//		List<ContactPerson> li = dm.getAllContactPersons();
+//		ObservableList<ContactPerson> obListContactPersons = FXCollections.observableList(li);
+//		return obListContactPersons;
+//	}
+//	
+	public ObservableList<ICompany> getAllCompanies() {
+		ObservableList<Company> li = dm.getAllCompanies();
+	
 		
-		List<ContactPerson> li = dm.getAllContactPersons();
-		ObservableList<ContactPerson> obListContactPersons = FXCollections.observableList(li);
-		return obListContactPersons;
+		return (ObservableList<ICompany>) (Object) li;
+	}
+	
+	
+	public void updateCompany(String name, String address) {
+		company.setCompanyAdress(address);
+		company.setCompanyName(name);
+		
+		
+		GenericDaoJpa.startTransaction();
+		companyRepo.update(company);
+		GenericDaoJpa.commitTransaction();
+	}
+	
+	
+	private void setCompanyRepo(GenericDao<Company> companyRepo) {
+		this.companyRepo = companyRepo;
+	}
+	
+	public void addCompanyListener(PropertyChangeListener pcl) {
+		companySubject.addPropertyChangeListener(pcl);
+	}
+	
+	public void removePropertyChangeListener(PropertyChangeListener pcl) {
+		companySubject.removePropertyChangeListener(pcl);
 	}
 	
 	private void setContactPersonRepo(GenericDao<ContactPerson> contactPersonRepo) {
@@ -81,11 +121,15 @@ public class AdministratorController extends Controller {
 		this.employee = employee;
 	}
 	
-	// als ticket gewijzigd wordt gaat de ticket in editticketpanel ook veranderd worden
 	public void addEmployeeListener(PropertyChangeListener pcl) {
 		employeeSubject.addPropertyChangeListener(pcl);
 	}
 	
+	public void setCompany(int companyNr) {
+		Company company = dm.getAllCompanies().stream().filter(c->c.getCompanyNr() == companyNr).findFirst().orElse(null);
+		companySubject.firePropertyChange("company", this.company, company);
+		this.company = company;
+	}
 	
 	public ObservableList<Employee> getAllEmployees() {
 		List<Employee> li = dm.getAllEmployees();

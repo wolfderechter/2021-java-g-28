@@ -39,9 +39,6 @@ public class ContactPerson extends Account {
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
 	private int id;
-
-
-	
 	
 	private StringProperty firstName;
 	
@@ -104,6 +101,7 @@ public class ContactPerson extends Account {
 	public User getUser() {
 		return user;
 	}
+	
 
 	public void setUser(User user) {
 		this.user = user;
@@ -114,7 +112,7 @@ public class ContactPerson extends Account {
 		return firstName.getValue();
 	}
 
-	private void setFirstName(String firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = new SimpleStringProperty(firstName);
 	}
 
@@ -123,7 +121,7 @@ public class ContactPerson extends Account {
 		return lastName.getValue();
 	}
 
-	private void setLastName(String lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = new SimpleStringProperty(lastName);;
 	}
 	
