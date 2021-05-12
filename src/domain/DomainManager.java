@@ -215,4 +215,8 @@ public class DomainManager {
 		employeeRepo.update((Employee) emp);
 		GenericDaoJpa.commitTransaction();
 	}
+	
+	public Employee getEmployeeByFirstAndLastName(String first, String last) {
+		return employeeRepo.getAll().stream().filter(e -> e.getFirstName().equals(first) && e.getLastName().equals(last)).findFirst().orElse(null);
+	}
 }

@@ -59,6 +59,8 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	private Button btnCreateTicket;
 	@FXML
 	private TextArea txtReactionText;
+	@FXML
+	private ComboBox<String> cmbEmployee;
 
 	private ITicket ticket;
 
@@ -82,7 +84,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	}
 
 	private void saveTicketDetails(ActionEvent actionEvent) {
-		this.dc.updateTicket(cmbFieldStatus.getSelectionModel().getSelectedItem(),txAreaDescription.getText());
+		this.dc.updateTicket(cmbFieldStatus.getSelectionModel().getSelectedItem(),txAreaDescription.getText(), getFirstAndLastNameCombo()[0], getFirstAndLastNameCombo()[1]);
 	}
 
 	private void cancelTicketDetails(ActionEvent actionEvent) {
@@ -112,6 +114,10 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		cmbContactPerson.setItems(FXCollections.observableArrayList(dc.getContactPersonFromCompanyName(cmbCompany.getSelectionModel().getSelectedItem())));
 		cmbContactPerson.getSelectionModel().select(ticket.getContactPerson().getUser().getUserName());
 		cmbContactPerson.setDisable(true);
+		
+		cmbEmployee.setItems(FXCollections.observableArrayList(dc.getAllEmployeesCombo()));
+		cmbEmployee.getSelectionModel().select(ticket.getEmployee().getFirstName());
+		
 		dpDateCreate.setValue(ticket.getDateCreation());
 		dpDateCreate.setDisable(true);
 		//button acties
@@ -149,6 +155,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		cmbFieldStatus.getSelectionModel().select(TicketStatusEnum.Created);
 		cmbCompany.setDisable(false);
 		cmbContactPerson.setDisable(false);
+		
 		cmbType.getSelectionModel().select(null);;
 		//button acties
 		btnSave.setOnAction(this::createTicket);
@@ -162,8 +169,9 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	
 	private void createTicket(ActionEvent event) {
 		try {
+			
 		dc.createTicket(dpDateCreate.getValue(),txFieldTitle.getText(),txAreaDescription.getText(),cmbType.getSelectionModel().selectedItemProperty().getValue(),
-				cmbContactPerson.getSelectionModel().selectedItemProperty().getValue());
+				cmbContactPerson.getSelectionModel().selectedItemProperty().getValue(), getFirstAndLastNameCombo()[0], getFirstAndLastNameCombo()[1]);
 		}catch(Exception ex) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
@@ -177,6 +185,15 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	private void addReaction(ActionEvent event) {
 				dc.addReaction(txtReactionText.getText());
 				lstReactions.getSelectionModel().selectLast(); 
+		
+	}
+	
+	private String[] getFirstAndLastNameCombo() {
+		String[] employeeData = cmbEmployee.getSelectionModel().selectedItemProperty().getValue().split(" ");
+		String[] result = new String[2];
+		result[0] = employeeData[0];
+		result[1] = employeeData[1].split(",")[0];
+		return result;
 		
 	}
 	

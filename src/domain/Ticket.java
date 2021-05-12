@@ -48,28 +48,28 @@ public class Ticket implements ITicket {
 	 
 	@OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
 	private List<Reaction> reactions;
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "companyNr")
 	private Company company;
 
 
-//	@ManyToOne
-//	@JoinColumn(name = "employeeId")
-//	private Employee employee;
-//	
+	@ManyToOne
+	@JoinColumn(name = "employeenr")
+	private Employee employee;
+	
 	protected Ticket() {
 		
 	}
 	
 	public Ticket(LocalDate creaDate, String title, String description,
-			TicketTypeEnum type,ContactPerson contactperson) {
+			TicketTypeEnum type,ContactPerson contactperson, IEmployee emp) {
 		setDateCreation(creaDate);
 		setTitle(title);
 		setDescription(description);
 		setType(type);
 		setContactPerson(contactperson);
 		setStatus(TicketStatusEnum.Created);
-		
+		setEmployee((Employee) emp);
 	}
 
 	public Reaction addReaction(String text, boolean isSolution, String nameUser) {
@@ -213,5 +213,13 @@ public class Ticket implements ITicket {
 	public void setCompany(Company company) {
 		this.company = company;
 
+	}
+	
+	public Employee getEmployee() {
+		return this.employee;
+	}
+	
+	public void setEmployee(Employee emp) {
+		this.employee = emp;
 	}
 }

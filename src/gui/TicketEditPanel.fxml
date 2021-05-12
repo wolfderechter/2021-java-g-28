@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="552.0" prefWidth="500.0" type="GridPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="552.0" prefWidth="500.0" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="286.0" minWidth="173.0" prefWidth="272.0" />
       <ColumnConstraints maxWidth="412.0" minWidth="299.0" prefWidth="313.0" />
@@ -23,6 +23,7 @@
    </columnConstraints>
    <rowConstraints>
       <RowConstraints maxHeight="39.0" minHeight="39.0" prefHeight="39.0" />
+      <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
@@ -82,32 +83,32 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </TextArea>
-      <Label contentDisplay="CENTER" text="TICKET REACTIONS" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="10">
+      <Label contentDisplay="CENTER" text="TICKET REACTIONS" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="11">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>
       </Label>
-      <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="27.0" prefWidth="116.0" text="save " GridPane.columnIndex="1" GridPane.rowIndex="9">
+      <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="27.0" prefWidth="116.0" text="save " GridPane.columnIndex="1" GridPane.rowIndex="10">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin></Button>
-      <Button fx:id="btnCancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="cancel" GridPane.columnIndex="1" GridPane.rowIndex="9">
+      <Button fx:id="btnCancel" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="cancel" GridPane.columnIndex="1" GridPane.rowIndex="10">
          <GridPane.margin>
             <Insets bottom="10.0" left="200.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnAddReaction" mnemonicParsing="false" text="Add Reaction" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-      <ListView fx:id="lstReactions" minHeight="-Infinity" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="14">
+      <Button fx:id="btnAddReaction" mnemonicParsing="false" text="Add Reaction" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <ListView fx:id="lstReactions" minHeight="-Infinity" prefHeight="200.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="15">
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin>
       </ListView>
-      <TextArea fx:id="txtReactionText" prefHeight="240.0" prefWidth="304.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="14">
+      <TextArea fx:id="txtReactionText" prefHeight="240.0" prefWidth="304.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="15">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </TextArea>
-      <Label text="reaction text" GridPane.columnIndex="2" GridPane.rowIndex="13">
+      <Label text="reaction text" GridPane.columnIndex="2" GridPane.rowIndex="14">
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font>
@@ -115,7 +116,7 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Label>
-      <Button fx:id="btnCreateTicket" mnemonicParsing="false" prefHeight="38.0" prefWidth="156.0" text="Create Ticket" GridPane.rowIndex="9" />
+      <Button fx:id="btnCreateTicket" mnemonicParsing="false" prefHeight="38.0" prefWidth="156.0" text="Create Ticket" GridPane.rowIndex="10" />
       <DatePicker fx:id="dpDateCreate" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -140,6 +141,12 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </ComboBox>
+      <ComboBox fx:id="cmbEmployee" prefWidth="281.0" promptText="choose employee" GridPane.columnIndex="1" GridPane.rowIndex="9">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </ComboBox>
+      <Label text="Employee" GridPane.rowIndex="9" />
    </children>
    <padding>
       <Insets bottom="100.0" right="100.0" top="10.0" />

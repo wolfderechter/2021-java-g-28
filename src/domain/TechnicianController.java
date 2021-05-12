@@ -43,10 +43,13 @@ public class TechnicianController extends Controller {
 	}
 
 	@Override
-	public void updateTicket(TicketStatusEnum status,String descrip) {
+	public void updateTicket(TicketStatusEnum status,String descrip, String first, String last) {
 		//changes in de edit panel toepassen
 		ticket.setStatus(status);
 		ticket.setDescription(descrip);
+		Employee employee = dm.getEmployeeByFirstAndLastName(first, last);
+		System.out.println(employee.getFirstName());
+		ticket.setEmployee(employee);
 		//ticket changen in de panel
 		dm.updateTicket(ticket);
 	}
@@ -110,6 +113,11 @@ public class TechnicianController extends Controller {
 		List<ContactPerson> li = dm.getAllCompanies().stream().filter(c->c.getCompanyName() == companyName).map(c->c.getContactPersons()).findFirst().orElse(null);
 		List<String> liString = li.stream().map(c->c.getUser().getUserName()).collect(Collectors.toList());
 		return liString;
+	}
+	
+	@Override
+	public List<String> getAllEmployeesCombo(){
+		return dm.getAllEmployees().stream().map(employee -> String.format("%s %s, %s", employee.getFirstName(), employee.getLastName(), employee.getRole())).collect(Collectors.toList());
 	}
 	
 	// voor het aantal behandelde tickets per contractType

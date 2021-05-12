@@ -62,9 +62,11 @@ public class SupportManagerController extends Controller {
 	}
 	
 	public void createTicket(LocalDate creaDate, String title, String description,
-			TicketTypeEnum type,String contactpersonName) {
+			TicketTypeEnum type,String contactpersonName, String employeeFristName, String employeeLastName) {
 			ContactPerson contactperson = dm.getContactPersonByUsername(contactpersonName);
-			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson);
+			Employee employee = dm.getEmployeeByFirstAndLastName(employeeFristName, employeeLastName);
+			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson, employee);
+			
 			dm.createTicket(ticket);
 			setTicket(ticket.getTicketNr());
 	}
@@ -131,6 +133,11 @@ public class SupportManagerController extends Controller {
 		List<ContactPerson> li = dm.getAllCompanies().stream().filter(c->c.getCompanyName() == companyName).map(c->c.getContactPersons()).findFirst().orElse(null);
 		List<String> liString = li.stream().map(c->c.getUser().getUserName()).collect(Collectors.toList());
 		return liString;
+	}
+	
+	@Override
+	public List<String> getAllEmployeesCombo(){
+		return dm.getAllEmployees().stream().map(employee -> String.format("%s %s, %s", employee.getFirstName(), employee.getLastName(), employee.getRole())).collect(Collectors.toList());
 	}
 
 }

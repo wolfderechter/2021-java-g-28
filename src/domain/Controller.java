@@ -40,7 +40,7 @@ public class Controller {
 	/////////////////// SupportManagerController//////////////////////////
 	/////////////////////////////////////////////////////////////////////
 
-	public void updateTicket(TicketStatusEnum selectedItem, String text) {
+	public void updateTicket(TicketStatusEnum selectedItem, String text, String first, String last) {
 	}
 
 	public List<String> getAllCompanyNames() {
@@ -51,7 +51,7 @@ public class Controller {
 		return null;
 	}
 
-	public void createTicket(LocalDate value, String text, String text2, TicketTypeEnum value2, String value3) {
+	public void createTicket(LocalDate value, String text, String text2, TicketTypeEnum value2, String value3, String text3, String text4) {
 	}
 
 	public void addReaction(String response) {
@@ -62,5 +62,7 @@ public class Controller {
 	}
 	
 	public void close() {}
+	
+	public List<String> getAllEmployeesCombo(){return null;}
 
 }
