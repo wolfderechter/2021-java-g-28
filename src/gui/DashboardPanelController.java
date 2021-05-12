@@ -9,6 +9,7 @@ import domain.IEmployee;
 import domain.SupportManagerController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -77,6 +78,7 @@ public class DashboardPanelController extends GridPane {
 		setActiveButtonColor(btnCustomer);
 		ContactPersonPanelController cppc = new ContactPersonPanelController(dc);
 		bpDashboard.setCenter(cppc);
+		bpDashboard.setPadding(new Insets(150, 0, 0, 300));
 	}
 
 	private void displayTickets(ActionEvent event) {
@@ -100,12 +102,14 @@ public class DashboardPanelController extends GridPane {
 		setActiveButtonColor(btnEmployee);
 		EmployeePanelController epc = new EmployeePanelController(dc);
 		bpDashboard.setCenter(epc);
+		bpDashboard.setPadding(new Insets(100, 0, 0, 250));
 	}
 	
 	private void displayAccount(ActionEvent event) {
 		setActiveButtonColor(btnUsername);
 		SignedInAccountPanelController sap = new SignedInAccountPanelController(dc);
 		bpDashboard.setCenter(sap);
+		bpDashboard.setPadding(new Insets(0, 0, 0, 500));
 	}
 
 	private void setActiveButtonColor(Button button) {

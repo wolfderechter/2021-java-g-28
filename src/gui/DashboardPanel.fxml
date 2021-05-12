@@ -21,7 +21,7 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane style="-fx-border-color: black; -fx-border-width: 0 1 0 0;">
+      <GridPane prefHeight="702.0" prefWidth="193.0" style="-fx-border-color: black; -fx-border-width: 0 1 0 0;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
@@ -46,7 +46,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="btnUsername" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="172.0" style="-fx-background-color: white;" text="username">
+                  <Button fx:id="btnUsername" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="172.0" style="-fx-background-color: white; -fx-cursor: hand;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="username">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -118,6 +118,6 @@
             </HBox>
          </children>
       </GridPane>
-      <BorderPane fx:id="bpDashboard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+      <BorderPane fx:id="bpDashboard" GridPane.columnIndex="1" />
    </children>
 </fx:root>

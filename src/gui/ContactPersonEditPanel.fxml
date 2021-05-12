@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" prefHeight="800.0" prefWidth="400.0" type="VBox" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox>
          <children>
@@ -62,7 +62,7 @@
                   <TextField fx:id="TxFieldName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="TxFieldAddress" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <ListView fx:id="lstNamen" minWidth="-Infinity" prefHeight="50.0" prefWidth="385.0" GridPane.rowIndex="5" />
+                  <ListView fx:id="lstNamen" minWidth="-Infinity" prefHeight="48.0" prefWidth="362.0" GridPane.rowIndex="5" />
                </children>
             </GridPane>
          </children>
@@ -72,16 +72,19 @@
             <Insets top="5.0" />
          </VBox.margin>
          <children>
-            <TableView fx:id="tvContracts" prefHeight="139.0" prefWidth="400.0">
+            <TableView fx:id="tvContracts" prefHeight="139.0" prefWidth="360.0">
               <columns>
-                <TableColumn fx:id="nrCol" prefWidth="75.0" text="Nr" />
-                <TableColumn fx:id="nameCol" prefWidth="75.0" text="Type" />
-                  <TableColumn fx:id="statusCol" prefWidth="75.0" text="Status" />
+                <TableColumn fx:id="nrCol" prefWidth="120.0" text="Nr" />
+                <TableColumn fx:id="nameCol" prefWidth="138.0" text="Type" />
+                  <TableColumn fx:id="statusCol" prefWidth="142.0" text="Status" />
               </columns>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
             </TableView>
          </children>
       </HBox>
-      <HBox>
+      <HBox prefHeight="139.0" prefWidth="370.0">
          <VBox.margin>
             <Insets bottom="20.0" top="10.0" />
          </VBox.margin>
@@ -92,8 +95,8 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Username" />
@@ -131,7 +134,7 @@
                   </Button>
                </children>
                <padding>
-                  <Insets top="20.0" />
+                  <Insets top="10.0" />
                </padding>
             </GridPane>
          </children>
@@ -141,6 +144,6 @@
       </HBox>
    </children>
    <padding>
-      <Insets left="15.0" />
+      <Insets left="15.0" right="15.0" />
    </padding>
 </fx:root>

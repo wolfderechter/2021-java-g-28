@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root minWidth="900.0" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TableView fx:id="tvEmployees" minWidth="500.0" prefHeight="500.0" prefWidth="600.0">
+      <TableView fx:id="tvEmployees" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" BorderPane.alignment="TOP_LEFT">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="75.0" text="EmployeeId" />
             <TableColumn fx:id="dateInServiceCol" prefWidth="85.60003662109375" text="DateInService" />
@@ -28,7 +28,7 @@
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="TOP_CENTER" prefHeight="100.0">
                <children>
                   <Label contentDisplay="CENTER" text="EMPLOYEES">
                      <font>
@@ -37,8 +37,8 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0" />
-            <ToolBar prefHeight="20.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="20.0" />
+            <ToolBar>
               <items>
                   <Label text="Filter:" />
                   <ChoiceBox prefWidth="100.0" />

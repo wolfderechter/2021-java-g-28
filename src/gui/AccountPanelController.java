@@ -3,7 +3,6 @@ package gui;
 import java.io.IOException;
 
 import domain.Controller;
-import domain.DomainController;
 import domain.IEmployee;
 import domain.LoginController;
 import javafx.event.ActionEvent;
@@ -37,7 +36,6 @@ public class AccountPanelController extends GridPane {
 	@FXML
 	private Label lblLoginError;
 
-	DomainController dc;
 	LoginController lc;
 	
 	public AccountPanelController() {

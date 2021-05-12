@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
@@ -88,7 +89,7 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-       
+        setPadding(new Insets(35, 0, 0, 0));
         fields();
     }
     

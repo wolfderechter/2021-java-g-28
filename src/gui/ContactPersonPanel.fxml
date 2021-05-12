@@ -1,37 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="550.0" prefWidth="350.0" type="BorderPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="900.0" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TableView fx:id="tvCompany" maxHeight="600.0" minHeight="600.0" prefHeight="600.0" prefWidth="399.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tvCompany" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" BorderPane.alignment="TOP_LEFT">
         <columns>
             <TableColumn fx:id="nameCol" prefWidth="100.0" text="Name" />
             <TableColumn fx:id="addressCol" prefWidth="100.0" text="Address" />
             <TableColumn fx:id="telephoneCol" prefWidth="100.0" text="TelephoneNr" />
         </columns>
+         <BorderPane.margin>
+            <Insets top="35.0" />
+         </BorderPane.margin>
       </TableView>
    </center>
    <top>
-      <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Customers">
-               <font>
-                  <Font size="38.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="100.0">
                <children>
-                  <TextField fx:id="txFieldSearch" />
+                  <Label text="Customers">
+                     <font>
+                        <Font size="38.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
+            <ToolBar nodeOrientation="RIGHT_TO_LEFT">
+               <items>
+                  <TextField fx:id="txFieldSearch" />
+               </items>
+            </ToolBar>
          </children>
       </VBox>
    </top>
