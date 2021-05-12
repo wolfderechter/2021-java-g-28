@@ -60,5 +60,7 @@ public class Controller {
 	public IEmployee getEmployee() {
 		return null;
 	}
+	
+	public void close() {}
 
 }

@@ -89,6 +89,7 @@ public class AdministratorController extends Controller {
 		companySubject.removePropertyChangeListener(pcl);
 	}
 
+	@Override
 	public void close() {
 		dm.closePersistentie();
 	}

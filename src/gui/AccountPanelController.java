@@ -67,7 +67,7 @@ public class AccountPanelController extends GridPane {
 				try {
 					signedInUser = getSignedInUser(txtUsername.getText());
 				} catch (IllegalArgumentException e) {
-					lblLoginError.setText(e.toString());
+					lblLoginError.setText(e.getMessage());
 				}
 				showDashboard(lc.getController(signedInUser));
 			} else {

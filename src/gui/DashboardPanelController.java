@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
 public class DashboardPanelController extends GridPane {
 
 	@FXML
-	private Label lblUsername;
+	private Button btnUsername;
 	@FXML
 	private Button btnCustomer;
 	@FXML
@@ -64,7 +64,8 @@ public class DashboardPanelController extends GridPane {
 			btnContractType.setDisable(true);
 		}
 		
-		lblUsername.setText(dc.getEmployee().getUser().getUserName());
+		btnUsername.setText(dc.getEmployee().getUser().getUserName());		
+		btnUsername.setOnAction(this::displayAccount);
 		btnCustomer.setOnAction(this::displayCustomers);
 		btnTickets.setOnAction(this::displayTickets);
 		btnFaq.setOnAction(this::displayFaq);
@@ -100,13 +101,20 @@ public class DashboardPanelController extends GridPane {
 		EmployeePanelController epc = new EmployeePanelController(dc);
 		bpDashboard.setCenter(epc);
 	}
+	
+	private void displayAccount(ActionEvent event) {
+		setActiveButtonColor(btnUsername);
+		SignedInAccountPanelController sap = new SignedInAccountPanelController(dc);
+		bpDashboard.setCenter(sap);
+	}
 
 	private void setActiveButtonColor(Button button) {
 		btnCustomer.setStyle("-fx-text-fill: #7c7c7c;");
 		btnTickets.setStyle("-fx-text-fill: #7c7c7c;");
 		btnEmployee.setStyle("-fx-text-fill: #7c7c7c;");
 		btnFaq.setStyle("-fx-text-fill: #7c7c7c;");
-
+		btnUsername.setStyle("-fx-text-fill: #7c7c7c;");
+		
 		if (button.equals(btnCustomer)) {
 			btnCustomer.setStyle("-fx-text-fill: #000000;");
 		}
@@ -125,6 +133,10 @@ public class DashboardPanelController extends GridPane {
 		
 		if (button.equals(btnContractType)) {
 			btnContractType.setStyle("-fx-text-fill: #000000;");
+		}
+		
+		if(button.equals(btnUsername)) {
+			btnUsername.setStyle("-fx-text-fill: #000000;");
 		}
 	}
 }

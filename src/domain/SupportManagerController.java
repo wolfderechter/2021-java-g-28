@@ -17,27 +17,16 @@ public class SupportManagerController extends Controller {
 	private IEmployee employee;
 	private Ticket ticket;
 	private PropertyChangeSupport ticketSubject;
-	private GenericDao<Ticket> ticketRepo;
 	private DomainManager dm = new DomainManager();
 	private IFaq faq;
-	private GenericDao<Faq> faqRepo;
-	private GenericDao<Contract> contractRepo;
 	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
 	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
 
 	public SupportManagerController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
-		setTicketRepo(new GenericDaoJpa<>(Ticket.class));
-		setFaqRepo(new GenericDaoJpa<>(Faq.class));
-		setContractRepo(new GenericDaoJpa<>(Contract.class));
 		this.employee = emp;
 	}
 	
-	private void setFaqRepo(GenericDao<Faq> faqRepo) {
-		this.faqRepo = faqRepo;
-	}
-	
-
 	public ObservableList<IFaq> getAllFaqs() {
 		ObservableList<Faq> li = dm.getAllFaqs();
 		
@@ -47,25 +36,16 @@ public class SupportManagerController extends Controller {
 	public IEmployee getEmployee() {
 		return this.employee;
 	}
-	
-	private void setContractRepo(GenericDao<Contract> contractRepo) {
-		this.contractRepo = contractRepo;
-	}
 
-	private void setTicketRepo(GenericDao<Ticket> ticketRepo) {
-		this.ticketRepo = ticketRepo;
-	}
-
+	@Override
 	public void close() {
-		GenericDaoJpa.closePersistency();
+		dm.closePersistentie();
 	}
 
 	public void addReaction(String text) {
 		// nog te vervangen met ingelogde usernaam
 		ticket.addReaction(text, false, "Nathan Supp Test");
 		dm.updateTicket(ticket);
-		
-		
 	}
 
 	// nodig voor lijst van contractTypes voor tableview van ContractTypePanel
@@ -104,9 +84,7 @@ public class SupportManagerController extends Controller {
 	//deze methode gaat de lijst filteren die in table van tickets wordt gestoken
 	public void addStatusFilterOnTickets(List<? extends TicketStatusEnum> added) {
 		this.selectedFilterStatusen.addAll(added);
-		
 	}
-
 
 	@Override
 	public void removeStatusFilterOnTickets(List<? extends TicketStatusEnum> removed) {

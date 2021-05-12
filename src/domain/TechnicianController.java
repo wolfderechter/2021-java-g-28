@@ -16,7 +16,6 @@ public class TechnicianController extends Controller {
 	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
 	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
 	private PropertyChangeSupport ticketSubject;
-	
 	private DomainManager dm = new DomainManager();
 	private IEmployee employee;
 	
@@ -30,8 +29,9 @@ public class TechnicianController extends Controller {
 		return this.employee;
 	}
 
+	@Override
 	public void close() {
-		GenericDaoJpa.closePersistency();
+		dm.closePersistentie();
 	}
 
 	@Override
@@ -55,8 +55,6 @@ public class TechnicianController extends Controller {
 		// nog te vervangen met ingelogde usernaam
 		ticket.addReaction(text, false, employee.getUser().getUserName());
 		dm.updateTicket(ticket);
-		
-		
 	}
 
 	@Override
@@ -84,7 +82,6 @@ public class TechnicianController extends Controller {
 	//deze methode gaat de lijst filteren die in table van tickets wordt gestoken
 	public void addStatusFilterOnTickets(List<? extends TicketStatusEnum> added) {
 		this.selectedFilterStatusen.addAll(added);
-		
 	}
 
 	@Override
@@ -115,12 +112,8 @@ public class TechnicianController extends Controller {
 		return liString;
 	}
 	
-	
-	
-
 	// voor het aantal behandelde tickets per contractType
 //	public int getProcessedTicketPerContractType(ContractType type) {
 //
 //	}
-
 }

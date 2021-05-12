@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,13 +10,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: white;" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.0" minWidth="134.0" prefWidth="212.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="995.0" minWidth="10.0" prefWidth="917.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.0" minWidth="134.0" prefWidth="193.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="995.0" minWidth="10.0" prefWidth="807.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -48,21 +46,21 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1">
                <children>
-                  <Label fx:id="lblUsername" text="username" textAlignment="CENTER">
+                  <Button fx:id="btnUsername" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="27.0" prefWidth="172.0" style="-fx-background-color: white;" text="username">
                      <font>
                         <Font size="18.0" />
                      </font>
                      <padding>
                         <Insets left="15.0" />
                      </padding>
-                  </Label>
+                  </Button>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
                <children>
                   <Button fx:id="btnCustomer" mnemonicParsing="false" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="Customer management" textFill="#7c7c7c">
                      <font>
-                        <Font name="Arial Bold" size="16.0" />
+                        <Font name="Arial Bold" size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -74,7 +72,7 @@
                <children>
                   <Button fx:id="btnEmployee" alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="Employee management" textFill="#7c7c7c">
                      <font>
-                        <Font name="Arial Bold" size="16.0" />
+                        <Font name="Arial Bold" size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -108,9 +106,9 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" GridPane.rowIndex="6">
                <children>
-                  <Button fx:id="btnContractType" mnemonicParsing="false" prefHeight="32.0" prefWidth="245.0" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="ContractType management" textFill="#7c7c7c">
+                  <Button fx:id="btnContractType" mnemonicParsing="false" prefHeight="29.0" prefWidth="191.0" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="ContractType management" textFill="#7c7c7c">
                      <font>
-                        <Font name="Arial Bold" size="16.0" />
+                        <Font name="Arial Bold" size="13.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -120,13 +118,6 @@
             </HBox>
          </children>
       </GridPane>
-      <VBox GridPane.columnIndex="1">
-         <children>
-            <BorderPane fx:id="bpDashboard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-         </children>
-         <padding>
-            <Insets left="20.0" />
-         </padding>
-      </VBox>
+      <BorderPane fx:id="bpDashboard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
    </children>
 </fx:root>
