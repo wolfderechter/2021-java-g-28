@@ -1,6 +1,7 @@
 package domain;
 
 import java.beans.Transient;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,24 +46,16 @@ public class ContactPerson {
 //	private ObjectProperty<Company> company;
 	private Company company;
 	@OneToMany
-	private List<Contract> contracts;
+	private List<Contract> contracts = new ArrayList<>();
 	
 	public ContactPerson() {
 		
 	}
 	
-	public ContactPerson(int id, String firstName, String lastName, Company company, List<Notification> notifications) {
-		checkContracts();
-		setId(id);
+	public ContactPerson(String firstName, String lastName, Company company) {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setCompany(company);
-		setNotifications(notifications);
-	}
-	
-	public void checkContracts() {
-		if(contracts.stream().map(c->c.getStatus()).filter(c->c == ContractEnumStatus.Running).count() == 0)
-			throw new IllegalArgumentException("Customer doesn't have an active contract");
 	}
 	
 	public void addNotification(String reaction) {
