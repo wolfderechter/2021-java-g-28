@@ -133,6 +133,7 @@ public class DomainManager {
     	if(faqList == null) {
     		faqList = FXCollections.observableArrayList(faqRepo.getAll());
     	}
+    	faqList.forEach(f -> f.convertSolution());
     	return faqList;
     }
     

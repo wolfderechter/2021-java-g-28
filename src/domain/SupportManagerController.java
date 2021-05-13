@@ -139,5 +139,10 @@ public class SupportManagerController extends Controller {
 	public List<String> getAllEmployeesCombo(){
 		return dm.getAllEmployees().stream().map(employee -> String.format("%s %s, %s", employee.getFirstName(), employee.getLastName(), employee.getRole())).collect(Collectors.toList());
 	}
+	
+	public String[] getSolution(String problem) {
+		faq = getAllFaqs().stream().filter(f -> f.getProblem().equals(problem)).findFirst().get();
+		return faq.getSolutionArray();
+	}
 
 }

@@ -7,11 +7,9 @@ import javafx.collections.ObservableList;
 
 public interface IFaq {
 
-	
-	
 	String getProblem();
 	
-	String[] getSolution();
+	String[] getSolutionArray();
 	
 
 }
