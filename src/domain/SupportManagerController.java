@@ -66,7 +66,6 @@ public class SupportManagerController extends Controller {
 			ContactPerson contactperson = dm.getContactPersonByUsername(contactpersonName);
 			Employee employee = dm.getEmployeeByFirstAndLastName(employeeFristName, employeeLastName);
 			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson, employee);
-			
 			dm.createTicket(ticket);
 			setTicket(ticket.getTicketNr());
 	}

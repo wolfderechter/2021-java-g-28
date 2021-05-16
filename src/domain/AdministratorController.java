@@ -2,6 +2,11 @@ package domain;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,18 +24,19 @@ public class AdministratorController extends Controller {
 	private PropertyChangeSupport contactPersonSubject;
 	private Company company;
 	private PropertyChangeSupport companySubject;
-	private IEmployee employee;
+	private IEmployee loggedInEmployee;
+	private Employee employee;
 	
 	public AdministratorController(IEmployee emp) {
 		companySubject = new PropertyChangeSupport(this);
 		contactPersonSubject = new PropertyChangeSupport(this);
 		employeeSubject = new PropertyChangeSupport(this);
-		this.employee = emp;
+		this.loggedInEmployee = emp;
 	}
 	
 	@Override
 	public IEmployee getEmployee() {
-		return this.employee;
+		return this.loggedInEmployee;
 	}
 
 	public ContactPerson getContactPersonByUsername(String username) {
@@ -144,4 +150,44 @@ public class AdministratorController extends Controller {
 		ObservableList<Employee> li = dm.getEmployeesByName(name);
 		return (ObservableList<IEmployee>) (Object) li;
 	}
+
+	public void createEmployee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive) {
+		User user = dm.getUserByUsername(username);
+		Employee employee = new Employee(creationDate, firstName, lastName, adress, role, phoneNumber, email, username, isActive, user);
+		
+		dm.createEmployee(employee);
+		//dm.createUser??
+		setEmployee(employee.getId());
+	}
+
+	public void createUser(String phoneNumber, String email, String username, String role) {
+		
+		try {
+			get(String.format("https://localhost:44350/Account/CreateUserJava/%s/%s/%s/%s",
+					username, email, phoneNumber, role));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+
+	
+	//Call naar Dotnet
+	private String get(String urlToRead) throws IOException {
+		StringBuilder result = new StringBuilder();
+
+		URL url = new URL(urlToRead);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-Type", "text/plain");
+		conn.setConnectTimeout(5000);
+		conn.setReadTimeout(5000);
+		try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+			result.append(reader.readLine());
+		}
+
+		return result.toString();
+	}
+
 }
