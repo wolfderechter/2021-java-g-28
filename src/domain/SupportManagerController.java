@@ -21,9 +21,10 @@ public class SupportManagerController extends Controller {
 	private PropertyChangeSupport cTypeSubject;
 	private DomainManager dm = new DomainManager();
 	private IFaq faq;
-	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
-	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
- 
+	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<>();
+	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<>();
+	private List<String> statusFilterContractType = new ArrayList<>();
+
 	public SupportManagerController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
 		cTypeSubject = new PropertyChangeSupport(this);
@@ -47,32 +48,17 @@ public class SupportManagerController extends Controller {
 	}
 
 	// nodig voor lijst van contractTypes voor tableview van ContractTypePanel
-	public ObservableList<ContractType> getAllContractTypes() {
-		List<ContractType> li = dm.getAllContractTypes();
-		ObservableList<ContractType> obListContractTypes = FXCollections.observableList(li);
-		return obListContractTypes;
-	}
+	
 
 	public ObservableList<Contract> getAllContracts() {
 		List<Contract> li = dm.getAllContracts();
 		ObservableList<Contract> obListContracts = FXCollections.observableList(li);
 		return obListContracts;
 	}
-<<<<<<< Upstream, based on branch 'main' of https://github.com/HoGentProjectenII/2021-java-g-28
-	
-	public void createTicket(LocalDate creaDate, String title, String description,
-			TicketTypeEnum type,String contactpersonName, String employeeFristName, String employeeLastName) {
-			ContactPerson contactperson = dm.getContactPersonByUsername(contactpersonName);
-			Employee employee = dm.getEmployeeByFirstAndLastName(employeeFristName, employeeLastName);
-			Ticket ticket = new Ticket(creaDate,title,description,type,contactperson, employee);
-			dm.createTicket(ticket);
-			setTicket(ticket.getTicketNr());
-=======
 
 	public ObservableList<IFaq> getAllFaqs() {
 		ObservableList<Faq> li = dm.getAllFaqs();
 		return (ObservableList<IFaq>) (Object) li;
->>>>>>> c3cd69a create contract implemented
 	}
 
 	public void createTicket(LocalDate creaDate, String title, String description, TicketTypeEnum type,
@@ -86,17 +72,40 @@ public class SupportManagerController extends Controller {
 
 	public void createContractType(String name, int maxResponse, ContractTypeCreationMethod creationMethod,
 			boolean is24Hours, int duration, double price) {
-		ContractType contractType = new ContractType(name,creationMethod,is24Hours,maxResponse,duration,price);
+		ContractType contractType = new ContractType(name, creationMethod, is24Hours, maxResponse, duration, price);
 		dm.createContractType(contractType);
-				
-		
-		
 
 	}
 
 	@Override
 	// nodig voor lijst van tickets voor tableview van ticketPanel
 	public ObservableList<ITicket> getFilteredTickets() {
+		ObservableList<Ticket> li = dm.getAllTickets();
+		li = li.stream().filter(t -> this.selectedFilterTypes.contains(t.getType()))
+				.filter(t -> this.selectedFilterStatusen.contains(t.getStatus()))
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		System.out.println(li);
+		return (ObservableList<ITicket>) (Object) li;
+	}
+	
+	public ObservableList<IContractType> getFilteredContractTypes() {
+		boolean getAll = statusFilterContractType.contains("Active") && statusFilterContractType.contains("Inactive");
+		boolean getActive = statusFilterContractType.contains("Active");
+		boolean getInActive = statusFilterContractType.contains("Inactive");
+		List<ContractType> li = dm.getAllContractTypes();
+		if(getAll) {
+				ObservableList<ContractType> obListContractTypes = FXCollections.observableList(li);
+				return (ObservableList<IContractType>) (Object) obListContractTypes;
+			}else if(getActive){
+			return li.stream().filter(c->c.isActive() == true).collect(Collectors.toCollection(FXCollections::observableArrayList));
+			}else if(getInActive) {
+				return li.stream().filter(c->c.isActive() == false).collect(Collectors.toCollection(FXCollections::observableArrayList));
+			}else {
+				List<IContractType> emptyList = new ArrayList<>();
+				return FXCollections.observableArrayList(emptyList);
+			}
+		}
+	public ObservableList<ITicket> getFiltererdTickets(){
 		ObservableList<Ticket> li = dm.getAllTickets();
 		li = li.stream().filter(t -> this.selectedFilterTypes.contains(t.getType()))
 				.filter(t -> this.selectedFilterStatusen.contains(t.getStatus()))
@@ -124,6 +133,14 @@ public class SupportManagerController extends Controller {
 	@Override
 	public void removeTypeFilterOnTickets(List<? extends TicketTypeEnum> removed) {
 		this.selectedFilterTypes.removeAll(removed);
+	}
+
+	public void addStatusFilterOnContractType(List<? extends String> addList) {
+		statusFilterContractType.addAll(addList);
+	}
+
+	public void RemoveStatusFilterOnContractType(List<? extends String> removeList) {
+		statusFilterContractType.removeAll(removeList);
 	}
 
 	@Override
