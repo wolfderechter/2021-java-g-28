@@ -25,8 +25,6 @@ public class StartUp extends Application {
 //		Controller dc = new TechnicianController();
 //		IEmployee g = new Employee();
 
-
-		
 		IEmployee d = new Employee();
 		Controller dc = new AdministratorController(d);
 		

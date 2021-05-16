@@ -200,6 +200,13 @@ public class DomainManager {
         ticketList.add(ticket);
 	}
 	
+	public void createContractType(ContractType contractType) {
+		GenericDaoJpa.startTransaction();
+		contractTypeRepo.insert(contractType);
+        GenericDaoJpa.commitTransaction();
+        contractTypeList.add(contractType);
+	}
+	
 	public void updateTicket(Ticket ticket) 
 	{
 		GenericDaoJpa.startTransaction();

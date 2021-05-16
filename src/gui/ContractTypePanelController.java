@@ -1,10 +1,8 @@
 package gui;
 
-import java.io.IOException;
 
+import java.io.IOException;
 import domain.ContractType;
-import domain.Controller;
-import domain.DomainController;
 import domain.SupportManagerController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,13 +38,14 @@ public class ContractTypePanelController extends BorderPane{
         tvContractTypes.setItems(this.dc.getAllContractTypes());
 		//toevoegen edit panel
 		ContractTypeEditPanelController cepc = new ContractTypeEditPanelController(this.dc);
+		dc.addContractTypeListener(cepc);
 		setRight(cepc);
 		tvContractTypes.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, vorigContractType, selectedContractType) -> 
 		{
 		//Controleer of er een ContractType is geselecteerd
 		if (selectedContractType!= null) {
-			cepc.changeContractType(selectedContractType);
+			dc.setContractType(selectedContractType.getName());
 			}
 		});
 	}
