@@ -43,14 +43,11 @@ public class Ticket implements ITicket {
 	private ContactPerson contactPerson;
 	private String picturePath;
 
-
-	 
 	@OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
 	private List<Reaction> reactions;
 	@ManyToOne
 	@JoinColumn(name = "companyNr")
 	private Company company;
-
 
 	@ManyToOne
 	@JoinColumn(name = "employeenr")
@@ -61,16 +58,22 @@ public class Ticket implements ITicket {
 	}
 	
 	public Ticket(LocalDate creaDate, String title, String description,
-			TicketTypeEnum type,ContactPerson contactperson, IEmployee emp) {
+			TicketTypeEnum type,ContactPerson cp, IEmployee emp) {
+		checkContracts(cp);
 		setDateCreation(creaDate);
 		setTitle(title);
 		setDescription(description);
 		setType(type);
-		setContactPerson(contactperson);
+		setContactPerson(cp);
 		setStatus(TicketStatusEnum.Created);
 		setEmployee((Employee) emp);
 	}
 
+	public void checkContracts(ContactPerson cp) {
+		if(cp.getContracts().stream().map(c->c.getStatus()).filter(c->c == ContractEnumStatus.Running).count() == 0)
+			throw new IllegalArgumentException("Customer doesn't have an active contract");
+	}
+	
 	public Reaction addReaction(String text, boolean isSolution, String nameUser) {
 		Reaction reaction = new Reaction(text, isSolution, nameUser, this);
 		reactions.add(reaction);

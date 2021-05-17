@@ -72,6 +72,9 @@ public class SupportManagerController extends Controller {
 
 	public void createContractType(String name, int maxResponse, ContractTypeCreationMethod creationMethod,
 			boolean is24Hours, int duration, double price) {
+		if(dm.getAllContractTypes().stream().map(c->c.getName()).anyMatch(c->c==name)) {
+			throw new IllegalArgumentException("there already exist a contract type with that name");
+		}
 		ContractType contractType = new ContractType(name, creationMethod, is24Hours, maxResponse, duration, price);
 		dm.createContractType(contractType);
 

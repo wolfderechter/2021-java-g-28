@@ -68,12 +68,12 @@ public class TicketPanelController extends BorderPane {
 					if (c.wasAdded()) {
 						
 						dc.addStatusFilterOnTickets(c.getAddedSubList());
-						vervangTableViewData();
+						replaceTableViewData();
 					}
 					if (c.wasRemoved()) {
 						//System.out.println(c.getRemoved());
 						dc.removeStatusFilterOnTickets(c.getRemoved());
-						vervangTableViewData();
+						replaceTableViewData();
 					}
 					// c.wasPermutated();
 					// c.wasReplaced();
@@ -90,12 +90,12 @@ public class TicketPanelController extends BorderPane {
 					if (c.wasAdded()) {
 
 						dc.addTypeFilterOnTickets(c.getAddedSubList());
-						vervangTableViewData();
+						replaceTableViewData();
 					}
 					if (c.wasRemoved()) {
 						
 						dc.removeTypeFilterOnTickets(c.getRemoved());
-						vervangTableViewData();
+						replaceTableViewData();
 					}
 					// c.wasPermutated();
 					// c.wasReplaced();
@@ -103,7 +103,7 @@ public class TicketPanelController extends BorderPane {
 				}
 		});
 		lstTypes.getSelectionModel().selectAll();
-		vervangTableViewData();
+		replaceTableViewData();
 		// toevoegen edit panel
 		TicketEditPanelController tepc = new TicketEditPanelController(dc);
 		dc.addTicketListener(tepc);
@@ -117,7 +117,7 @@ public class TicketPanelController extends BorderPane {
 				});		
 	}
 
-	private void vervangTableViewData() {
+	private void replaceTableViewData() {
 		// aanmaak tableview + data
 		ticketNrCol.setCellValueFactory(cellData -> cellData.getValue().TicketNr());
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
