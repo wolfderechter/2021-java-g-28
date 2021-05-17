@@ -11,6 +11,7 @@ import domain.Company;
 import domain.ContactPerson;
 import domain.Contract;
 import domain.ContractEnumStatus;
+import domain.Controller;
 import domain.DomainController;
 import domain.ICompany;
 import javafx.collections.FXCollections;
@@ -21,10 +22,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -73,14 +77,19 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 
 	    @FXML
 	    private CheckBox checkBoxStatus;
+	    
+	    @FXML
+	    private Button btnCreateCompany;
 
+	    @FXML
+	    private DatePicker datePickerDateInService;
     
     private ICompany company;
     
-    private AdministratorController dc;
+    private Controller dc;
 	
-    public ContactPersonEditPanelController(AdministratorController dc2) {
-    	this.dc = dc2;
+    public ContactPersonEditPanelController(Controller dc2) {
+    	this.dc = (AdministratorController) dc2;
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactPersonEditPanel.fxml"));
         loader.setController(this);
        loader.setRoot(this);
@@ -91,6 +100,7 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
         }
         setPadding(new Insets(35, 0, 0, 0));
         fields();
+        btnCreateCompany.setOnAction(this::createCompanyStart);
     }
     
     private void saveCompany(ActionEvent actionEvent) {
@@ -117,7 +127,6 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	}
 	
 	private void fields() {
-		
 		
 		
 		if(company != null) {
@@ -148,20 +157,45 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().getContractType().Name());
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
 		tvContracts.setItems(FXCollections.observableArrayList(this.company.getContracts()));
-		
+		datePickerDateInService.setValue(company.getCustomerInitDate());
 		TxFieldUsername.setText(company.getCompanyName());
 		checkBoxStatus.setSelected(company.getStatus());
 		btnCancel.setOnAction(this::cancelDetails);
-			
-			//TxFieldFirstName.setText(company.getContactPersons().getFirstName());
+		
 			}
-	
 		
-		
-		//TxFieldStreet.setText(contactPerson.FirstName().getValue().toString());
 		
 	}
 	
+	private void createCompanyStart(ActionEvent event) {
+		TxFieldName.clear();
+		TxFieldAddress.clear();
+		TxFieldFirstName.clear();
+		TxFieldLastName.clear();
+		TxFieldEMail.clear();
+		//btnSave.setOnAction(this::createCompany);
+		//btnSave.setOnAction(this::createCompany);
+		btnCancel.setOnAction(this::cancelDetails);
+		btnSave.setText("Create company");
+		btnCreateCompany.setOnAction(this::createCompany);
+		
+	}
+	
+	private void createCompany(ActionEvent event) {
+		try {
+			System.out.println(datePickerDateInService.getValue().toString());
+			dc.createCompany(TxFieldName.getText(), TxFieldAddress.getText(), datePickerDateInService.getValue(), true);
+			dc.createContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText(), TxFieldEMail.getText(), TxFieldName.getText());
+			System.out.println("tesdst");
+		}catch(Exception ex) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Test");
+			alert.setHeaderText("test");
+			alert.setContentText(ex.getMessage());
+			alert.showAndWait();
+		}
+		
+	}
 
     
 }

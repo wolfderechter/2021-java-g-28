@@ -191,6 +191,20 @@ public class DomainManager {
         ticketList.add(ticket);
 	}
 	
+	public void createCompany(Company company) {
+		GenericDaoJpa.startTransaction();
+		companyRepo.insert(company);
+		GenericDaoJpa.commitTransaction();
+		companyList.add(company);
+	}
+	
+	public void createContactPerson(ContactPerson contactPerson) {
+		GenericDaoJpa.startTransaction();
+		contactPersonRepo.insert(contactPerson);
+		GenericDaoJpa.commitTransaction();
+		contactPersonList.add(contactPerson);
+	}
+	
 	public void updateTicket(Ticket ticket) 
 	{
 		GenericDaoJpa.startTransaction();
@@ -219,5 +233,12 @@ public class DomainManager {
 	
 	public Employee getEmployeeByFirstAndLastName(String first, String last) {
 		return employeeRepo.getAll().stream().filter(e -> e.getFirstName().equals(first) && e.getLastName().equals(last)).findFirst().orElse(null);
+	}
+	
+	public Company getCompanyByCompanyName(String companyName) {
+		if (companyList == null) {
+			
+		}
+		return companyList.stream().filter(c -> c.getCompanyName().equals(companyName)).findFirst().get();
 	}
 }

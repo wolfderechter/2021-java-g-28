@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.Company;
 import domain.ContactPerson;
+import domain.IContactPerson;
 import domain.Ticket;
 import domain.TicketTypeEnum;
 import domain.TicketStatusEnum;
@@ -27,7 +28,7 @@ class TicketTest {
 	@Test
 	void nieuwTicketHeeftContactPersonMetActiefContractNodig() {
 		Company comp = new Company();
-		ContactPerson cp = new ContactPerson("Test","ContactPerson",comp);
+		IContactPerson cp = new ContactPerson("Test","ContactPerson",comp);
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {new Ticket(LocalDate.now(),"test Ticket","ticket voor te testen",TicketTypeEnum.NoImpact,cp);});
 	}
 	

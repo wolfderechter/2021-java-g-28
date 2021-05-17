@@ -33,8 +33,8 @@ public class AdministratorController extends Controller {
 		return this.employee;
 	}
 
-	public ContactPerson getContactPersonByUsername(String username) {
-		ContactPerson cp = dm.getContactPersonByUsername(username);
+	public IContactPerson getContactPersonByUsername(String username) {
+		IContactPerson cp = dm.getContactPersonByUsername(username);
 		return cp;
 	}
 	public void setContactPerson(int contactPersonIndex) {
@@ -69,7 +69,6 @@ public class AdministratorController extends Controller {
 	public void updateCompany(String name, String address) {
 		company.setCompanyAdress(address);
 		company.setCompanyName(name);
-
 		dm.updateCompany(name, address, company);
 		
 	}
@@ -80,6 +79,19 @@ public class AdministratorController extends Controller {
 
 	}
 	
+	public void createCompany(String companyName, String companyAddress, LocalDate date, Boolean status/*, String contactPersonFirstName, String contactPersonLastName, String username*/ ) {
+		Company company = new Company(companyName, companyAddress, date, status);
+		
+		dm.createCompany(company);
+		setCompany(company.getCompanyNr());
+	}
+	
+	public void createContactPerson(String firstName, String lastName, String email, String companyName) {
+	//	Company company = (Company) dm.getCompaniesByName(companyName);
+		ContactPerson contactPerson = new ContactPerson(firstName, lastName, email);
+		dm.createContactPerson(contactPerson);
+		setContactPerson(contactPerson.getId());
+	}
 	
 	public void addCompanyListener(PropertyChangeListener pcl) {
 		companySubject.addPropertyChangeListener(pcl);
