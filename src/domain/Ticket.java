@@ -43,7 +43,7 @@ public class Ticket implements ITicket {
 	private ContactPerson contactPerson;
 	private String picturePath;
 
-
+	
 	 
 	@OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
 	private List<Reaction> reactions;
