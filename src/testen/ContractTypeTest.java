@@ -36,12 +36,13 @@ class ContractTypeTest {
 					});
 	}
 	
-//	@ParameterizedTest
-//	@ValueSource
-//	public void createContractTypeWithInvalidData() {
-//		
-//	} 
+	@ParameterizedTest
 	
+	public void createContractTypeWithInvalidData() {
+		
+	} 
+			
+
 	
 
 }

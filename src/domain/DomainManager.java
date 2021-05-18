@@ -264,4 +264,8 @@ public class DomainManager {
     			.filter(e -> e.getUsername().toLowerCase().contains(username.toLowerCase()))
     			.collect(Collectors.toCollection(FXCollections::observableArrayList));
 	}
+
+
+
+	
 }

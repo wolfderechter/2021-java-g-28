@@ -62,18 +62,60 @@ public class ContractTypeEditPanelController extends GridPane implements Propert
             throw new RuntimeException(ex);
         }
         btnCancel.setOnAction(this::cancelChanges);
-		btnSave.setOnAction(this::saveChangesCt);
-		btnCreate.setOnAction(this::CreateContractType);
+        btnSave.setText("Make Changes");
+		btnSave.setOnAction(this::saveChangesStart);
+		btnCreate.setOnAction(this::createContractTypeStart);
+	}
+	
+	public void createContractTypeStart(ActionEvent event) {
+		makeEverythingEditable();
+		txtName.clear();
+		txtMaxResponse.clear();
+		cmbCreationMethod.getSelectionModel().select(1);
+		chk24HSupport.setSelected(false);
+		txtDuration.clear();
+		txtPrice.clear();;
+		btnCreate.setOnAction(this::createContractType);
+		btnCreate.setText("Create");
 		
 	}
 	
-	public void saveChangesCt(ActionEvent event) {
-		
+	public void createContractType(ActionEvent event) {
+		try {
+			dc.createContractType(txtName.getText(), Integer.parseInt(txtMaxResponse.getText()),cmbCreationMethod.getSelectionModel().getSelectedItem(),
+					chk24HSupport.isSelected(),Integer.parseInt(txtDuration.getText()),Double.parseDouble(txtPrice.getText()));
+			resetFields();
+		} catch (Exception ex) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning Dialog");
+			alert.setHeaderText("Something went wrong creating the contracttype");
+			alert.setContentText(ex.getMessage());
+			alert.showAndWait();
+		}
+	}
+	
+	public void saveChangesStart(ActionEvent event) {
+		if(cType.Amount().getValue() == 0){
+			makeEverythingEditable();
+		}
+		chkActive.setDisable(false);
+		btnSave.setText("Save Changes");
+		btnSave.setOnAction(this::saveChanges);
+	}
+	
+	public void saveChanges(ActionEvent event) {
+		if(cType.Amount().getValue() != 0){
+			dc.SaveStatusContractType(chkActive.isSelected());
+		}else {
+			dc.saveAllContractType(txtName.getText(),txtMaxResponse.getText(),cmbCreationMethod.getSelectionModel().getSelectedItem(),
+					chk24HSupport.isSelected(),txtDuration.getText(),txtPrice.getText(),chkActive.isSelected());
+		}
 	}
 	
 	public void cancelChanges(ActionEvent event) {
 		resetFields();
 	}
+	
 	//gaat alle textboxen opvullen met data van contractType
 	public void resetFields() {
 		txtName.setText(cType.getName());
@@ -85,20 +127,28 @@ public class ContractTypeEditPanelController extends GridPane implements Propert
 		txtDuration.setText(Integer.toString(cType.getMinDuration()));
 		txtPrice.setText(Double.toString(cType.getPrice()));
 		lblAmount.setText(cType.Amount().getValue().toString());
+		chkActive.setDisable(true);
+		//alles op disabled buiten active
+		txtName.setDisable(true);
+		txtMaxResponse.setDisable(true);
+		cmbCreationMethod.setDisable(true);
+		chk24HSupport.setDisable(true);
+		txtDuration.setDisable(true);
+		txtPrice.setDisable(true);
+		lblAmount.setDisable(true);
+		btnCancel.setOnAction(this::cancelChanges);
+        btnSave.setText("Make Changes");
+		btnSave.setOnAction(this::saveChangesStart);
+		btnCreate.setOnAction(this::createContractTypeStart);
 	}
 	
-	public void CreateContractType(ActionEvent event) {
-		try {
-			dc.createContractType(txtName.getText(), Integer.parseInt(txtMaxResponse.getText()),cmbCreationMethod.getSelectionModel().getSelectedItem(),
-					chk24HSupport.isSelected(),Integer.parseInt(txtDuration.getText()),Double.parseDouble(txtPrice.getText()));
-			resetFields();
-		} catch (Exception ex) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Warning Dialog");
-			alert.setHeaderText("Something went wrong creatign the contracttype");
-			alert.setContentText(ex.getMessage());
-			alert.showAndWait();
-		}
+	private void makeEverythingEditable() {
+		txtName.setDisable(false);
+		txtMaxResponse.setDisable(false);
+		cmbCreationMethod.setDisable(false);
+		chk24HSupport.setDisable(false);
+		txtDuration.setDisable(false);
+		txtPrice.setDisable(false);
 	}
 	
 	@Override
