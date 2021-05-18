@@ -51,9 +51,26 @@ public class Employee implements IEmployee {
 		
 	}
 	
-	
+	public Employee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive, User user) {
+		setDateInService(creationDate);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setAdress(adress);
+		setRole(role);
+		//setPhoneNumber(phoneNumber);
+		//setEmail(email);
+		//setUsername(username);
+		setStatus(isActive);
+		setUser(user);
+	}
+
+
 	public User getUser() {
 		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public String getEmail() {
@@ -79,12 +96,16 @@ public class Employee implements IEmployee {
 
 	@Override
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Access(AccessType.PROPERTY)
-	public int getId() {
-		return id.intValue();
+	public Integer getId() {
+		if(id != null) {
+			return id.intValue();
+		}
+		return null;
 	}
-	@Override
-	public void setId(int id) {
+	
+	public void setId(Integer id) {
 		this.id = new SimpleIntegerProperty(id);
 	}
 	
@@ -98,7 +119,7 @@ public class Employee implements IEmployee {
 	public String getFirstName() {
 		return firstName.getValue();
 	}
-	@Override
+	
 	public void setFirstName(String firstName) {
 		this.firstName = new SimpleStringProperty(firstName);
 	}
@@ -113,7 +134,7 @@ public class Employee implements IEmployee {
 	public String getLastName() {
 		return lastName.getValue();
 	}
-	@Override
+	
 	public void setLastName(String lastName) {
 		this.lastName = new SimpleStringProperty(lastName);
 	}
@@ -128,7 +149,7 @@ public class Employee implements IEmployee {
 	public String getAdress() {
 		return adress.getValue();
 	}
-	@Override
+	
 	public void setAdress(String adress) {
 		this.adress = new SimpleStringProperty(adress);
 	}
@@ -143,7 +164,7 @@ public class Employee implements IEmployee {
 	public LocalDate getDateInService() {
 		return dateInService.getValue();
 	}
-	@Override
+	
 	public void setDateInService(LocalDate dateInService) {
 		this.dateInService = new SimpleObjectProperty<LocalDate>(dateInService);
 	}
@@ -159,7 +180,7 @@ public class Employee implements IEmployee {
 	public String getRole() {
 		return role.getValue();
 	}
-	@Override
+	
 	public void setRole(String role) {
 		this.role = new SimpleStringProperty(role);
 	}

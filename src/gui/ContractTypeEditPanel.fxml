@@ -70,6 +70,11 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </TextField>
+      <ComboBox fx:id="cmbCreationMethod" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </ComboBox>
       <TextField fx:id="txtMaxResponse" prefHeight="25.0" prefWidth="334.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -85,22 +90,6 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </TextField>
-      <Button fx:id="btnSave" mnemonicParsing="false" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="9">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="9">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <GridPane.margin>
-            <Insets bottom="10.0" left="70.0" />
-         </GridPane.margin>
-      </Button>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
             <CheckBox fx:id="chk24HSupport" mnemonicParsing="false" text="24HR support" textAlignment="CENTER">
@@ -124,10 +113,36 @@
             <Label fx:id="lblAmount" text="Label" />
          </children>
       </HBox>
-      <ComboBox fx:id="cmbCreationMethod" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+         <children>
+            <Button fx:id="btnSave" mnemonicParsing="false" text="Save">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnCreate" mnemonicParsing="false" prefHeight="44.0" prefWidth="94.0" text="Create">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
          <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </GridPane.margin>
-      </ComboBox>
+      </HBox>
    </children>
 </fx:root>

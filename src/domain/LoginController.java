@@ -48,7 +48,6 @@ public class LoginController {
 	}
 	
 	public Controller getController(IEmployee emp) {
-		System.out.println(emp.getRole());
 		switch (emp.getRole()) {
 		case "AD": return new AdministratorController(emp);
 		case "SM": return new SupportManagerController(emp);
