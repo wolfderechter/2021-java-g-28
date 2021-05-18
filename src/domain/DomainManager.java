@@ -107,10 +107,6 @@ public class DomainManager {
 		this.userRepo = userRepo;
 	}
 
-	// goede methode
-//	public void closePersistentie() {
-//        GenericDaoJpa.closePersistency();
-//    }
 
     public List<ContactPerson> getAllContactPersons() {
         if(contactPersonList == null) {
@@ -145,13 +141,7 @@ public class DomainManager {
     	faqList.forEach(f -> f.convertSolution());
     	return faqList;
     }
-    
-//    public List<Contract> getAllContracts() {
-//    	if (contractRepo == null) {
-//    		contractList = contractRepo.getAll();
-//    	}
-//    	return contractList;
-//    }
+   
     
     public ObservableList<Employee> getAllEmployees() {
         if(employeeList == null) {
@@ -205,6 +195,12 @@ public class DomainManager {
 		contractTypeRepo.insert(contractType);
         GenericDaoJpa.commitTransaction();
         contractTypeList.add(contractType);
+	}
+	
+	public void updateContractType(ContractType cType) {
+		GenericDaoJpa.startTransaction();
+		contractTypeRepo.update(cType);
+		GenericDaoJpa.commitTransaction();
 	}
 	
 	public void updateTicket(Ticket ticket) 
@@ -264,6 +260,10 @@ public class DomainManager {
     			.filter(e -> e.getUsername().toLowerCase().contains(username.toLowerCase()))
     			.collect(Collectors.toCollection(FXCollections::observableArrayList));
 	}
+
+
+
+	
 
 
 
