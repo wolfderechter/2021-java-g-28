@@ -8,7 +8,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +29,8 @@ public class AdministratorController extends Controller {
 	private PropertyChangeSupport companySubject;
 	private IEmployee loggedInEmployee;
 	private Employee employee;
+	private List<String> selectedFilterStatusen = new ArrayList<>();
+	private List<String> selectedFilterRoles = new ArrayList<>();
 	
 	public AdministratorController(IEmployee emp) {
 		companySubject = new PropertyChangeSupport(this);
@@ -150,13 +155,16 @@ public class AdministratorController extends Controller {
 		ObservableList<Employee> li = dm.getEmployeesByName(name);
 		return (ObservableList<IEmployee>) (Object) li;
 	}
+	public ObservableList<IEmployee> getEmployeesByUsername(String username) {
+		ObservableList<Employee> li = dm.getEmployeesByUsername(username);
+		return (ObservableList<IEmployee>) (Object) li;
+	}
 
 	public void createEmployee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive) {
 		User user = dm.getUserByUsername(username);
 		Employee employee = new Employee(creationDate, firstName, lastName, adress, role, phoneNumber, email, username, isActive, user);
 		
 		dm.createEmployee(employee);
-		//dm.createUser??
 		setEmployee(employee.getId());
 	}
 
@@ -189,5 +197,37 @@ public class AdministratorController extends Controller {
 
 		return result.toString();
 	}
+
+	
+	public void addStatusFilterOnEmployee(List<? extends String> added) {
+		this.selectedFilterStatusen.addAll(added);
+	}
+
+	public void RemoveStatusFilterOnEmployee(List<? extends String> removed) {
+		this.selectedFilterStatusen.removeAll(removed);
+
+	}
+
+	public ObservableList<IEmployee> getFilteredEmployees() {
+		ObservableList<Employee> li = dm.getAllEmployees();
+		li = li.stream()
+				.filter(e -> this.selectedFilterRoles.contains(e.getRole()))
+				.filter(e -> this.selectedFilterStatusen.contains(e.getStatus() ? "Active" : "Inactive"))
+				.sorted(Comparator.comparing(Employee::getLastName))
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		return (ObservableList<IEmployee>) (Object) li;
+	}
+
+	public void addRoleFilterOnEmployee(List<? extends String> added) {
+		this.selectedFilterRoles.addAll(added);
+
+	}
+
+	public void RemoveRoleFilterOnEmployee(List<? extends String> removed) {
+		this.selectedFilterRoles.removeAll(removed);
+	}
+
+
+
 
 }

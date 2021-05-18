@@ -253,4 +253,15 @@ public class DomainManager {
     	return userList.stream()
     			.filter(u -> u.getUserName().equals(username)).findFirst().get();
 	}
+
+
+
+	public ObservableList<Employee> getEmployeesByUsername(String username) {
+		if(employeeList == null) {
+	    	employeeList = FXCollections.observableArrayList(employeeRepo.getAll());
+		}
+    	return employeeList.stream()
+    			.filter(e -> e.getUsername().toLowerCase().contains(username.toLowerCase()))
+    			.collect(Collectors.toCollection(FXCollections::observableArrayList));
+	}
 }
