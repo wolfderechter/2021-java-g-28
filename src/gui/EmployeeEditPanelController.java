@@ -4,14 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 import domain.AdministratorController;
-import domain.ContactPerson;
-import domain.DomainController;
-import domain.Employee;
 import domain.IEmployee;
-import domain.TicketStatusEnum;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

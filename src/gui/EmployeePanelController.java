@@ -1,17 +1,12 @@
 package gui;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
 import domain.AdministratorController;
-import domain.ContactPerson;
 import domain.Controller;
-import domain.DomainController;
 import domain.Employee;
 import domain.IEmployee;
 import javafx.collections.FXCollections;
@@ -23,9 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 public class EmployeePanelController extends BorderPane {

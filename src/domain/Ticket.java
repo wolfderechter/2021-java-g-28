@@ -59,7 +59,7 @@ public class Ticket implements ITicket {
 	}
 	
 	public Ticket(LocalDate creaDate, String title, String description,
-			TicketTypeEnum type,ContactPerson cp, IEmployee emp) {
+			TicketTypeEnum type,ContactPerson cp, Employee emp) {
 		checkContracts(cp);
 		setDateCreation(creaDate);
 		setTitle(title);
@@ -67,11 +67,11 @@ public class Ticket implements ITicket {
 		setType(type);
 		setContactPerson(cp);
 		setStatus(TicketStatusEnum.Created);
-		setEmployee((Employee) emp);
+		setEmployee(emp);
 	}
 	
 	public void checkContracts(ContactPerson cp) {
-		if(cp.getContracts().stream().map(c->c.getStatus()).filter(c->c == ContractEnumStatus.Running).count() == 0)
+		if(cp.getCompany().getContracts().stream().map(c->c.getStatus()).filter(c->c == ContractEnumStatus.Running).count() == 0)
 			throw new IllegalArgumentException("Customer doesn't have an active contract");
 	}
 	
@@ -213,14 +213,6 @@ public class Ticket implements ITicket {
 	}
 
 	
-//	public Employee getEmployee() {
-//		return this.employee;
-//	}
-//	
-//	public void setEmployee(Employee employee) {
-//		this.employee = employee;
-//	}
-
 	public Company getCompany() {
 		return company;
 	}
@@ -231,7 +223,7 @@ public class Ticket implements ITicket {
 	}
 	
 	public Employee getEmployee() {
-		return this.employee;
+		return employee;
 	}
 	
 	public void setEmployee(Employee emp) {
