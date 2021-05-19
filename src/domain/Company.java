@@ -102,6 +102,9 @@ public class Company implements ICompany {
     }
     
     public void setCompanyName(String companyName) {
+    	if (companyName == null || companyName.isEmpty()) {
+    		throw new IllegalArgumentException("The company name has to be filled in");
+    	}
     	this.companyName = new SimpleStringProperty(companyName);
     }
       

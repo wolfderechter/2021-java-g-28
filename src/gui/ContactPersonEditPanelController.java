@@ -132,15 +132,15 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
     }
     
     private void saveCompany(ActionEvent actionEvent) {
-    	this.dc.updateCompany(TxFieldName.getText(), TxFieldAddress.getText());
+    	this.dc.updateCompany(TxFieldName.getText(), TxFieldAddress.getText(), checkBoxStatus.isSelected());
     
     }
     
-    private void saveContactPerson(ActionEvent actionEvent) {
-    		this.dc.updateContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText(), TxFieldEMail.getText());
-
-    }
-    
+//    private void saveContactPerson(ActionEvent actionEvent) {
+//    		this.dc.updateContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText(), TxFieldEMail.getText());
+//
+//    }
+//    
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -168,7 +168,7 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 			
 		btnSave.setOnAction(e-> {
 				this.saveCompany(e);
-				this.saveContactPerson(e);
+				//this.saveContactPerson(e);
 			});
 		nrCol.setCellValueFactory(cellData -> cellData.getValue().ContractNr());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().getContractType().Name());
