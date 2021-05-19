@@ -39,4 +39,7 @@ public interface ITicket {
 	List<Reaction> getReactions();
 	
 	Employee getEmployee();
+	
+	LocalDate getResolvedDate();
+	
 }

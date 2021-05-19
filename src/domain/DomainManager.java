@@ -128,6 +128,11 @@ public class DomainManager {
         return ticketList;
     }
     
+    //kpi
+    public List<Ticket> getAllTicketsAsList(){
+    	return ticketRepo.getAll();
+    }
+    
     public ObservableList<Company> getAllCompanies() {
     	if(companyList == null) {
     		companyList = FXCollections.observableArrayList(companyRepo.getAll());
