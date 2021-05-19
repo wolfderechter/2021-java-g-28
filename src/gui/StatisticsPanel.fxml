@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root prefHeight="604.0" prefWidth="620.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="69.0" layoutY="14.0" text="Company">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="chbCompany" layoutX="69.0" layoutY="56.0" prefHeight="25.0" prefWidth="180.0" />
+      <Label layoutX="69.0" layoutY="99.0" text="Amount  of tickets : " />
+      <Label fx:id="lblTicketsAmount" layoutX="184.0" layoutY="99.0" text="0" />
+      <LineChart fx:id="lnChart" layoutX="60.0" layoutY="134.0" prefHeight="382.0" prefWidth="514.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+   </children>
+</fx:root>

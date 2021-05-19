@@ -80,9 +80,20 @@ public class DashboardPanelController extends GridPane {
 		btnFaq.setOnAction(this::displayFaq);
 		btnEmployee.setOnAction(this::displayEmployees);
 		btnContractType.setOnAction(this::displayContractType);
+<<<<<<< HEAD
 		btnKpi.setOnAction(this::displayKpi);
+=======
+		btnStatistics.setOnAction(this::displayStatictics);
+>>>>>>> 86377129a67c1411764da14f22b4e75535eb7349
 	}
 
+	private void displayStatictics(ActionEvent event) {
+		setActiveButtonColor(btnStatistics);
+		StatisticsPanelController cppc = new StatisticsPanelController(dc);
+		bpDashboard.setCenter(cppc);
+		bpDashboard.setPadding(new Insets(150, 0, 0, 300));
+	}
+	
 	private void displayCustomers(ActionEvent event) {
 		setActiveButtonColor(btnCustomer);
 		ContactPersonPanelController cppc = new ContactPersonPanelController(dc);
@@ -134,8 +145,16 @@ public class DashboardPanelController extends GridPane {
 		btnEmployee.setStyle("-fx-text-fill: #7c7c7c;");
 		btnFaq.setStyle("-fx-text-fill: #7c7c7c;");
 		btnUsername.setStyle("-fx-text-fill: #7c7c7c;");
+<<<<<<< HEAD
 		btnKpi.setStyle("-fx-text-fill: #7c7c7c;");
 		
 		button.setStyle("-fx-text-fill: #000000;");
+=======
+		btnStatistics.setStyle("-fx-text-fill: #7c7c7c;");
+		btnKpi.setStyle("-fx-text-fill: #7c7c7c;");
+		//set active button
+		button.setStyle("-fx-text-fill: #000000;");
+		
+>>>>>>> 86377129a67c1411764da14f22b4e75535eb7349
 	}
 }

@@ -36,20 +36,18 @@ public class Company implements ICompany {
 
 	@Transient
 	private IntegerProperty companyNr;
-  
 	@Transient
 	private StringProperty companyAdress;
 	@Transient
     public StringProperty companyName;
 	private LocalDate customerInitDate;
-   
     @OneToMany(mappedBy ="Company")
     public List<Contract> contracts;
-    
-   
 	@OneToMany(mappedBy ="Company")
     private List<ContactPerson> contactPersons;
-    
+	@OneToMany(mappedBy = "Company")
+	private List<Ticket> tickets;
+	
     public Boolean status;
     
     public Company() {
@@ -125,7 +123,7 @@ public class Company implements ICompany {
 		return contactPersons;
 	}
 	public void setContactPersons(List<ContactPerson> contactPersons) {
-		contactPersons = contactPersons;
+		this.contactPersons = contactPersons;
 	}
 	
 	 @Override
@@ -134,9 +132,16 @@ public class Company implements ICompany {
 	}
 
 	public void setContracts(List<Contract> contracts) {
-		contracts = contracts;
+		this.contracts = contracts;
 	}
 	
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+	
+	public List<Ticket> getTickets(){
+		return tickets;
+	}
 	public boolean getStatus() {
 		return this.status;
 	}
@@ -152,6 +157,7 @@ public class Company implements ICompany {
 	public void setCustomerInitDate(LocalDate customerInitDate) {
 		this.customerInitDate = customerInitDate;
 	}
+	
 	
 	
 
