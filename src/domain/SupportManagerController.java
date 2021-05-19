@@ -3,9 +3,12 @@ package domain;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.mockito.exceptions.verification.MoreThanAllowedActualInvocations;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +51,6 @@ public class SupportManagerController extends Controller {
 	}
 
 	// nodig voor lijst van contractTypes voor tableview van ContractTypePanel
-	
 
 	public ObservableList<Contract> getAllContracts() {
 		List<Contract> li = dm.getAllContracts();
@@ -72,22 +74,22 @@ public class SupportManagerController extends Controller {
 
 	public void createContractType(String name, int maxResponse, ContractTypeCreationMethod creationMethod,
 			boolean is24Hours, int duration, double price) {
-		if(dm.getAllContractTypes().stream().map(c->c.getName()).anyMatch(c->c==name)) {
+		if (dm.getAllContractTypes().stream().map(c -> c.getName()).anyMatch(c -> c == name)) {
 			throw new IllegalArgumentException("there already exist a contract type with that name");
 		}
 		ContractType contractType = new ContractType(name, creationMethod, is24Hours, maxResponse, duration, price);
 		dm.createContractType(contractType);
 
 	}
-	
+
 	public void SaveStatusContractType(boolean selected) {
 		this.cType.setActive(selected);
 		dm.updateContractType(cType);
 		setContractType(cType.getName());
 	}
-	
+
 	public void saveAllContractType(String name, String response, ContractTypeCreationMethod creationMethod,
-			boolean is24h, String duration, String price,boolean status) {
+			boolean is24h, String duration, String price, boolean status) {
 		cType.setActive(status);
 		cType.setName(name);
 		cType.setMaxResponseTime(Integer.parseInt(response));
@@ -109,31 +111,68 @@ public class SupportManagerController extends Controller {
 		System.out.println(li);
 		return (ObservableList<ITicket>) (Object) li;
 	}
-	
+
 	public ObservableList<IContractType> getFilteredContractTypes() {
 		boolean getAll = statusFilterContractType.contains("Active") && statusFilterContractType.contains("Inactive");
 		boolean getActive = statusFilterContractType.contains("Active");
 		boolean getInActive = statusFilterContractType.contains("Inactive");
 		List<ContractType> li = dm.getAllContractTypes();
-		if(getAll) {
-				ObservableList<ContractType> obListContractTypes = FXCollections.observableList(li);
-				return (ObservableList<IContractType>) (Object) obListContractTypes;
-			}else if(getActive){
-			return li.stream().filter(c->c.isActive() == true).collect(Collectors.toCollection(FXCollections::observableArrayList));
-			}else if(getInActive) {
-				return li.stream().filter(c->c.isActive() == false).collect(Collectors.toCollection(FXCollections::observableArrayList));
-			}else {
-				List<IContractType> emptyList = new ArrayList<>();
-				return FXCollections.observableArrayList(emptyList);
-			}
+		if (getAll) {
+			ObservableList<ContractType> obListContractTypes = FXCollections.observableList(li);
+			return (ObservableList<IContractType>) (Object) obListContractTypes;
+		} else if (getActive) {
+			return li.stream().filter(c -> c.isActive() == true)
+					.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		} else if (getInActive) {
+			return li.stream().filter(c -> c.isActive() == false)
+					.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		} else {
+			List<IContractType> emptyList = new ArrayList<>();
+			return FXCollections.observableArrayList(emptyList);
 		}
-	public ObservableList<ITicket> getFiltererdTickets(){
+	}
+
+	public ObservableList<ITicket> getFiltererdTickets() {
 		ObservableList<Ticket> li = dm.getAllTickets();
 		li = li.stream().filter(t -> this.selectedFilterTypes.contains(t.getType()))
 				.filter(t -> this.selectedFilterStatusen.contains(t.getStatus()))
 				.collect(Collectors.toCollection(FXCollections::observableArrayList));
 		System.out.println(li);
 		return (ObservableList<ITicket>) (Object) li;
+	}
+
+	public List<List<Ticket>> getAllTicketsAsListPerMonth(){
+		List<List<Ticket>> ticketspermonth = new ArrayList<List<Ticket>>();
+		List<Ticket> tickets = dm.getAllTicketsAsList();
+		List<Ticket> ticketsToAdd = null;
+		
+		for (int month = 1; month < 13; month++) {
+			ticketsToAdd = new ArrayList<>();
+			for (int i = 0; i < tickets.size(); i++) {
+				if (tickets.get(i).getDateCreation().getMonthValue() == month) {
+					ticketsToAdd.add(tickets.get(i));
+				}
+			}
+			ticketspermonth.add(ticketsToAdd);
+		}
+		return ticketspermonth;
+	}
+	
+	public List<List<Ticket>> getAllTicketsAsListPerStatus(){
+		List<List<Ticket>> ticketsperstatus = new ArrayList<List<Ticket>>();
+		List<Ticket> tickets = dm.getAllTicketsAsList();
+		List<Ticket> ticketsToAdd = null;
+		
+		for (int status = 0; status < 8; status++) {
+			ticketsToAdd = new ArrayList<>();
+			for (int i = 0; i < tickets.size(); i++) {
+				if (tickets.get(i).getStatus() == TicketStatusEnum.values()[status]) {
+					ticketsToAdd.add(tickets.get(i));
+				}
+			}
+			ticketsperstatus.add(ticketsToAdd);
+		}
+		return ticketsperstatus;
 	}
 
 	@Override
@@ -223,9 +262,5 @@ public class SupportManagerController extends Controller {
 		faq = getAllFaqs().stream().filter(f -> f.getProblem().equals(problem)).findFirst().get();
 		return faq.getSolutionArray();
 	}
-
-	
-
-	
 
 }
