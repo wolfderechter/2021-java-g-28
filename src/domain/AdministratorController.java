@@ -81,9 +81,10 @@ public class AdministratorController extends Controller {
 		return (ObservableList<ICompany>) (Object) li;
 	}
 	
-	public void updateCompany(String name, String address) {
+	public void updateCompany(String name, String address, boolean status) {
 		company.setCompanyAdress(address);
 		company.setCompanyName(name);
+		company.setStatus(status);
 		dm.updateCompany(name, address, company);
 		
 	}

@@ -73,7 +73,7 @@ public class Controller {
 	
 	public List<String> getAllEmployeesCombo(){return null;}
 	
-	public void updateCompany(String text, String text2) {		
+	public void updateCompany(String text, String text2, boolean status) {		
 	}
 
 	public void updateContactPerson(String text, String text2, String text3) {
