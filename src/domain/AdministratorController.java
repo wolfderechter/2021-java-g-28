@@ -22,7 +22,7 @@ public class AdministratorController extends Controller {
 	
 	//private Employee employee;
 	private PropertyChangeSupport employeeSubject;
-	private DomainManager dm = new DomainManager();
+	private DomainManager dm;
 	private ContactPerson contactPerson;
 	private PropertyChangeSupport contactPersonSubject;
 	private Company company;
@@ -33,9 +33,18 @@ public class AdministratorController extends Controller {
 	private List<String> selectedFilterStatusenCompany = new ArrayList<>();
 	private List<String> selectedFilterStatusen = new ArrayList<>();
 	private List<String> selectedFilterRoles = new ArrayList<>();
-
 	
 	public AdministratorController(IEmployee emp) {
+		dm = new DomainManager();
+		companySubject = new PropertyChangeSupport(this);
+		contactPersonSubject = new PropertyChangeSupport(this);
+		employeeSubject = new PropertyChangeSupport(this);
+		this.loggedInEmployee = emp;
+	}
+	
+	
+	public AdministratorController(IEmployee emp, DomainManager domainManager) {
+		dm = domainManager;
 		companySubject = new PropertyChangeSupport(this);
 		contactPersonSubject = new PropertyChangeSupport(this);
 		employeeSubject = new PropertyChangeSupport(this);
