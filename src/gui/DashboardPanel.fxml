@@ -26,15 +26,15 @@
           <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="182.0" minHeight="54.0" prefHeight="124.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="299.0" minHeight="54.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="235.0" minHeight="32.0" prefHeight="84.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="193.0" minHeight="30.0" prefHeight="71.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="144.0" minHeight="23.0" prefHeight="79.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="126.0" minHeight="22.0" prefHeight="76.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="79.0" minHeight="13.0" prefHeight="69.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="64.0" minHeight="0.0" prefHeight="64.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="75.0" minHeight="34.0" prefHeight="63.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="182.0" minHeight="54.0" prefHeight="88.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="299.0" minHeight="17.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="235.0" minHeight="28.0" prefHeight="69.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="193.0" minHeight="2.0" prefHeight="70.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="126.0" minHeight="21.0" prefHeight="81.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="79.0" minHeight="13.0" prefHeight="79.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="81.0" minHeight="0.0" prefHeight="81.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="91.0" minHeight="34.0" prefHeight="91.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="212.0">

@@ -63,6 +63,7 @@ public class DashboardPanelController extends GridPane {
 			btnContractType.setDisable(true);
 			btnKpi.setDisable(true);
 			btnStatistics.setDisable(true);
+			btnFaq.setDisable(true);
 		}
 		
 		if(dc.getEmployee().getRole().equals("AD")) {
@@ -71,6 +72,7 @@ public class DashboardPanelController extends GridPane {
 			btnFaq.setDisable(true);
 			btnKpi.setDisable(true);
 			btnStatistics.setDisable(true);
+			btnFaq.setDisable(true);
 		}
 		
 		btnUsername.setText(dc.getEmployee().getUser().getUserName());		
