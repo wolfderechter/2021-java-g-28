@@ -4,16 +4,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.stream.Collectors;
-
-import domain.Company;
-import domain.ContactPerson;
 import domain.Controller;
-import domain.IEmployee;
 import domain.ITicket;
 import domain.SupportManagerController;
 import domain.TechnicianController;
 import domain.TicketStatusEnum;
 import domain.TicketTypeEnum;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +25,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 
 public class TicketEditPanelController extends GridPane implements PropertyChangeListener {
@@ -63,7 +60,6 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	private ComboBox<String> cmbEmployee;
 
 	private ITicket ticket;
-
 	private Controller dc;
 
 	public TicketEditPanelController(Controller dc2) {
@@ -110,12 +106,21 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		txAreaDescription.setText(ticket.getDescription());
 		cmbCompany.setItems(FXCollections.observableArrayList(dc.getAllCompanyNames()));
 		cmbCompany.getSelectionModel().select(ticket.getContactPerson().getCompany().getCompanyName());
+		cmbCompany.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observableValue, String vorigeName,
+					String	selectedValue) {
+				if(selectedValue!=null)
+				cmbContactPerson.setItems(FXCollections.observableArrayList(dc.getContactPersonFromCompanyName(selectedValue)));
+			}
+		});
 		cmbCompany.setDisable(true);
 		cmbContactPerson.setItems(FXCollections.observableArrayList(dc.getContactPersonFromCompanyName(cmbCompany.getSelectionModel().getSelectedItem())));
 		cmbContactPerson.getSelectionModel().select(ticket.getContactPerson().getUser().getUserName());
 		cmbContactPerson.setDisable(true);
 		cmbEmployee.setItems(FXCollections.observableArrayList(dc.getAllEmployeesCombo()));
-		cmbEmployee.getSelectionModel().select(ticket.getEmployee().getFirstName());
+		if(ticket.getEmployee()!=null)
+			cmbEmployee.getSelectionModel().select(ticket.getEmployee().getFirstName());
 		dpDateCreate.setValue(ticket.getDateCreation());
 		dpDateCreate.setDisable(true);
 		//button acties
@@ -141,6 +146,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		}
 	);
 	}
+	
 	
 	private void createTicketStart(ActionEvent event) {
 		txFieldTitle.clear();
@@ -174,12 +180,14 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 			alert.setContentText(ex.getMessage());
 			alert.showAndWait();
 		}	
+
 	}
+
+	
 	
 	private void addReaction(ActionEvent event) {
 				dc.addReaction(txtReactionText.getText());
 				lstReactions.getSelectionModel().selectLast(); 
-		
 	}
 	
 	private String[] getFirstAndLastNameCombo() {
@@ -188,7 +196,5 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		result[0] = employeeData[0];
 		result[1] = employeeData[1].split(",")[0];
 		return result;
-		
 	}
-	
 }

@@ -2,27 +2,18 @@ package gui;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
-
 import domain.Controller;
-import domain.DomainController;
-import domain.Faq;
 import domain.IFaq;
 import domain.SupportManagerController;
-import domain.TechnicianController;
-import domain.TicketStatusEnum;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 
 
 public class FaqPanelController extends BorderPane{
@@ -35,8 +26,6 @@ public class FaqPanelController extends BorderPane{
     
     private SupportManagerController dc;
     
-    private IFaq faq;
-	
 	public FaqPanelController(Controller domainC) {
 		this.dc= (SupportManagerController) domainC;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("FaqPanel.fxml"));

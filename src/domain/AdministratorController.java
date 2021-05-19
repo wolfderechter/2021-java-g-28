@@ -188,7 +188,6 @@ public class AdministratorController extends Controller {
 	public void createEmployee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive) {
 		User user = dm.getUserByUsername(username);
 		Employee employee = new Employee(creationDate, firstName, lastName, adress, role, isActive, user);
-		
 		dm.createEmployee(employee);
 		setEmployee(employee.getId());
 	}

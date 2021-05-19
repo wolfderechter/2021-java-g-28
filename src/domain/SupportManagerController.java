@@ -3,17 +3,11 @@ package domain;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.mockito.exceptions.verification.MoreThanAllowedActualInvocations;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import repository.GenericDao;
-import repository.GenericDaoJpa;
 
 public class SupportManagerController extends Controller {
 

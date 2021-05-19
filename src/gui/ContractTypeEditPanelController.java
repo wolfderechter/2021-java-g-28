@@ -3,11 +3,13 @@ package gui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.ContractTypeCreationMethod;
-import domain.DomainController;
 import domain.IContractType;
 import domain.SupportManagerController;
+import domain.Ticket;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
@@ -45,7 +46,10 @@ public class ContractTypeEditPanelController extends GridPane implements Propert
 	private Button btnCancel;
 	@FXML
 	private Button btnCreate;
-	
+	@FXML
+	private Label lblAmountProc;
+	@FXML
+	private Label lblpercProcInTime;
 	
 	private SupportManagerController dc;
 	
@@ -77,7 +81,6 @@ public class ContractTypeEditPanelController extends GridPane implements Propert
 		txtPrice.clear();;
 		btnCreate.setOnAction(this::createContractType);
 		btnCreate.setText("Create");
-		
 	}
 	
 	public void createContractType(ActionEvent event) {
@@ -126,7 +129,30 @@ public class ContractTypeEditPanelController extends GridPane implements Propert
 		chkActive.setSelected(cType.isActive());
 		txtDuration.setText(Integer.toString(cType.getMinDuration()));
 		txtPrice.setText(Double.toString(cType.getPrice()));
+		//labels instellen
 		lblAmount.setText(cType.Amount().getValue().toString());
+		long amountProc = cType.getContracts().stream().map(c->c.company.getTickets()).count();
+		lblAmountProc.setText(Long.toString(amountProc));
+		int amountInTime = 0;
+		List<List<Ticket>> ticketsInContract = cType.getContracts().stream().map(c->c.company.getTickets()).collect(Collectors.toList());
+				for (List<Ticket> list : ticketsInContract) {
+					for (Ticket ticket : list) {
+						if(ticket.getResolvedDate() == null) {
+							continue;
+						}else {
+							if(ticket.getResolvedDate().compareTo(ticket.getDateCreation()) < cType.getMaxResponseTime()) {
+								amountInTime++;
+							}
+						}	
+					}
+				};
+		double procentcompl;
+		if(amountInTime == 0) {
+			procentcompl = 0;
+		}else {
+			procentcompl = amountProc / amountInTime;
+			}
+		lblpercProcInTime.setText(Double.toString(procentcompl) + " %");
 		chkActive.setDisable(true);
 		//alles op disabled buiten active
 		txtName.setDisable(true);

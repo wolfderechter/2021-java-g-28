@@ -2,13 +2,11 @@ package domain;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import repository.GenericDaoJpa;
 
 public class TechnicianController extends Controller {
 
