@@ -8,17 +8,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="604.0" prefWidth="620.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="694.0" prefWidth="1290.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="69.0" layoutY="14.0" text="Company">
+      <Label layoutX="122.0" layoutY="14.0" text="Select Company">
          <font>
-            <Font size="20.0" />
+            <Font size="25.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="chbCompany" layoutX="69.0" layoutY="56.0" prefHeight="25.0" prefWidth="180.0" />
-      <Label layoutX="69.0" layoutY="99.0" text="Amount  of tickets : " />
-      <Label fx:id="lblTicketsAmount" layoutX="184.0" layoutY="99.0" text="0" />
-      <LineChart fx:id="lnChart" layoutX="60.0" layoutY="134.0" prefHeight="382.0" prefWidth="514.0">
+      <ChoiceBox fx:id="chbCompany" layoutX="122.0" layoutY="63.0" prefHeight="55.0" prefWidth="211.0" />
+      <Label layoutX="1004.0" layoutY="164.0" prefHeight="30.0" prefWidth="195.0" text="Amount  of tickets : ">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="lblTicketsAmount" layoutX="1192.0" layoutY="169.0" prefHeight="17.0" prefWidth="15.0" text="0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <LineChart fx:id="lnChart" layoutX="60.0" layoutY="124.0" legendVisible="false" prefHeight="551.0" prefWidth="918.0" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -26,5 +32,11 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
+      <Label layoutX="1004.0" layoutY="288.0" text="Average time : ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAverageTime" layoutX="1138.0" layoutY="295.0" prefHeight="17.0" prefWidth="15.0" />
    </children>
 </fx:root>

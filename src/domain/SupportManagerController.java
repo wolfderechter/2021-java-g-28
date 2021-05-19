@@ -263,17 +263,9 @@ public class SupportManagerController extends Controller {
 		statusFilterContractType.addAll(addList);
 	}
 
-<<<<<<< HEAD
-=======
+
 	public void RemoveStatusFilterOnContractType(List<? extends String> removeList) {
 		statusFilterContractType.removeAll(removeList);
 	}
 
-	
-
-	
-
-	
-
->>>>>>> 86377129a67c1411764da14f22b4e75535eb7349
 }
