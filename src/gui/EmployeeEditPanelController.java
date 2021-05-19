@@ -3,6 +3,7 @@ package gui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import domain.AdministratorController;
@@ -83,7 +84,7 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 	}
 		
 	private void cancelEmployeeDetails(ActionEvent actionEvent) {
-		resetFields();
+		emptyFields();
 	}
 	
 
@@ -122,12 +123,13 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 	private void createEmployeeStart(ActionEvent event) {
 		txFieldId.clear();
 		txFieldId.setDisable(true);
-		datePickerDateInService.setValue(null);
 		txFieldFirstName.clear();
 		txFieldLastName.clear();
 		txFieldAdress.clear();
 		//cmbFieldRole.setDisable(true);
 		//cmbFieldRole.getSelectionModel().clearSelection();
+		datePickerDateInService.setValue(LocalDate.now());
+		datePickerDateInService.setDisable(true);
 		cmbFieldRole.setItems(FXCollections.observableArrayList(new String[] {"SM", "TE", "AD"}));
 		txFieldPhoneNumber.clear();
 		txFieldEmail.clear();
@@ -142,6 +144,19 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 	
 	private void createEmployee(ActionEvent event) {
 		try {
+			//Check if obligated values are present else throw exception
+			if(txFieldPhoneNumber.getText().isBlank() || 
+				txFieldEmail.getText().isBlank() || 
+				cmbFieldRole.getSelectionModel().getSelectedItem().isBlank()) {
+				throw new Exception("Phonenumber, Email and role can not be empty!");
+			}
+			
+			if(txFieldFirstName.getText().isBlank() || 
+				txFieldLastName.getText().isBlank() ||
+				txFieldAdress.getText().isBlank()) {
+				throw new Exception("Firstname, Lastname and Adress can not be empty!");
+			}
+			
 			dc.createUser(txFieldPhoneNumber.getText(),
 					txFieldEmail.getText(),
 					txFieldUsername.getText(),
@@ -156,15 +171,40 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 					txFieldEmail.getText(),
 					txFieldUsername.getText(),
 					chBoxStatus.isSelected());
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Creating Employee");
+			alert.setHeaderText("Employee succesfully created");
+			alert.showAndWait();
+			emptyFields();
 			
 		} catch(Exception ex) {
-			ex.printStackTrace();
+			//Sex.printStackTrace();
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
 			alert.setHeaderText("Something went wrong creating the employee");
 			alert.setContentText(ex.getMessage());
 			alert.showAndWait();
 		}
+	}
+	
+	private void emptyFields() {
+		txFieldId.clear();
+		txFieldId.setDisable(true);
+		datePickerDateInService.setValue(null);
+		txFieldFirstName.clear();
+		txFieldLastName.clear();
+		txFieldAdress.clear();
+		cmbFieldRole.setItems(FXCollections.observableArrayList(new String[] {"SM", "TE", "AD"}));
+		txFieldPhoneNumber.clear();
+		txFieldEmail.clear();
+		txFieldUsername.clear();
+		chBoxStatus.setSelected(true);
+		btnSave.setOnAction(this::saveEmployeeDetails);
+		btnCancel.setOnAction(this::cancelEmployeeDetails);
+		btnCreateEmployee.setOnAction(this::createEmployeeStart);
+		btnSave.setText("Save");
+		btnCreateEmployee.setVisible(true);
+
 	}
     
 }

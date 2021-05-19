@@ -51,15 +51,12 @@ public class Employee implements IEmployee {
 		
 	}
 	
-	public Employee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive, User user) {
+	public Employee(LocalDate creationDate, String firstName, String lastName, String adress, String role, boolean isActive, User user) {
 		setDateInService(creationDate);
 		setFirstName(firstName);
 		setLastName(lastName);
 		setAdress(adress);
 		setRole(role);
-		//setPhoneNumber(phoneNumber);
-		//setEmail(email);
-		//setUsername(username);
 		setStatus(isActive);
 		setUser(user);
 	}
@@ -81,9 +78,15 @@ public class Employee implements IEmployee {
 	}
 	
 	public void setEmail(String email) {
+		if(email == null || email.isEmpty()) {
+			throw new IllegalArgumentException("The email can not be empty!");
+		}
 		user.setEmail(email);
 	}
 	public void setPhoneNumber(String phonenumber) {
+		if(phonenumber == null || phonenumber.isEmpty()) {
+			throw new IllegalArgumentException("The phonenumber can not be empty!");
+		}
 		user.setPhoneNumber(phonenumber);
 	}
 	public void setUsername(String username) {
@@ -124,6 +127,9 @@ public class Employee implements IEmployee {
 	}
 	
 	public void setFirstName(String firstName) {
+		if(firstName == null || firstName.isEmpty()) {
+			throw new IllegalArgumentException("The firstname can not be empty!");
+		}
 		this.firstName = new SimpleStringProperty(firstName);
 	}
 	
@@ -139,6 +145,9 @@ public class Employee implements IEmployee {
 	}
 	
 	public void setLastName(String lastName) {
+		if(lastName == null || lastName.isEmpty()) {
+			throw new IllegalArgumentException("The lastname can not be empty!");
+		}
 		this.lastName = new SimpleStringProperty(lastName);
 	}
 	
@@ -154,6 +163,9 @@ public class Employee implements IEmployee {
 	}
 	
 	public void setAdress(String adress) {
+		if(adress == null || adress.isEmpty()) {
+			throw new IllegalArgumentException("The adress can not be empty!");
+		}
 		this.adress = new SimpleStringProperty(adress);
 	}
 	
@@ -169,6 +181,9 @@ public class Employee implements IEmployee {
 	}
 	
 	public void setDateInService(LocalDate dateInService) {
+		if(dateInService == null) {
+			throw new IllegalArgumentException("The date in service can not be empty!");
+		}
 		this.dateInService = new SimpleObjectProperty<LocalDate>(dateInService);
 	}
 	
@@ -185,6 +200,12 @@ public class Employee implements IEmployee {
 	}
 	
 	public void setRole(String role) {
+		if(role == null || role.isEmpty()) {
+			throw new IllegalArgumentException("The role can not be empty!");
+		}
+		if(!(role.equals("AD") || role.equals("SM") || role.equals("TE"))) {
+			throw new IllegalArgumentException("The role can only be AD, SM or TE!");
+		}
 		this.role = new SimpleStringProperty(role);
 	}
 	

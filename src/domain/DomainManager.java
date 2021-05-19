@@ -240,8 +240,7 @@ public class DomainManager {
 		GenericDaoJpa.commitTransaction();
 	}
 	
-	public void updateEmployee(Integer id, LocalDate date, String firstname, String lastname, String adress,
-			String role, String phonenumber, String email, String username, boolean status, IEmployee emp) {
+	public void updateEmployee(IEmployee emp) {
 		GenericDaoJpa.startTransaction();
 		employeeRepo.update((Employee) emp);
 		GenericDaoJpa.commitTransaction();

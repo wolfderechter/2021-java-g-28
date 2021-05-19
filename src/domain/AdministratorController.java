@@ -162,8 +162,7 @@ public class AdministratorController extends Controller {
 		employee.setUsername(username);
 		employee.setStatus(status);
 		
-		dm.updateEmployee(id, date, firstname, lastname, adress,
-				role, phonenumber, email, username, status, employee);
+		dm.updateEmployee(employee);
 		
 	}
 
@@ -178,7 +177,7 @@ public class AdministratorController extends Controller {
 
 	public void createEmployee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive) {
 		User user = dm.getUserByUsername(username);
-		Employee employee = new Employee(creationDate, firstName, lastName, adress, role, phoneNumber, email, username, isActive, user);
+		Employee employee = new Employee(creationDate, firstName, lastName, adress, role, isActive, user);
 		
 		dm.createEmployee(employee);
 		setEmployee(employee.getId());
