@@ -38,16 +38,12 @@ public class TicketPanelController extends BorderPane {
 	private Controller dc;
 
 	public TicketPanelController(Controller dc2) {
-		
 		switch (dc2.getEmployee().getRole()) {
 		case "TE": this.dc = (TechnicianController) dc2; break;
 		case "SM": this.dc = (SupportManagerController) dc2; break;
 		default:
-			throw new IllegalArgumentException("Unexpected value: " + dc.getEmployee().getRole());
+			throw new IllegalArgumentException("Unexpected value: " + dc2.getEmployee().getRole());
 		}
-		
-		
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
