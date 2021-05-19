@@ -166,6 +166,8 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 		
 	if(company != null) {
 		btnSave.setDisable(false);
+		btnCreateCompany.setVisible(true);
+		btnSave.setText("Save");
 		TxFieldCustomerNr.setText(company.CompanyNr().getValue().toString());
 		TxFieldCustomerNr.setDisable(true);
 		TxFieldName.setText(company.getCompanyName());
@@ -175,7 +177,7 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 		lastNameCol.setCellValueFactory(cellData -> cellData.getValue().LastName());
 		tvContactPersons.setItems(FXCollections.observableArrayList(this.company.getContactPersons()));
 			
-		btnSave.setOnAction(this::saveCompany);
+		
 		nrCol.setCellValueFactory(cellData -> cellData.getValue().ContractNr());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().getContractType().Name());
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
@@ -184,7 +186,10 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 		tvContracts.setItems(FXCollections.observableArrayList(this.company.getContracts()));
 		datePickerDateInService.setValue(company.getCustomerInitDate());
 		checkBoxStatus.setSelected(company.getStatus());
+		
+		btnSave.setOnAction(this::saveCompany);
 		btnCancel.setOnAction(this::cancelDetails);
+		btnCreateCompany.setOnAction(this::createCompanyStart);
 		
 			} 
 	}
@@ -192,10 +197,13 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	private void createCompanyStart(ActionEvent event) {
 		TxFieldName.clear();
 		TxFieldAddress.clear();
-		btnCancel.setOnAction(this::cancelDetails);
-		//btnSave.setText("Create company");
-		btnCreateCompany.setOnAction(this::createCompany);
+		datePickerDateInService.setValue(LocalDate.now());
+		datePickerDateInService.setDisable(true);
 		
+		btnCreateCompany.setOnAction(this::createCompany);
+		btnCancel.setOnAction(this::cancelDetails);
+		btnSave.setVisible(false);
+		btnCreateCompany.setVisible(true);
 	}
 	
 	private void createCompany(ActionEvent event) {

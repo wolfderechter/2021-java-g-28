@@ -149,10 +149,7 @@ public class DomainManager {
    
     
     public ObservableList<Employee> getAllEmployees() {
-        if(employeeList == null) {
-        	employeeList = FXCollections.observableArrayList(employeeRepo.getAll());
-        }
-        return employeeList;
+        return employeeList =  FXCollections.observableArrayList(employeeRepo.getAll());
     }
     
     public ContactPerson getContactPersonByUsername(String username) {
@@ -216,7 +213,13 @@ public class DomainManager {
 		contractTypeRepo.insert(contractType);
         GenericDaoJpa.commitTransaction();
         contractTypeList.add(contractType);
-
+	}
+	
+	public void createEmployee(Employee employee) {
+		GenericDaoJpa.startTransaction();
+		employeeRepo.insert(employee);
+        GenericDaoJpa.commitTransaction();
+        employeeList.add(employee);
 	}
 	
 	public void updateContractType(ContractType cType) {
@@ -256,23 +259,16 @@ public class DomainManager {
 	}
 	
 	public Company getCompanyByCompanyName(String companyName) {
-		if (companyList == null) {
-			
-		}
+		
 		return companyList.stream().filter(c -> c.getCompanyName().equals(companyName)).findFirst().get();
 	}
 
 
-	public void createEmployee(Employee employee) {
-		GenericDaoJpa.startTransaction();
-		employeeRepo.insert(employee);
-        GenericDaoJpa.commitTransaction();
-        employeeList.add(employee);
-	}
+	
 	
 	public void editFirstName(int index, String newFirstName) {
 		GenericDaoJpa.startTransaction();
-		contactPersonList.get(index).setFirstName(newFirstName);
+		getAllContactPersons().get(index).setFirstName(newFirstName);
 		GenericDaoJpa.commitTransaction();
 	}
 
@@ -286,9 +282,6 @@ public class DomainManager {
 	}
 	
 	public Company getCompanyByName(String name) {
-		if(companyList == null) {
-			
-		}
 		return companyList.stream()
     			.filter(c -> c.getCompanyName().equals(name)).findFirst().get();
 	}

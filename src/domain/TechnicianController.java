@@ -14,8 +14,14 @@ public class TechnicianController extends Controller {
 	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<TicketStatusEnum>();
 	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<TicketTypeEnum>();
 	private PropertyChangeSupport ticketSubject;
-	private DomainManager dm = new DomainManager();
+	private DomainManager dm;
 	private IEmployee employee;
+	
+	public TechnicianController(IEmployee emp, DomainManager dm) {
+		ticketSubject = new PropertyChangeSupport(this);
+		this.employee = emp;
+		this.dm = dm;
+	}
 	
 	public TechnicianController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
@@ -25,6 +31,10 @@ public class TechnicianController extends Controller {
 	@Override
 	public IEmployee getEmployee() {
 		return this.employee;
+	}
+	
+	public void setEmployee(Employee emp) {
+		this.employee = emp;
 	}
 
 	@Override
@@ -36,28 +46,26 @@ public class TechnicianController extends Controller {
 	// bij het zetten van de ticket wordt de ticket in de editticketpanel geset
 	public void setTicket(int ticketNr) {
 		Ticket ticket = dm.getAllTickets().stream().filter(t->t.getTicketNr() == ticketNr).findFirst().orElse(null);
-		ticketSubject.firePropertyChange("ticket", this.ticket, ticket);
+		ticketSubject.firePropertyChange("ticket", this.getTicket(), ticket);
 		this.ticket = ticket;
 	}
 
 	@Override
 	public void updateTicket(TicketStatusEnum status,String descrip, String first, String last) {
 		//changes in de edit panel toepassen
-		
-		
-		ticket.setStatus(status);
-		ticket.setDescription(descrip);
+		getTicket().setStatus(status);
+		getTicket().setDescription(descrip);
 		Employee employee = dm.getEmployeeByFirstAndLastName(first, last);
 		System.out.println(employee.getFirstName());
-		ticket.setEmployee(employee);
+		getTicket().setEmployee(employee);
 		//ticket changen in de panel
-		dm.updateTicket(ticket);
+		dm.updateTicket(getTicket());
 	}
 
 	public void addReaction(String text) {
 		// nog te vervangen met ingelogde usernaam
-		ticket.addReaction(text, false, employee.getUser().getUserName());
-		dm.updateTicket(ticket);
+		getTicket().addReaction(text, false, employee.getUser().getUserName());
+		dm.updateTicket(getTicket());
 	}
 
 	@Override
@@ -118,6 +126,10 @@ public class TechnicianController extends Controller {
 	@Override
 	public List<String> getAllEmployeesCombo(){
 		return dm.getAllEmployees().stream().map(employee -> String.format("%s %s, %s", employee.getFirstName(), employee.getLastName(), employee.getRole())).collect(Collectors.toList());
+	}
+
+	public Ticket getTicket() {
+		return ticket;
 	}
 	
 	// voor het aantal behandelde tickets per contractType

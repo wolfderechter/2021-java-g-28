@@ -172,7 +172,7 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 			emptyFields();
 			
 		} catch(Exception ex) {
-			//Sex.printStackTrace();
+			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
 			alert.setHeaderText("Something went wrong creating the employee");
