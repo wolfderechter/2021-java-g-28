@@ -31,7 +31,10 @@ public class DashboardPanelController extends GridPane {
 	private Button btnFaq;
 	@FXML
 	private Button btnContractType;
-	
+	@FXML
+	private Button btnKpi;
+	@FXML
+	private Button btnStatistics;
 
 	private Controller dc;
 
