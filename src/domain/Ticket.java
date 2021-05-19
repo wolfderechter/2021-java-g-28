@@ -161,7 +161,7 @@ public class Ticket implements ITicket {
 	}
 
 	@Override
-	public ContactPerson getContactPerson() {
+	public IContactPerson getContactPerson() {
 		return contactPerson;
 	}
 

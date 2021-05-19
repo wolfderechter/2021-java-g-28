@@ -8,7 +8,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +30,11 @@ public class AdministratorController extends Controller {
 	private IEmployee loggedInEmployee;
 	private Employee employee;
 	
+	private List<String> selectedFilterStatusenCompany = new ArrayList<>();
+	private List<String> selectedFilterStatusen = new ArrayList<>();
+	private List<String> selectedFilterRoles = new ArrayList<>();
+
+	
 	public AdministratorController(IEmployee emp) {
 		companySubject = new PropertyChangeSupport(this);
 		contactPersonSubject = new PropertyChangeSupport(this);
@@ -39,13 +47,14 @@ public class AdministratorController extends Controller {
 		return this.loggedInEmployee;
 	}
 
-	public ContactPerson getContactPersonByUsername(String username) {
-		ContactPerson cp = dm.getContactPersonByUsername(username);
+	public IContactPerson getContactPersonByUsername(String username) {
+		IContactPerson cp = dm.getContactPersonByUsername(username);
 		return cp;
 	}
-	public void setContactPerson(int contactPersonIndex) {
-		this.contactPerson = this.company.getContactPersons().get(contactPersonIndex);
+	public void setContactPerson(int id) {
+		ContactPerson contactPerson = dm.getAllContactPersons().stream().filter(e -> e.getId() == id ).findFirst().orElse(null);
 		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);	
+		this.contactPerson = contactPerson;
 	}
 	
 
@@ -72,10 +81,10 @@ public class AdministratorController extends Controller {
 		return (ObservableList<ICompany>) (Object) li;
 	}
 	
-	public void updateCompany(String name, String address) {
+	public void updateCompany(String name, String address, boolean status) {
 		company.setCompanyAdress(address);
 		company.setCompanyName(name);
-
+		company.setStatus(status);
 		dm.updateCompany(name, address, company);
 		
 	}
@@ -86,6 +95,19 @@ public class AdministratorController extends Controller {
 
 	}
 	
+	public void createCompany(String companyName, String companyAddress, LocalDate date, Boolean status/*, String contactPersonFirstName, String contactPersonLastName, String username*/ ) {
+		Company company = new Company(companyName, companyAddress, date, status);
+		
+		dm.createCompany(company);
+		setCompany(company.getCompanyNr());
+	}
+	
+	public void createContactPerson(String firstName, String lastName, String username) {
+		User user = dm.getUserByUsername(username);
+		ContactPerson contactPerson = new ContactPerson(firstName, lastName, user, company);
+		dm.createContactPerson(contactPerson);
+		setContactPerson(contactPerson.getId());
+	}
 	
 	public void addCompanyListener(PropertyChangeListener pcl) {
 		companySubject.addPropertyChangeListener(pcl);
@@ -150,17 +172,20 @@ public class AdministratorController extends Controller {
 		ObservableList<Employee> li = dm.getEmployeesByName(name);
 		return (ObservableList<IEmployee>) (Object) li;
 	}
+	public ObservableList<IEmployee> getEmployeesByUsername(String username) {
+		ObservableList<Employee> li = dm.getEmployeesByUsername(username);
+		return (ObservableList<IEmployee>) (Object) li;
+	}
 
 	public void createEmployee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive) {
 		User user = dm.getUserByUsername(username);
 		Employee employee = new Employee(creationDate, firstName, lastName, adress, role, phoneNumber, email, username, isActive, user);
 		
 		dm.createEmployee(employee);
-		//dm.createUser??
 		setEmployee(employee.getId());
 	}
 
-	public void createUser(String phoneNumber, String email, String username, String role) {
+		public void createUser(String phoneNumber, String email, String username, String role) {
 		
 		try {
 			get(String.format("https://localhost:44350/Account/CreateUserJava/%s/%s/%s/%s",
@@ -169,7 +194,7 @@ public class AdministratorController extends Controller {
 			e.printStackTrace();
 		}
 		
-	}
+		}
 	
 
 	
@@ -188,6 +213,52 @@ public class AdministratorController extends Controller {
 		}
 
 		return result.toString();
+	}
+	
+	public void addStatusFilterOnCustomer(List<? extends String> added) {
+		this.selectedFilterStatusenCompany.addAll(added);
+	}
+	
+	public void RemoveStatusFilterOnCustomer(List<? extends String> removed) {
+		this.selectedFilterStatusenCompany.removeAll(removed);
+	}
+
+	public ObservableList<ICompany> getFilterdCompanies() {
+		ObservableList<Company> li = dm.getAllCompanies();
+		li = li.stream().filter(c ->this.selectedFilterStatusenCompany.contains(c.getStatus() ? "Active" : "Inactive"))
+				.sorted(Comparator.comparing(Company::getCompanyName))
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		
+		return (ObservableList<ICompany>) (Object) li;
+	}
+	
+	
+	public void addStatusFilterOnEmployee(List<? extends String> added) {
+		this.selectedFilterStatusen.addAll(added);
+	}
+
+	public void RemoveStatusFilterOnEmployee(List<? extends String> removed) {
+		this.selectedFilterStatusen.removeAll(removed);
+
+	}
+
+	public ObservableList<IEmployee> getFilteredEmployees() {
+		ObservableList<Employee> li = dm.getAllEmployees();
+		li = li.stream()
+				.filter(e -> this.selectedFilterRoles.contains(e.getRole()))
+				.filter(e -> this.selectedFilterStatusen.contains(e.getStatus() ? "Active" : "Inactive"))
+				.sorted(Comparator.comparing(Employee::getLastName))
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		return (ObservableList<IEmployee>) (Object) li;
+	}
+
+	public void addRoleFilterOnEmployee(List<? extends String> added) {
+		this.selectedFilterRoles.addAll(added);
+
+	}
+
+	public void RemoveRoleFilterOnEmployee(List<? extends String> removed) {
+		this.selectedFilterRoles.removeAll(removed);
 	}
 
 }

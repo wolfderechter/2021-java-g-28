@@ -63,6 +63,7 @@ public class DashboardPanelController extends GridPane {
 		if(dc.getEmployee().getRole().equals("AD")) {
 			btnTickets.setDisable(true);
 			btnContractType.setDisable(true);
+			btnFaq.setDisable(true);
 		}
 		
 		btnUsername.setText(dc.getEmployee().getUser().getUserName());		

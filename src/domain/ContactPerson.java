@@ -20,8 +20,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -29,11 +30,10 @@ import javafx.beans.property.StringProperty;
 @Entity(name = "ContactPerson")
 @Table(name = "ContactPersons")
 @Access(AccessType.FIELD)
-public class ContactPerson {
+public class ContactPerson implements IContactPerson {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	
+	private IntegerProperty id;
 	private StringProperty firstName;
 	private StringProperty lastName;
 	@ManyToOne
@@ -43,7 +43,6 @@ public class ContactPerson {
 	private List<Notification> notifications;
 	@ManyToOne
 	@JoinColumn(name = "CompanyNr")
-//	private ObjectProperty<Company> company;
 	private Company company;
 	@OneToMany
 	private List<Contract> contracts = new ArrayList<>();
@@ -52,17 +51,17 @@ public class ContactPerson {
 		
 	}
 	
-	public ContactPerson(String firstName, String lastName, Company company) {
+	public ContactPerson(String firstName, String lastName, User user, Company company) {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setCompany(company);
+		setUser(user);
 	}
 	
-	public void addNotification(String reaction) {
-		notifications.add(new Notification("Reaction",reaction,this));
-	}
 
-	
+	public IntegerProperty id() {
+		return id;
+	}
 	public StringProperty FirstName() {
 		return firstName;
 	}
@@ -71,15 +70,22 @@ public class ContactPerson {
 		return lastName;
 	}
 	
-	
-	public int getId() {
-		return id;
+	@Override
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Access(AccessType.PROPERTY)
+	public Integer getId() {
+		if(id != null) {
+			return id.intValue();
+		}
+		return null;
 	}
 
-	private void setId(int id) {
-		this.id = id;
+	public void setId(Integer id) {
+		this.id = new SimpleIntegerProperty(id);
 	}
 	
+	@Override
 	public User getUser() {
 		return user;
 	}
@@ -89,6 +95,7 @@ public class ContactPerson {
 		this.user = user;
 	}
 	
+	@Override
 	public String getEmail() {
 		return user.getEmail();
 	}
@@ -97,6 +104,7 @@ public class ContactPerson {
 		user.setEmail(email);
 	}
 	
+	@Override
 	@Access(AccessType.PROPERTY)
 	public String getFirstName() {
 		return firstName.getValue();
@@ -106,6 +114,7 @@ public class ContactPerson {
 		this.firstName = new SimpleStringProperty(firstName);
 	}
 
+	@Override
 	@Access(AccessType.PROPERTY)
 	public String getLastName() {
 		return lastName.getValue();
@@ -114,9 +123,8 @@ public class ContactPerson {
 	public void setLastName(String lastName) {
 		this.lastName = new SimpleStringProperty(lastName);;
 	}
-	
 
-
+	@Override
 	public Company getCompany() {
 		return company;
 	}
@@ -125,6 +133,7 @@ public class ContactPerson {
 		this.company = company;
 	}
 
+	@Override
 	public List<Notification> getNotifications() {
 		return notifications;
 	}
@@ -133,8 +142,11 @@ public class ContactPerson {
 		this.notifications = notifications;
 	}
 
+	public void addNotification(String reaction) {
+		notifications.add(new Notification("Reaction",reaction,this));
+	}
 
-
+	@Override
 	public List<Contract> getContracts() {
 		return contracts;
 	}
@@ -142,6 +154,11 @@ public class ContactPerson {
 	public void setContracts(List<Contract> contracts) {
 		this.contracts = contracts;
 	}
+	
+	public Integer getCompanyNr() {
+		return company.getCompanyNr();
+	}
+	
 	
 	
 	

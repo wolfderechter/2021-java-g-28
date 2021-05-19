@@ -2,6 +2,8 @@ package domain;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +22,9 @@ import javax.persistence.Transient;
 
 import gui.ContactPersonPanelController;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -30,21 +34,20 @@ import javafx.beans.property.StringProperty;
 @Access(AccessType.FIELD)
 public class Company implements ICompany {
 
-	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Transient
 	private IntegerProperty companyNr;
-   // private StringProperty companyAdress;
+  
 	@Transient
 	private StringProperty companyAdress;
 	@Transient
     public StringProperty companyName;
-    private Date CustomerInitDate;
-    
+	private LocalDate customerInitDate;
+   
     @OneToMany(mappedBy ="Company")
     public List<Contract> contracts;
     
    
-	@OneToMany(mappedBy ="Company", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy ="Company")
     private List<ContactPerson> contactPersons;
     
     public Boolean status;
@@ -53,26 +56,42 @@ public class Company implements ICompany {
     	
     }
     
+    public Company(String companyName, String companyAddress, LocalDate date, Boolean status) {
+    	setCompanyName(companyName);
+    	setCompanyAdress(companyAddress);
+    	setCustomerInitDate(date);
+    	setStatus(status);
+    	
+    	
+    }
+    
+    @Override
     public IntegerProperty CompanyNr() {
     	return companyNr;
     }
     
+    @Override
     public StringProperty CompanyName() {
     	return companyName;
     }
     
+    @Override
     public StringProperty CompanyAdress() {
     	return companyAdress;
     }
-    
+  
     
     @Override
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Access(AccessType.PROPERTY)
-	public int getCompanyNr() {
-		return companyNr.intValue();
+	public Integer getCompanyNr() {
+    	if(companyNr != null) {
+    		return companyNr.intValue();
+    	}
+		return null;
 	}
-	public void setCompanyNr(int companyNr) {
+	public void setCompanyNr(Integer companyNr) {
 		this.companyNr = new SimpleIntegerProperty(companyNr);
 	}
 	
@@ -83,6 +102,9 @@ public class Company implements ICompany {
     }
     
     public void setCompanyName(String companyName) {
+    	if (companyName == null || companyName.isEmpty()) {
+    		throw new IllegalArgumentException("The company name has to be filled in");
+    	}
     	this.companyName = new SimpleStringProperty(companyName);
     }
       
@@ -96,13 +118,7 @@ public class Company implements ICompany {
 		this.companyAdress = new SimpleStringProperty(companyAdress);
 	}
 
-	@Override
-	public Date getCustomerInitDate() {
-		return CustomerInitDate;
-	}
-	public void setCustomerInitDate(Date customerInitDate) {
-		CustomerInitDate = customerInitDate;
-	}
+	
 	
 	@Override
 	public List<ContactPerson> getContactPersons() {
@@ -125,9 +141,21 @@ public class Company implements ICompany {
 		return this.status;
 	}
 	
-	public void setStatus(Boolean role) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+
+	public LocalDate getCustomerInitDate() {
+		return customerInitDate;
+	}
+
+	public void setCustomerInitDate(LocalDate customerInitDate) {
+		this.customerInitDate = customerInitDate;
+	}
+	
+	
+
+
 	
     
     

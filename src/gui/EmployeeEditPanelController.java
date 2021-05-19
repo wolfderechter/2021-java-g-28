@@ -121,12 +121,14 @@ public class EmployeeEditPanelController extends GridPane implements PropertyCha
 	
 	private void createEmployeeStart(ActionEvent event) {
 		txFieldId.clear();
+		txFieldId.setDisable(true);
 		datePickerDateInService.setValue(null);
 		txFieldFirstName.clear();
 		txFieldLastName.clear();
 		txFieldAdress.clear();
 		//cmbFieldRole.setDisable(true);
 		//cmbFieldRole.getSelectionModel().clearSelection();
+		cmbFieldRole.setItems(FXCollections.observableArrayList(new String[] {"SM", "TE", "AD"}));
 		txFieldPhoneNumber.clear();
 		txFieldEmail.clear();
 		txFieldUsername.clear();

@@ -32,7 +32,7 @@ public interface ITicket {
 
 	String getDescription();
 
-	ContactPerson getContactPerson();
+	IContactPerson getContactPerson();
 
 	String getPicturePath();
 

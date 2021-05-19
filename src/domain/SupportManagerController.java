@@ -79,6 +79,25 @@ public class SupportManagerController extends Controller {
 		dm.createContractType(contractType);
 
 	}
+	
+	public void SaveStatusContractType(boolean selected) {
+		this.cType.setActive(selected);
+		dm.updateContractType(cType);
+		setContractType(cType.getName());
+	}
+	
+	public void saveAllContractType(String name, String response, ContractTypeCreationMethod creationMethod,
+			boolean is24h, String duration, String price,boolean status) {
+		cType.setActive(status);
+		cType.setName(name);
+		cType.setMaxResponseTime(Integer.parseInt(response));
+		cType.setCreationMethod(creationMethod);
+		cType.setIsOutsideBusinessHours(is24h);
+		cType.setMinDuration(Integer.parseInt(duration));
+		cType.setPrice(Double.parseDouble(price));
+		dm.updateContractType(cType);
+		setContractType(cType.getName());
+	}
 
 	@Override
 	// nodig voor lijst van tickets voor tableview van ticketPanel
@@ -204,5 +223,9 @@ public class SupportManagerController extends Controller {
 		faq = getAllFaqs().stream().filter(f -> f.getProblem().equals(problem)).findFirst().get();
 		return faq.getSolutionArray();
 	}
+
+	
+
+	
 
 }

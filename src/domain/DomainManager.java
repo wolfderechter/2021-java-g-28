@@ -33,7 +33,7 @@ public class DomainManager {
 	// observable list?
 
 	private ObservableList<Ticket> ticketList;
-	private List<ContactPerson> contactPersonList;
+	private ObservableList<ContactPerson> contactPersonList;
 	private List<ContractType> contractTypeList;
 	private ObservableList<Employee> employeeList;
 	private ObservableList<Company> companyList;
@@ -107,14 +107,11 @@ public class DomainManager {
 		this.userRepo = userRepo;
 	}
 
-	// goede methode
-//	public void closePersistentie() {
-//        GenericDaoJpa.closePersistency();
-//    }
 
-    public List<ContactPerson> getAllContactPersons() {
+    public ObservableList<ContactPerson> getAllContactPersons() {
         if(contactPersonList == null) {
-        	contactPersonList = contactPersonRepo.getAll();
+        	contactPersonList = FXCollections.observableArrayList(contactPersonRepo.getAll());
+        	
         }
         return contactPersonList;
     }
@@ -145,13 +142,7 @@ public class DomainManager {
     	faqList.forEach(f -> f.convertSolution());
     	return faqList;
     }
-    
-//    public List<Contract> getAllContracts() {
-//    	if (contractRepo == null) {
-//    		contractList = contractRepo.getAll();
-//    	}
-//    	return contractList;
-//    }
+   
     
     public ObservableList<Employee> getAllEmployees() {
         if(employeeList == null) {
@@ -200,11 +191,34 @@ public class DomainManager {
         ticketList.add(ticket);
 	}
 	
+	public void createContactPerson(ContactPerson contactPerson) {
+		GenericDaoJpa.startTransaction();
+		contactPersonRepo.insert(contactPerson);
+		GenericDaoJpa.commitTransaction();
+		//contactPersonList.add(contactPerson);
+	}
+	
+	public void createCompany(Company company) {
+		
+		GenericDaoJpa.startTransaction();
+		companyRepo.insert(company);
+		GenericDaoJpa.commitTransaction();
+		companyList.add(company);
+	}
+	
+	
 	public void createContractType(ContractType contractType) {
 		GenericDaoJpa.startTransaction();
 		contractTypeRepo.insert(contractType);
         GenericDaoJpa.commitTransaction();
         contractTypeList.add(contractType);
+
+	}
+	
+	public void updateContractType(ContractType cType) {
+		GenericDaoJpa.startTransaction();
+		contractTypeRepo.update(cType);
+		GenericDaoJpa.commitTransaction();
 	}
 	
 	public void updateTicket(Ticket ticket) 
@@ -236,6 +250,13 @@ public class DomainManager {
 	public Employee getEmployeeByFirstAndLastName(String first, String last) {
 		return employeeRepo.getAll().stream().filter(e -> e.getFirstName().equals(first) && e.getLastName().equals(last)).findFirst().orElse(null);
 	}
+	
+	public Company getCompanyByCompanyName(String companyName) {
+		if (companyList == null) {
+			
+		}
+		return companyList.stream().filter(c -> c.getCompanyName().equals(companyName)).findFirst().get();
+	}
 
 
 	public void createEmployee(Employee employee) {
@@ -253,4 +274,25 @@ public class DomainManager {
     	return userList.stream()
     			.filter(u -> u.getUserName().equals(username)).findFirst().get();
 	}
+	
+	public Company getCompanyByName(String name) {
+		if(companyList == null) {
+			
+		}
+		return companyList.stream()
+    			.filter(c -> c.getCompanyName().equals(name)).findFirst().get();
+	}
+	
+
+
+
+	public ObservableList<Employee> getEmployeesByUsername(String username) {
+		if(employeeList == null) {
+	    	employeeList = FXCollections.observableArrayList(employeeRepo.getAll());
+		}
+    	return employeeList.stream()
+    			.filter(e -> e.getUsername().toLowerCase().contains(username.toLowerCase()))
+    			.collect(Collectors.toCollection(FXCollections::observableArrayList));
+	}
+	
 }

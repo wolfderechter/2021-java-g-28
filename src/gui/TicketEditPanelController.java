@@ -114,7 +114,6 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		cmbContactPerson.setItems(FXCollections.observableArrayList(dc.getContactPersonFromCompanyName(cmbCompany.getSelectionModel().getSelectedItem())));
 		cmbContactPerson.getSelectionModel().select(ticket.getContactPerson().getUser().getUserName());
 		cmbContactPerson.setDisable(true);
-		
 		cmbEmployee.setItems(FXCollections.observableArrayList(dc.getAllEmployeesCombo()));
 		cmbEmployee.getSelectionModel().select(ticket.getEmployee().getFirstName());
 		
@@ -124,8 +123,8 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		btnSave.setOnAction(this::saveTicketDetails);
 		btnCancel.setOnAction(this::cancelTicketDetails);
 		btnCreateTicket.setOnAction(this::createTicketStart);
-		lstReactions.setVisible(true);
-		txtReactionText.setVisible(true);
+		lstReactions.setVisible(ticket != null);
+		txtReactionText.setVisible(ticket != null);
 		
 		//listview reacties
 		//lstReactions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

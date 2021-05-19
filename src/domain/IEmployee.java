@@ -34,6 +34,8 @@ public interface IEmployee {
 	StringProperty Adress();
 
 	String getAdress();
+	
+	String getUsername();
 
 	ObjectProperty<LocalDate> DateInService();
 

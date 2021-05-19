@@ -61,8 +61,31 @@ public class Controller {
 		return null;
 	}
 	
+	public void createContactPerson(String firstName, String lastName, String username) {
+		
+	}
+	
+	public void createUser(String phoneNumber, String email, String username, String role) {
+		
+	}
+	
 	public void close() {}
 	
 	public List<String> getAllEmployeesCombo(){return null;}
+	
+	public void updateCompany(String text, String text2, boolean status) {		
+	}
+
+	public void updateContactPerson(String text, String text2, String text3) {
+		
+	}
+
+	public void setContactPerson(int index) {
+		
+	}
+
+	public void createCompany(String companyName, String companyAddress, LocalDate date, Boolean status) {
+		
+	}
 
 }
