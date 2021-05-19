@@ -42,6 +42,7 @@ public class Ticket implements ITicket {
 	@JoinColumn(name = "contactPersonId")
 	private ContactPerson contactPerson;
 	private String picturePath;
+	private LocalDate dateResolved;
 
 	@OneToMany(mappedBy = "ticket", cascade = CascadeType.PERSIST)
 	private List<Reaction> reactions;
@@ -68,7 +69,7 @@ public class Ticket implements ITicket {
 		setStatus(TicketStatusEnum.Created);
 		setEmployee((Employee) emp);
 	}
-
+	
 	public void checkContracts(ContactPerson cp) {
 		if(cp.getContracts().stream().map(c->c.getStatus()).filter(c->c == ContractEnumStatus.Running).count() == 0)
 			throw new IllegalArgumentException("Customer doesn't have an active contract");
@@ -110,6 +111,15 @@ public class Ticket implements ITicket {
 	public void setTicketNr(Integer ticketNr) {
 		this.ticketNr = new SimpleIntegerProperty(ticketNr);
 	}
+	
+	public void setResolveDate(LocalDate dateResolve) {
+		this.dateResolved = dateResolve;
+	}
+	
+	public LocalDate getResolvedDate() {
+		return dateResolved;
+	}
+	
 
 	@Override
 	@Access(AccessType.PROPERTY)
@@ -132,6 +142,9 @@ public class Ticket implements ITicket {
 	public void setStatus(TicketStatusEnum status) {
 		if(status == null) {
 			throw new IllegalArgumentException("Status can't be empty");
+		}
+		if(status == TicketStatusEnum.Closed) {
+			setResolveDate(LocalDate.now());
 		}
 		this.status = new SimpleObjectProperty<TicketStatusEnum>(status);
 	}

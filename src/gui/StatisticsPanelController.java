@@ -16,8 +16,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
-public class StatisticsPanelController {
+public class StatisticsPanelController extends AnchorPane{
 	@FXML
 	private LineChart<Number,Number> lnChart;
 	@FXML
@@ -30,7 +31,7 @@ public class StatisticsPanelController {
 	
 	public StatisticsPanelController(Controller dc2) {
 		this.dc = (SupportManagerController) dc2;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("TicketEditPanel.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticsPanel.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
 		try {
@@ -39,7 +40,6 @@ public class StatisticsPanelController {
 			throw new RuntimeException(ex);
 		}
 		chbCompany.setItems(FXCollections.observableArrayList(dc.getAllCompanyNames()));
-		chbCompany.getSelectionModel().selectFirst();
 		chbCompany.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			  @Override
 			  public void changed(ObservableValue<? extends String> observableValue, String nameSelected, String oldvalue) {
@@ -47,25 +47,24 @@ public class StatisticsPanelController {
 				  setDataChart();
 			  }
 		});
+		chbCompany.getSelectionModel().selectFirst();
+		setDataChart();
 	}
 	
-	
-	
 	public void setDataChart(){
-		
+		lblTicketsAmount.setText(Long.toString(selectedCompany.getTickets().stream().count()));
 		//setting the chart
 		final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Contactperson name");
+        xAxis.setLabel("ticket");
         //creating the chart
         lnChart =new LineChart<Number,Number>(xAxis,yAxis);
-        lnChart.setTitle("Amount of tickets for each contactperson");
+        lnChart.setTitle("ticket resolve time");
         //defining a series
         XYChart.Series series = new XYChart.Series();
-        series.setName("My portfolio");
+        series.setName("Data company");
         //populating the series with data
-       
-        series.getData().add(new XYChart.Data("samantha", 23));
+        selectedCompany.getTickets().forEach(t->series.getData().add(new XYChart.Data(1, "gsegrs")));
         series.getData().add(new XYChart.Data(2, 14));
         series.getData().add(new XYChart.Data(3, 15));
         series.getData().add(new XYChart.Data(4, 24));
