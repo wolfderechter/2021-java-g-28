@@ -23,7 +23,7 @@ public class LoginControllerTest {
 	}
 	
 	@Test
-	void getValidationWhenMakingCallToServer() {
+	void getValidationWhenMakingCallToServer() throws Exception {
 		Assertions.assertEquals("false", lc.getValidation("test", "test"));
 	}
 }

@@ -26,13 +26,15 @@
           <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="182.0" minHeight="54.0" prefHeight="83.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="182.0" minHeight="54.0" prefHeight="83.0" vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="182.0" minHeight="54.0" prefHeight="124.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="299.0" minHeight="54.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="235.0" minHeight="32.0" prefHeight="84.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="193.0" minHeight="30.0" prefHeight="71.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="144.0" minHeight="23.0" prefHeight="79.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="126.0" minHeight="22.0" prefHeight="76.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="79.0" minHeight="13.0" prefHeight="69.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="64.0" minHeight="0.0" prefHeight="64.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="75.0" minHeight="34.0" prefHeight="63.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="212.0">
@@ -56,7 +58,25 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="192.0" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="btnStatistics" mnemonicParsing="false" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="Statistics" textFill="#7c7c7c">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
+               <children>
+                  <Button fx:id="btnKpi" mnemonicParsing="false" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="KPI" textFill="#7c7c7c">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="4">
                <children>
                   <Button fx:id="btnCustomer" mnemonicParsing="false" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="Customer management" textFill="#7c7c7c">
                      <font>
@@ -68,7 +88,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="5">
                <children>
                   <Button fx:id="btnEmployee" alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="Employee management" textFill="#7c7c7c">
                      <font>
@@ -80,7 +100,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="4">
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="6">
                <children>
                   <Button fx:id="btnTickets" mnemonicParsing="false" prefWidth="172.0" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="Ticket management" textFill="#7a7a7a">
                      <font>
@@ -92,7 +112,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="5">
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="7">
                <children>
                   <Button fx:id="btnFaq" mnemonicParsing="false" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="Faq management" textFill="#7c7c7c">
                      <font>
@@ -104,7 +124,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="6">
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="8">
                <children>
                   <Button fx:id="btnContractType" mnemonicParsing="false" prefHeight="29.0" prefWidth="191.0" style="-fx-background-color: white;" styleClass="btn" stylesheets="@../../stylesheets/style.css" text="ContractType management" textFill="#7c7c7c">
                      <font>
