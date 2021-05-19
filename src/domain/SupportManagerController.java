@@ -16,18 +16,34 @@ public class SupportManagerController extends Controller {
 	private PropertyChangeSupport ticketSubject;
 	private ContractType cType;
 	private PropertyChangeSupport cTypeSubject;
-	private DomainManager dm = new DomainManager();
+	private DomainManager dm;
 	private IFaq faq;
 	private List<TicketStatusEnum> selectedFilterStatusen = new ArrayList<>();
 	private List<TicketTypeEnum> selectedFilterTypes = new ArrayList<>();
 	private List<String> statusFilterContractType = new ArrayList<>();
 
+
 	public SupportManagerController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
 		cTypeSubject = new PropertyChangeSupport(this);
 		this.employee = emp;
+		setDomainManager(new DomainManager());
 	}
-
+	
+	//Testen
+	public SupportManagerController(IEmployee emp, DomainManager dm) {
+		ticketSubject = new PropertyChangeSupport(this);
+		cTypeSubject = new PropertyChangeSupport(this);
+		this.employee = emp;
+		setDomainManager(dm);
+	}
+	
+	public SupportManagerController() {
+		
+	}
+	public void setDomainManager(DomainManager domainManager) {
+		this.dm = domainManager;
+	}
 	@Override
 	public IEmployee getEmployee() {
 		return this.employee;
@@ -106,7 +122,6 @@ public class SupportManagerController extends Controller {
 		li = li.stream().filter(t -> this.selectedFilterTypes.contains(t.getType()))
 				.filter(t -> this.selectedFilterStatusen.contains(t.getStatus()))
 				.collect(Collectors.toCollection(FXCollections::observableArrayList));
-		System.out.println(li);
 		return (ObservableList<ITicket>) (Object) li;
 	}
 
@@ -130,14 +145,6 @@ public class SupportManagerController extends Controller {
 		}
 	}
 
-	public ObservableList<ITicket> getFiltererdTickets() {
-		ObservableList<Ticket> li = dm.getAllTickets();
-		li = li.stream().filter(t -> this.selectedFilterTypes.contains(t.getType()))
-				.filter(t -> this.selectedFilterStatusen.contains(t.getStatus()))
-				.collect(Collectors.toCollection(FXCollections::observableArrayList));
-		System.out.println(li);
-		return (ObservableList<ITicket>) (Object) li;
-	}
 
 	public List<List<Ticket>> getAllTicketsAsListPerMonth(){
 		List<List<Ticket>> ticketspermonth = new ArrayList<List<Ticket>>();

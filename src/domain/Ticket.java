@@ -54,7 +54,7 @@ public class Ticket implements ITicket {
 	@JoinColumn(name = "employeenr")
 	private Employee employee;
 	
-	protected Ticket() {
+	public Ticket() {
 		
 	}
 	

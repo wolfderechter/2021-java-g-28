@@ -33,7 +33,7 @@ public class Faq implements IFaq {
      public String solution;
      @Transient
      public String[] solutionArray;
-     protected Faq() {
+     public Faq() {
     	 
      }
      
