@@ -2,8 +2,16 @@ package domain;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,27 +27,30 @@ public class AdministratorController extends Controller {
 	private PropertyChangeSupport contactPersonSubject;
 	private Company company;
 	private PropertyChangeSupport companySubject;
-	private IEmployee employee;
+	private IEmployee loggedInEmployee;
+	private Employee employee;
+	private List<String> selectedFilterStatusenCompany = new ArrayList<>();
 	
 	public AdministratorController(IEmployee emp) {
 		companySubject = new PropertyChangeSupport(this);
 		contactPersonSubject = new PropertyChangeSupport(this);
 		employeeSubject = new PropertyChangeSupport(this);
-		this.employee = emp;
+		this.loggedInEmployee = emp;
 	}
 	
 	@Override
 	public IEmployee getEmployee() {
-		return this.employee;
+		return this.loggedInEmployee;
 	}
 
 	public IContactPerson getContactPersonByUsername(String username) {
 		IContactPerson cp = dm.getContactPersonByUsername(username);
 		return cp;
 	}
-	public void setContactPerson(int contactPersonIndex) {
-		this.contactPerson = this.company.getContactPersons().get(contactPersonIndex);
+	public void setContactPerson(int id) {
+		ContactPerson contactPerson = dm.getAllContactPersons().stream().filter(e -> e.getId() == id ).findFirst().orElse(null);
 		contactPersonSubject.firePropertyChange("contactPerson", this.contactPerson, contactPerson);	
+		this.contactPerson = contactPerson;
 	}
 	
 
@@ -86,9 +97,9 @@ public class AdministratorController extends Controller {
 		setCompany(company.getCompanyNr());
 	}
 	
-	public void createContactPerson(String firstName, String lastName, String email, String companyName) {
-	//	Company company = (Company) dm.getCompaniesByName(companyName);
-		ContactPerson contactPerson = new ContactPerson(firstName, lastName, email);
+	public void createContactPerson(String firstName, String lastName, String username) {
+		User user = dm.getUserByUsername(username);
+		ContactPerson contactPerson = new ContactPerson(firstName, lastName, user, company);
 		dm.createContactPerson(contactPerson);
 		setContactPerson(contactPerson.getId());
 	}
@@ -156,4 +167,62 @@ public class AdministratorController extends Controller {
 		ObservableList<Employee> li = dm.getEmployeesByName(name);
 		return (ObservableList<IEmployee>) (Object) li;
 	}
+
+	public void createEmployee(LocalDate creationDate, String firstName, String lastName, String adress, String role, String phoneNumber, String email, String username, boolean isActive) {
+		User user = dm.getUserByUsername(username);
+		Employee employee = new Employee(creationDate, firstName, lastName, adress, role, phoneNumber, email, username, isActive, user);
+		
+		dm.createEmployee(employee);
+		//dm.createUser??
+		setEmployee(employee.getId());
+	}
+
+		public void createUser(String phoneNumber, String email, String username, String role) {
+		
+		try {
+			get(String.format("https://localhost:44350/Account/CreateUserJava/%s/%s/%s/%s",
+					username, email, phoneNumber, role));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		}
+	
+
+	
+	//Call naar Dotnet
+	private String get(String urlToRead) throws IOException {
+		StringBuilder result = new StringBuilder();
+
+		URL url = new URL(urlToRead);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-Type", "text/plain");
+		conn.setConnectTimeout(5000);
+		conn.setReadTimeout(5000);
+		try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+			result.append(reader.readLine());
+		}
+
+		return result.toString();
+	}
+	
+	public void addStatusFilterOnCustomer(List<? extends String> added) {
+		this.selectedFilterStatusenCompany.addAll(added);
+	}
+	
+	public void RemoveStatusFilterOnCustomer(List<? extends String> removed) {
+		this.selectedFilterStatusenCompany.removeAll(removed);
+	}
+
+	public ObservableList<ICompany> getFilterdCompanies() {
+		ObservableList<Company> li = dm.getAllCompanies();
+		li = li.stream().filter(c ->this.selectedFilterStatusenCompany.contains(c.getStatus() ? "Active" : "Inactive"))
+				.sorted(Comparator.comparing(Company::getCompanyName))
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
+		
+		return (ObservableList<ICompany>) (Object) li;
+	}
+	
+	
 }

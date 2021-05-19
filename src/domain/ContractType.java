@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -17,58 +18,63 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
 @Entity(name = "ContractTypes")
 @Table(name = "ContactTypes")
 @Access(AccessType.FIELD)
-public class ContractType {
+public class ContractType implements IContractType {
 	@Transient
 	private StringProperty name;
-    private ContractTypeCreationMethod CreationMethod;
-    @Column(name = "IsOutsideBusinessHours")
-    private boolean OutsideBusinessHours;
-    @Column(name = "IsActive")
-    private boolean Active;
-    private int MaxResponseTime;
-    private int MinDuration;
-    private double Price;
-    @OneToMany(mappedBy = "Type", cascade = CascadeType.PERSIST)
-    private List<Contract> contracts;
-    
-    //constructors
-    protected ContractType() {}
-    
-    public ContractType(String name, ContractTypeCreationMethod creationMethod, boolean outsideBusinessHours,
-			int maxResponseTime, int minDuration, double price) {
-    	setName(name);
-		CreationMethod = creationMethod;
-		OutsideBusinessHours = outsideBusinessHours;
-		MaxResponseTime = maxResponseTime;
-		MinDuration = minDuration;
-		Price = price;
-		Active = true;
-    }
+	private ContractTypeCreationMethod CreationMethod;
+	@Column(name = "IsOutsideBusinessHours")
+	private boolean OutsideBusinessHours;
+	@Column(name = "IsActive")
+	private boolean Active;
+	private int MaxResponseTime;
+	private int MinDuration;
+	private double Price;
+	@OneToMany(mappedBy = "Type", cascade = CascadeType.PERSIST)
+	private List<Contract> contracts = new ArrayList<>();
 
-	//property's
-    public IntegerProperty Amount() {
+	// constructors
+	protected ContractType() {
+	}
+
+	public ContractType(String name, ContractTypeCreationMethod creationMethod, boolean outsideBusinessHours,
+			int maxResponseTime, int minDuration, double price) {
+		setName(name);
+		setCreationMethod(creationMethod);
+		setIsOutsideBusinessHours(outsideBusinessHours);
+		setMaxResponseTime(maxResponseTime);
+		setMinDuration(minDuration);
+		setPrice(price);
+		setActive(true);
+	}
+
+	// property's
+	@Override
+	public IntegerProperty Amount() {
 		return new SimpleIntegerProperty((int) contracts.stream().count());
 	}
 
+	@Override
 	public StringProperty Name() {
 		return name;
 	}
 
+	@Override
 	public BooleanProperty Status() {
-			return new SimpleBooleanProperty(Active);
+		return new SimpleBooleanProperty(Active);
 	}
-	
-	//setters and getters
+
+	// setters and getters
+	@Override
 	@Id
 	@Access(AccessType.PROPERTY)
 	public String getName() {
 		return name.getValue();
 	}
-	
+
+	@Override
 	public ContractTypeCreationMethod getCreationMethod() {
 		return CreationMethod;
 	}
@@ -77,6 +83,7 @@ public class ContractType {
 		CreationMethod = creationMethod;
 	}
 
+	@Override
 	public boolean isOutsideBusinessHours() {
 		return OutsideBusinessHours;
 	}
@@ -85,6 +92,7 @@ public class ContractType {
 		OutsideBusinessHours = isOutsideBusinessHours;
 	}
 
+	@Override
 	public boolean isActive() {
 		return Active;
 	}
@@ -93,6 +101,7 @@ public class ContractType {
 		this.Active = isActive;
 	}
 
+	@Override
 	public int getMaxResponseTime() {
 		return MaxResponseTime;
 	}
@@ -109,6 +118,7 @@ public class ContractType {
 		MinDuration = minDuration;
 	}
 
+	@Override
 	public double getPrice() {
 		return Price;
 	}
@@ -117,6 +127,7 @@ public class ContractType {
 		Price = price;
 	}
 
+	@Override
 	public List<Contract> getContracts() {
 		return contracts;
 	}
@@ -126,11 +137,9 @@ public class ContractType {
 	}
 
 	public void setName(String name) {
-		if(name.isEmpty() || name == null)
-			throw new IllegalArgumentException("Contract Type Name mag niet leeg zijn");
-			
-			this.name = new SimpleStringProperty(name);
+		if (name.isEmpty() || name == null)
+			throw new IllegalArgumentException("Contract Type Name can't be empty");
+		this.name = new SimpleStringProperty(name);
 	}
-	
-    
+
 }

@@ -27,16 +27,19 @@ public class DomainManager {
 	private GenericDao<ContractType> contractTypeRepo;
 	private GenericDao<Employee> employeeRepo;
 	private GenericDao<Company> companyRepo;
+	private GenericDao<User> userRepo;
+
 
 	// observable list?
 
 	private ObservableList<Ticket> ticketList;
-	private List<ContactPerson> contactPersonList;
+	private ObservableList<ContactPerson> contactPersonList;
 	private List<ContractType> contractTypeList;
 	private ObservableList<Employee> employeeList;
 	private ObservableList<Company> companyList;
 	private ObservableList<Faq> faqList;
-	
+	private List<User> userList;
+
 	
 
 	private List<Contract> contractList;
@@ -53,10 +56,12 @@ public class DomainManager {
 		setContractRepo(new GenericDaoJpa<>(Contract.class));
 		setContractTypeRep(new GenericDaoJpa<>(ContractType.class));
 		setCompanyRepo(new GenericDaoJpa<>(Company.class));
+		setUserRepo(new GenericDaoJpa<>(User.class));
 		openPersistentie();
 	}
 
-	
+
+
 	private void openPersistentie() {
 		emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		em = emf.createEntityManager();
@@ -97,15 +102,20 @@ public class DomainManager {
 	private void setEmployeeRepo(GenericDao<Employee> employeeRepo) {
 		this.employeeRepo = employeeRepo;
 	}
+	
+	private void setUserRepo(GenericDao<User> userRepo) {
+		this.userRepo = userRepo;
+	}
 
 	// goede methode
 //	public void closePersistentie() {
 //        GenericDaoJpa.closePersistency();
 //    }
 
-    public List<ContactPerson> getAllContactPersons() {
+    public ObservableList<ContactPerson> getAllContactPersons() {
         if(contactPersonList == null) {
-        	contactPersonList = contactPersonRepo.getAll();
+        	contactPersonList = FXCollections.observableArrayList(contactPersonRepo.getAll());
+        	
         }
         return contactPersonList;
     }
@@ -191,18 +201,28 @@ public class DomainManager {
         ticketList.add(ticket);
 	}
 	
+	public void createContactPerson(ContactPerson contactPerson) {
+		GenericDaoJpa.startTransaction();
+		contactPersonRepo.insert(contactPerson);
+		GenericDaoJpa.commitTransaction();
+		//contactPersonList.add(contactPerson);
+	}
+	
 	public void createCompany(Company company) {
+		
 		GenericDaoJpa.startTransaction();
 		companyRepo.insert(company);
 		GenericDaoJpa.commitTransaction();
 		companyList.add(company);
 	}
 	
-	public void createContactPerson(ContactPerson contactPerson) {
+	
+	public void createContractType(ContractType contractType) {
 		GenericDaoJpa.startTransaction();
-		contactPersonRepo.insert(contactPerson);
-		GenericDaoJpa.commitTransaction();
-		contactPersonList.add(contactPerson);
+		contractTypeRepo.insert(contractType);
+        GenericDaoJpa.commitTransaction();
+        contractTypeList.add(contractType);
+
 	}
 	
 	public void updateTicket(Ticket ticket) 
@@ -241,4 +261,31 @@ public class DomainManager {
 		}
 		return companyList.stream().filter(c -> c.getCompanyName().equals(companyName)).findFirst().get();
 	}
+
+
+	public void createEmployee(Employee employee) {
+		GenericDaoJpa.startTransaction();
+		employeeRepo.insert(employee);
+        GenericDaoJpa.commitTransaction();
+        employeeList.add(employee);
+	}
+
+
+	public User getUserByUsername(String username) {
+		if(userList == null) {
+	    	userList = userRepo.getAll();
+		}
+    	return userList.stream()
+    			.filter(u -> u.getUserName().equals(username)).findFirst().get();
+	}
+	
+	public Company getCompanyByName(String name) {
+		if(companyList == null) {
+			
+		}
+		return companyList.stream()
+    			.filter(c -> c.getCompanyName().equals(name)).findFirst().get();
+	}
+	
+	
 }

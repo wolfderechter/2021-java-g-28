@@ -3,6 +3,7 @@ package domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Company implements ICompany {
     public List<Contract> contracts;
     
    
-	@OneToMany(mappedBy ="Company", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy ="Company")
     private List<ContactPerson> contactPersons;
     
     public Boolean status;
@@ -60,6 +61,7 @@ public class Company implements ICompany {
     	setCompanyAdress(companyAddress);
     	setCustomerInitDate(date);
     	setStatus(status);
+    	
     	
     }
     

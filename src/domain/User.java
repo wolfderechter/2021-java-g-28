@@ -13,7 +13,6 @@ import javafx.beans.property.StringProperty;
 
 @Entity
 @Table(name = "AspNetUsers")
-
 @Access(AccessType.FIELD)
 public class User {
 
@@ -27,6 +26,8 @@ public class User {
 	private String email;
 	
 	private String phoneNumber;
+	
+	
 	public User() {
 		
 	}

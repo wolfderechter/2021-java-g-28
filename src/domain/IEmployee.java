@@ -21,48 +21,28 @@ public interface IEmployee {
 
 	IntegerProperty Id();
 
-	int getId();
-
-	void setId(int id);
+	Integer getId();
 
 	StringProperty FirstName();
 
 	String getFirstName();
 
-	void setFirstName(String firstName);
-
 	StringProperty LastName();
 
 	String getLastName();
-
-	void setLastName(String lastName);
 
 	StringProperty Adress();
 
 	String getAdress();
 
-	void setAdress(String adress);
-
 	ObjectProperty<LocalDate> DateInService();
 
 	LocalDate getDateInService();
-
-	void setDateInService(LocalDate dateInService);
 
 	StringProperty Role();
 
 	String getRole();
 
-	void setRole(String role);
-
-	void setStatus(Boolean status);
-
 	Boolean getStatus();
-
-	void setPhoneNumber(String phonenumber);
-
-	void setEmail(String email);
-
-	void setUsername(String username);
 
 }

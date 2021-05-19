@@ -56,9 +56,6 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	    
 	    @FXML
 	    private Button btnCancel;
-	    
-	    @FXML
-	    private ListView<String> lstNamen;
 
 	    @FXML
 	    private TableView<Contract> tvContracts;
@@ -83,6 +80,35 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 
 	    @FXML
 	    private DatePicker datePickerDateInService;
+	    
+	    @FXML
+	    private TableColumn<ContactPerson, String> firstNameCol;
+
+	    @FXML
+	    private TableColumn<ContactPerson, String> lastNameCol;
+
+	    @FXML
+	    private TableColumn<ContactPerson, String> emailCol;
+	    
+	    @FXML
+	    private TableView<ContactPerson> tvContactPersons;
+	    
+	    @FXML
+	    private Button btnCreateContactPerson;
+
+	    @FXML
+	    private TextField txFieldAddFirstName;
+
+	    @FXML
+	    private TextField txFieldAddLastName;
+
+	    @FXML
+	    private TextField txFieldAddEmail;
+	    @FXML
+	    private Button btnCreateContactPerson2;
+	    
+	    @FXML
+	    private TextField txFieldContactPersonUsername;
     
     private ICompany company;
     
@@ -101,6 +127,8 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
         setPadding(new Insets(35, 0, 0, 0));
         fields();
         btnCreateCompany.setOnAction(this::createCompanyStart);
+        btnCreateContactPerson2.setOnAction(this::createContactPersonStart);
+        btnCreateContactPerson2.setVisible(true);
     }
     
     private void saveCompany(ActionEvent actionEvent) {
@@ -134,20 +162,9 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 			TxFieldCustomerNr.setDisable(true);
 			TxFieldName.setText(company.getCompanyName());
 			TxFieldAddress.setText(company.getCompanyAdress());
-			ObservableList<String> namen = company.getContactPersons().stream().map(c->c.getFirstName() + c.getLastName()).collect(Collectors.toCollection(FXCollections::observableArrayList));
-			lstNamen.setItems(namen);
-			lstNamen.getSelectionModel().selectedItemProperty()
-			.addListener((observableValue, previousContactPerson, selectedContactPerson) -> 
-			{
-			if (selectedContactPerson!= null) {
-				int index = lstNamen.getSelectionModel().getSelectedIndex();
-				TxFieldFirstName.setText(company.getContactPersons().get(index).getFirstName());
-				TxFieldLastName.setText(company.getContactPersons().get(index).getLastName());
-				TxFieldEMail.setText(company.getContactPersons().get(index).getEmail());
-				dc.setContactPerson(index);
-				}
-			}
-		);
+			firstNameCol.setCellValueFactory(cellData -> cellData.getValue().FirstName());
+			lastNameCol.setCellValueFactory(cellData -> cellData.getValue().LastName());
+			tvContactPersons.setItems(FXCollections.observableArrayList(this.company.getContactPersons()));
 			
 		btnSave.setOnAction(e-> {
 				this.saveCompany(e);
@@ -158,7 +175,6 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 		statusCol.setCellValueFactory(cellData -> cellData.getValue().Status());
 		tvContracts.setItems(FXCollections.observableArrayList(this.company.getContracts()));
 		datePickerDateInService.setValue(company.getCustomerInitDate());
-		TxFieldUsername.setText(company.getCompanyName());
 		checkBoxStatus.setSelected(company.getStatus());
 		btnCancel.setOnAction(this::cancelDetails);
 		
@@ -170,11 +186,6 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	private void createCompanyStart(ActionEvent event) {
 		TxFieldName.clear();
 		TxFieldAddress.clear();
-		TxFieldFirstName.clear();
-		TxFieldLastName.clear();
-		TxFieldEMail.clear();
-		//btnSave.setOnAction(this::createCompany);
-		//btnSave.setOnAction(this::createCompany);
 		btnCancel.setOnAction(this::cancelDetails);
 		btnSave.setText("Create company");
 		btnCreateCompany.setOnAction(this::createCompany);
@@ -183,11 +194,9 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 	
 	private void createCompany(ActionEvent event) {
 		try {
-			System.out.println(datePickerDateInService.getValue().toString());
-			dc.createCompany(TxFieldName.getText(), TxFieldAddress.getText(), datePickerDateInService.getValue(), true);
-			dc.createContactPerson(TxFieldFirstName.getText(), TxFieldLastName.getText(), TxFieldEMail.getText(), TxFieldName.getText());
-			System.out.println("tesdst");
+			dc.createCompany(TxFieldName.getText(), TxFieldAddress.getText(), datePickerDateInService.getValue(), checkBoxStatus.isSelected());
 		}catch(Exception ex) {
+			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Test");
 			alert.setHeaderText("test");
@@ -195,6 +204,23 @@ public class ContactPersonEditPanelController extends VBox implements PropertyCh
 			alert.showAndWait();
 		}
 		
+	}
+	
+	private void createContactPersonStart(ActionEvent event) {
+		try {
+			dc.createUser("0484107905", txFieldAddEmail.getText(),txFieldContactPersonUsername.getText() , "Customer");
+			dc.createContactPerson(txFieldAddFirstName.getText(), txFieldAddLastName.getText(),txFieldContactPersonUsername.getText() );
+			txFieldAddFirstName.clear();
+			txFieldAddLastName.clear();
+			txFieldContactPersonUsername.clear();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Test");
+			alert.setHeaderText("test");
+			alert.setContentText(ex.getMessage());
+			alert.showAndWait();
+		}
 	}
 
     

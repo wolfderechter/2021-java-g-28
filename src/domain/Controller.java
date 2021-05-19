@@ -61,7 +61,11 @@ public class Controller {
 		return null;
 	}
 	
-	public void createContactPerson(String firstName, String lastName, String email, String companyName) {
+	public void createContactPerson(String firstName, String lastName, String username) {
+		
+	}
+	
+	public void createUser(String phoneNumber, String email, String username, String role) {
 		
 	}
 	

@@ -32,11 +32,10 @@ import javafx.beans.property.StringProperty;
 @Access(AccessType.FIELD)
 public class ContactPerson implements IContactPerson {
 
-
+	
 	private IntegerProperty id;
 	private StringProperty firstName;
 	private StringProperty lastName;
-	private Boolean status;
 	@ManyToOne
 	@JoinColumn(name = "UserId")
 	private User user;
@@ -52,12 +51,10 @@ public class ContactPerson implements IContactPerson {
 		
 	}
 	
-	public ContactPerson(String firstName, String lastName, User user, boolean isActive) {
+	public ContactPerson(String firstName, String lastName, User user, Company company) {
 		setFirstName(firstName);
 		setLastName(lastName);
-		//setEmail(email);
-		//setCompany(company);
-		setStatus(isActive);
+		setCompany(company);
 		setUser(user);
 	}
 	
@@ -158,11 +155,12 @@ public class ContactPerson implements IContactPerson {
 		this.contracts = contracts;
 	}
 	
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public Integer getCompanyNr() {
+		return company.getCompanyNr();
 	}
-	public Boolean getStatus() {
-		return this.status;
-	}
+	
+	
+	
+	
 	
 }
