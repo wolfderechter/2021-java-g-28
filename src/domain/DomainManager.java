@@ -126,19 +126,15 @@ public class DomainManager {
     public ObservableList<Ticket> getAllTickets() {
         ticketList = FXCollections.observableArrayList(ticketRepo.getAll());
         return ticketList;
-    }
-    
-<<<<<<< HEAD
-    public ObservableList<Company> getAllCompanies() {   	
-=======
+    }	
+
     //kpi
     public List<Ticket> getAllTicketsAsList(){
     	return ticketRepo.getAll();
     }
     
     public ObservableList<Company> getAllCompanies() {
-    	if(companyList == null) {
->>>>>>> branch 'main' of https://github.com/HoGentProjectenII/2021-java-g-28.git
+
     		companyList = FXCollections.observableArrayList(companyRepo.getAll());
     	return companyList;
     }
