@@ -36,7 +36,7 @@ public class ContractType implements IContractType {
 	private List<Contract> contracts = new ArrayList<>();
 
 	// constructors
-	protected ContractType() {
+	public ContractType() {
 	}
 
 	public ContractType(String name, ContractTypeCreationMethod creationMethod, boolean outsideBusinessHours,
@@ -115,6 +115,9 @@ public class ContractType implements IContractType {
 	}
 
 	public void setMinDuration(int minDuration) {
+		if(minDuration <1 || minDuration > 3) {
+			throw new IllegalArgumentException("Duration has to be between 1 and 3");
+		}
 		MinDuration = minDuration;
 	}
 
@@ -137,7 +140,7 @@ public class ContractType implements IContractType {
 	}
 
 	public void setName(String name) {
-		if (name.isEmpty() || name == null)
+		if ( name == null||name.isEmpty())
 			throw new IllegalArgumentException("Contract Type Name can't be empty");
 		this.name = new SimpleStringProperty(name);
 	}

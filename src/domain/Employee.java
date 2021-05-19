@@ -89,6 +89,9 @@ public class Employee implements IEmployee {
 	public void setUsername(String username) {
 		user.setUserName(username);
 	}
+	public String getUsername() {
+		return user.getUserName();
+	}
 	
 	public IntegerProperty Id() {
 		return id;

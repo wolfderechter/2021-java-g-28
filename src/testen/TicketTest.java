@@ -8,9 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import domain.Company;
 import domain.ContactPerson;
+
 import domain.IContactPerson;
+
+import domain.Employee;
+import domain.IEmployee;
 import domain.Ticket;
 import domain.TicketTypeEnum;
+import domain.User;
 import domain.TicketStatusEnum;
 
 
@@ -26,10 +31,12 @@ class TicketTest {
 //		}
 //	
 	@Test
-	void nieuwTicketHeeftContactPersonMetActiefContractNodig() {
+	void newTicketNeedsContactPersonwithActiveContracts() {
 		Company comp = new Company();
-		IContactPerson cp = new ContactPerson("Test","ContactPerson",comp);
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {new Ticket(LocalDate.now(),"test Ticket","ticket voor te testen",TicketTypeEnum.NoImpact,cp);});
+		User user = new User();
+		ContactPerson cp = new ContactPerson("Test","ContactPerson", user,comp);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {new Ticket(LocalDate.now(),"test Ticket","ticket voor te testen",TicketTypeEnum.NoImpact,cp,null);});
+
 	}
 	
 //	@ParameterizedTest

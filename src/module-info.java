@@ -11,4 +11,5 @@ open module project_JAVA {
 	requires mockito.junit.jupiter;
 	requires org.mockito;
 	requires java.desktop;
+	requires org.junit.jupiter.params;
 }
