@@ -144,8 +144,7 @@ public class EmployeePanelController extends BorderPane {
 			if (selectedEmployee != null) {
 				dc.setEmployee(selectedEmployee.getId());
 		        dc.addEmployeeListener(eepc);
-
-				}
+			}
 			}
 		);
 	}
@@ -157,7 +156,7 @@ public class EmployeePanelController extends BorderPane {
         roleCol.setCellValueFactory(cellData -> cellData.getValue().Role());
         userNameCol.setCellValueFactory(cellData -> cellData.getValue().getUser().UserName());
         dateInServiceCol.setCellValueFactory(cellData -> cellData.getValue().DateInService());
-
+        
         tvEmployees.setItems(dc.getFilteredEmployees());
 	}
 	

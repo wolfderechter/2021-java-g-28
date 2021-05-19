@@ -25,17 +25,6 @@ public class EmployeeTest {
 		user = new User();
 		employee = new Employee(LocalDate.now(), "firstName", "lastName", "adress", "AD", true, user);	}
 	
-	@Test
-	void newEmployeeCreatesEmployee() {
-		//User user = new User("4b618909-a651-1115-bcdd-awac37d1d0c7", "username", "email@gmail.com", "04599054");		
-		Assertions.assertEquals("firstName", employee.getFirstName());	
-		Assertions.assertEquals("lastName", employee.getLastName());	
-		Assertions.assertEquals("AD", employee.getRole());	
-		Assertions.assertEquals(true, employee.getStatus());	
-		Assertions.assertEquals(user, employee.getUser());	
-
-	}
-	
 	
 	//paramterizedtest foute namen ingeven
 	@ParameterizedTest
@@ -81,20 +70,35 @@ public class EmployeeTest {
 	private static Stream<Arguments> parametersEmployee() {
 	    return Stream.of(
 	      Arguments.of(LocalDate.now(), "firstName", "lastName", "adress", "AD", true, new User()),
-	      Arguments.of(LocalDate.now(), "firstName", "lastName", "adress", "AD", true, new User()),
-	      Arguments.of(LocalDate.now(), "firstName", "lastName", "adress", "AD", true, new User()),
-	      Arguments.of(LocalDate.now(), "firstName", "lastName", "adress", "AD", true, new User())
+	      Arguments.of(LocalDate.now(), "Wolf", "De Rechter", "peperstraat 5, 9100", "AD", true, new User()),
+	      Arguments.of(LocalDate.now(), "Jari", "Van der Coelden", "degraeve straat 3, 9100", "SM", true, new User()),
+	      Arguments.of(LocalDate.now(), "Zowie", "Verschuere", "driegaaienstraat 67, 9100", "TE", false, new User())
 	    );
 	}
 	
 	@ParameterizedTest
 	@MethodSource("parametersEmployee")
-	public void newEmployeeCreates(LocalDate dateInService, String firstname, String lastname, String adress, String role, Boolean status, User user) {
+	public void newEmployeeCreatesValidEmployee(LocalDate dateInService, String firstname, String lastname, String adress, String role, Boolean status, User user) {
 		Employee employee1 = new Employee(dateInService, firstname, lastname, adress, role, status, user);
 		Assertions.assertEquals(firstname, employee1.getFirstName());	
 		Assertions.assertEquals(lastname, employee1.getLastName());	
 		Assertions.assertEquals(role, employee1.getRole());	
 		Assertions.assertEquals(status, employee1.getStatus());	
 		Assertions.assertEquals(user, employee1.getUser());	
+	}
+	
+	@ParameterizedTest
+	@MethodSource("parametersEmployee")
+	public void editEmployeeEditsSuccesfully(LocalDate dateInService, String firstname, String lastname, String adress, String role, Boolean status, User user) {
+		employee.setFirstName(firstname);
+		employee.setLastName(lastname);
+		employee.setAdress(adress);
+		employee.setRole(role);
+		employee.setStatus(status);
+		
+		Assertions.assertEquals(firstname, employee.getFirstName());	
+		Assertions.assertEquals(lastname, employee.getLastName());	
+		Assertions.assertEquals(role, employee.getRole());	
+		Assertions.assertEquals(status, employee.getStatus());	
 	}
 }
