@@ -32,8 +32,9 @@ import javafx.beans.property.StringProperty;
 @Access(AccessType.FIELD)
 public class ContactPerson implements IContactPerson {
 
-	
-	private IntegerProperty id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private StringProperty firstName;
 	private StringProperty lastName;
 	@ManyToOne
@@ -51,17 +52,15 @@ public class ContactPerson implements IContactPerson {
 		
 	}
 	
-	public ContactPerson(String firstName, String lastName, User user, Company company) {
+	public ContactPerson(String firstName, String lastName, User user) {
 		setFirstName(firstName);
 		setLastName(lastName);
-		setCompany(company);
+		//setCompany(company);
 		setUser(user);
 	}
 	
 
-	public IntegerProperty id() {
-		return id;
-	}
+	
 	public StringProperty FirstName() {
 		return firstName;
 	}
@@ -71,18 +70,12 @@ public class ContactPerson implements IContactPerson {
 	}
 	
 	@Override
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Access(AccessType.PROPERTY)
-	public Integer getId() {
-		if(id != null) {
-			return id.intValue();
-		}
-		return null;
+	public int getId() {	
+			return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = new SimpleIntegerProperty(id);
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	@Override
@@ -111,6 +104,9 @@ public class ContactPerson implements IContactPerson {
 	}
 
 	public void setFirstName(String firstName) {
+		if (firstName == null || firstName.isEmpty()) {
+    		throw new IllegalArgumentException("First name has to be filled in");
+    	}
 		this.firstName = new SimpleStringProperty(firstName);
 	}
 
@@ -121,6 +117,9 @@ public class ContactPerson implements IContactPerson {
 	}
 
 	public void setLastName(String lastName) {
+		if (lastName == null || lastName.isEmpty()) {
+    		throw new IllegalArgumentException("Last name can not be null or empty");
+    	}
 		this.lastName = new SimpleStringProperty(lastName);;
 	}
 
@@ -129,7 +128,7 @@ public class ContactPerson implements IContactPerson {
 		return company;
 	}
 
-	private void setCompany(Company company) {
+	public void setCompany(Company company) {
 		this.company = company;
 	}
 

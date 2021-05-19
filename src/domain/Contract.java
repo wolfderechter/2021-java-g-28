@@ -1,5 +1,6 @@
 package domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -39,8 +40,8 @@ public class Contract {
 	@Transient
 	public ObjectProperty<ContractEnumStatus> status;
 	
-    public Date endDate;
-    public Date startDate;
+    public ObjectProperty<LocalDate> endDate;
+    public ObjectProperty<LocalDate> startDate;
     
     @ManyToOne()
     @JoinColumn(name="TypeName")
@@ -60,6 +61,14 @@ public class Contract {
     
     public ObjectProperty<ContractEnumStatus> Status() {
     	return status;
+    }
+    
+    public ObjectProperty<LocalDate> StartDate() {
+    	return startDate;
+    }
+    
+    public ObjectProperty<LocalDate> EndDate() {
+    	return endDate;
     }
     
     @Access(AccessType.PROPERTY)
@@ -85,6 +94,26 @@ public class Contract {
 	public ContractType getContractType() {
 		return type;
 	}
+
+	@Access(AccessType.PROPERTY)
+	public LocalDate getEndDate() {
+		return endDate.getValue();
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = new SimpleObjectProperty(endDate);
+	}
+
+	@Access(AccessType.PROPERTY)
+	public LocalDate getStartDate() {
+		return startDate.getValue();
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = new SimpleObjectProperty(startDate);
+	}
+	
+	
     
     
 }

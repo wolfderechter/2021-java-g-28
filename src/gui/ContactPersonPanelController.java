@@ -46,11 +46,11 @@ public class ContactPersonPanelController extends BorderPane {
 	@FXML 
 	private TextArea TextAreaTest;
 	
-	 @FXML
-	  private TextField txFieldSearch;
+	@FXML
+	private TextField txFieldSearch;
 	 
-	 @FXML
-	  private ListView<String> lstFilter;
+	@FXML
+	private ListView<String> lstFilter;
 	
 	private AdministratorController dc;
 	
@@ -73,7 +73,6 @@ public class ContactPersonPanelController extends BorderPane {
         	public void onChanged(ListChangeListener.Change<? extends String> e) {
         		while(e.next()) {
         			if (e.wasAdded()) {
-        				System.out.println("testttttt");
         				dc.addStatusFilterOnCustomer(e.getAddedSubList());
         				fields();
         			}
@@ -86,11 +85,10 @@ public class ContactPersonPanelController extends BorderPane {
         });
         lstFilter.getSelectionModel().select("Active");
         
-     
+        txFieldSearch.setEditable(true);
         txFieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
         	tvCompany.setItems(dc.getCompaniesByName(newValue));
         	});
-        
         
        fields();
         ContactPersonEditPanelController cpepc = new ContactPersonEditPanelController(dc);
@@ -106,7 +104,10 @@ public class ContactPersonPanelController extends BorderPane {
 			}
 		);
         
+       
+        
 	}
+	
 	
 	public void fields() {
 		 nameCol.setCellValueFactory(cellData -> cellData.getValue().CompanyName());

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 public interface IContactPerson {
 
-	Integer getId();
+	int getId();
 
 	User getUser();
 

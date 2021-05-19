@@ -167,8 +167,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 	}
 	
 	private void createTicket(ActionEvent event) {
-		try {
-			
+		try {		
 		dc.createTicket(dpDateCreate.getValue(),txFieldTitle.getText(),txAreaDescription.getText(),cmbType.getSelectionModel().selectedItemProperty().getValue(),
 				cmbContactPerson.getSelectionModel().selectedItemProperty().getValue(), getFirstAndLastNameCombo()[0], getFirstAndLastNameCombo()[1]);
 		}catch(Exception ex) {
@@ -177,8 +176,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 			alert.setHeaderText("Something went wrong adding the ticket");
 			alert.setContentText(ex.getMessage());
 			alert.showAndWait();
-		}
-		
+		}	
 	}
 	
 	private void addReaction(ActionEvent event) {

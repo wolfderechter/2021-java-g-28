@@ -87,5 +87,9 @@ public class Controller {
 	public void createCompany(String companyName, String companyAddress, LocalDate date, Boolean status) {
 		
 	}
+	
+	public void editFirstName(int index, String newFirstName) {
+		
+	}
 
 }

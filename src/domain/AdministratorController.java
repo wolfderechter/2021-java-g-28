@@ -85,7 +85,7 @@ public class AdministratorController extends Controller {
 		company.setCompanyAdress(address);
 		company.setCompanyName(name);
 		company.setStatus(status);
-		dm.updateCompany(name, address, company);
+		dm.updateCompany(company);
 		
 	}
 	
@@ -104,9 +104,9 @@ public class AdministratorController extends Controller {
 	
 	public void createContactPerson(String firstName, String lastName, String username) {
 		User user = dm.getUserByUsername(username);
-		ContactPerson contactPerson = new ContactPerson(firstName, lastName, user, company);
-		dm.createContactPerson(contactPerson);
-		setContactPerson(contactPerson.getId());
+		company.addContactPerson(new ContactPerson(firstName, lastName, user));
+		dm.updateCompany(company);
+		setCompany(company.getCompanyNr());
 	}
 	
 	public void addCompanyListener(PropertyChangeListener pcl) {
@@ -259,6 +259,10 @@ public class AdministratorController extends Controller {
 
 	public void RemoveRoleFilterOnEmployee(List<? extends String> removed) {
 		this.selectedFilterRoles.removeAll(removed);
+	}
+	
+	public void editFirstName(int index, String newFirstName) {
+		dm.editFirstName(index, newFirstName);
 	}
 
 }

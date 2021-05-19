@@ -32,9 +32,8 @@ class TicketTest {
 //	
 	@Test
 	void newTicketNeedsContactPersonwithActiveContracts() {
-		Company comp = new Company();
 		User user = new User();
-		ContactPerson cp = new ContactPerson("Test","ContactPerson", user,comp);
+		ContactPerson cp = new ContactPerson("Test","ContactPerson", user);
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {new Ticket(LocalDate.now(),"test Ticket","ticket voor te testen",TicketTypeEnum.NoImpact,cp,null);});
 
 	}

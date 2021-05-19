@@ -41,6 +41,7 @@ public class Company implements ICompany {
 	private StringProperty companyAdress;
 	@Transient
     public StringProperty companyName;
+	
 	private LocalDate customerInitDate;
    
     @OneToMany(mappedBy ="Company")
@@ -62,6 +63,12 @@ public class Company implements ICompany {
     	setCustomerInitDate(date);
     	setStatus(status);
     	
+    	
+    }
+    
+    public void addContactPerson(ContactPerson contactPerson) {
+    	contactPerson.setCompany(this);
+    	contactPersons.add(contactPerson);
     	
     }
     
@@ -103,7 +110,7 @@ public class Company implements ICompany {
     
     public void setCompanyName(String companyName) {
     	if (companyName == null || companyName.isEmpty()) {
-    		throw new IllegalArgumentException("The company name has to be filled in");
+    		throw new IllegalArgumentException("The company name can not be empty!");
     	}
     	this.companyName = new SimpleStringProperty(companyName);
     }
@@ -114,8 +121,11 @@ public class Company implements ICompany {
 		return companyAdress.getValue();
 	}
 	
-	public void setCompanyAdress(String companyAdress) {
-		this.companyAdress = new SimpleStringProperty(companyAdress);
+	public void setCompanyAdress(String companyAddress) {
+		if (companyAddress == null || companyAddress.isEmpty()) {
+    		throw new IllegalArgumentException("The company address can not be empty!");
+    	}
+		this.companyAdress = new SimpleStringProperty(companyAddress);
 	}
 
 	

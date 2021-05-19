@@ -41,6 +41,7 @@ public class DomainManager {
 	private List<User> userList;
 
 	
+	
 
 	private List<Contract> contractList;
 
@@ -111,7 +112,6 @@ public class DomainManager {
     public ObservableList<ContactPerson> getAllContactPersons() {
         if(contactPersonList == null) {
         	contactPersonList = FXCollections.observableArrayList(contactPersonRepo.getAll());
-        	
         }
         return contactPersonList;
     }
@@ -128,10 +128,8 @@ public class DomainManager {
         return ticketList;
     }
     
-    public ObservableList<Company> getAllCompanies() {
-    	if(companyList == null) {
+    public ObservableList<Company> getAllCompanies() {   	
     		companyList = FXCollections.observableArrayList(companyRepo.getAll());
-    	}
     	return companyList;
     }
     
@@ -195,7 +193,7 @@ public class DomainManager {
 		GenericDaoJpa.startTransaction();
 		contactPersonRepo.insert(contactPerson);
 		GenericDaoJpa.commitTransaction();
-		//contactPersonList.add(contactPerson);
+		contactPersonList.add(contactPerson);
 	}
 	
 	public void createCompany(Company company) {
@@ -234,10 +232,11 @@ public class DomainManager {
 		GenericDaoJpa.commitTransaction();
 	}
 
-	public void updateCompany(String name, String address, Company company) {
+	public void updateCompany(Company company) {
 		GenericDaoJpa.startTransaction();
 		companyRepo.update(company);
 		GenericDaoJpa.commitTransaction();
+		
 	}
 	
 	public void updateEmployee(Integer id, LocalDate date, String firstname, String lastname, String adress,
@@ -265,6 +264,12 @@ public class DomainManager {
         GenericDaoJpa.commitTransaction();
         employeeList.add(employee);
 	}
+	
+	public void editFirstName(int index, String newFirstName) {
+		GenericDaoJpa.startTransaction();
+		contactPersonList.get(index).setFirstName(newFirstName);
+		GenericDaoJpa.commitTransaction();
+	}
 
 
 	public User getUserByUsername(String username) {
@@ -272,7 +277,7 @@ public class DomainManager {
 	    	userList = userRepo.getAll();
 		}
     	return userList.stream()
-    			.filter(u -> u.getUserName().equals(username)).findFirst().get();
+    			.filter(u -> u.getUserName().equals(username)).findFirst().orElse(null);
 	}
 	
 	public Company getCompanyByName(String name) {
