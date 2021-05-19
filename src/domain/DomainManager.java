@@ -128,7 +128,17 @@ public class DomainManager {
         return ticketList;
     }
     
+<<<<<<< HEAD
     public ObservableList<Company> getAllCompanies() {   	
+=======
+    //kpi
+    public List<Ticket> getAllTicketsAsList(){
+    	return ticketRepo.getAll();
+    }
+    
+    public ObservableList<Company> getAllCompanies() {
+    	if(companyList == null) {
+>>>>>>> branch 'main' of https://github.com/HoGentProjectenII/2021-java-g-28.git
     		companyList = FXCollections.observableArrayList(companyRepo.getAll());
     	return companyList;
     }
@@ -239,8 +249,7 @@ public class DomainManager {
 		
 	}
 	
-	public void updateEmployee(Integer id, LocalDate date, String firstname, String lastname, String adress,
-			String role, String phonenumber, String email, String username, boolean status, IEmployee emp) {
+	public void updateEmployee(IEmployee emp) {
 		GenericDaoJpa.startTransaction();
 		employeeRepo.update((Employee) emp);
 		GenericDaoJpa.commitTransaction();

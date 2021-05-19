@@ -31,7 +31,10 @@ public class DashboardPanelController extends GridPane {
 	private Button btnFaq;
 	@FXML
 	private Button btnContractType;
-	
+	@FXML
+	private Button btnKpi;
+	@FXML
+	private Button btnStatistics;
 
 	private Controller dc;
 
@@ -58,12 +61,16 @@ public class DashboardPanelController extends GridPane {
 			btnCustomer.setDisable(true);
 			btnEmployee.setDisable(true);
 			btnContractType.setDisable(true);
+			btnKpi.setDisable(true);
+			btnStatistics.setDisable(true);
 		}
 		
 		if(dc.getEmployee().getRole().equals("AD")) {
 			btnTickets.setDisable(true);
 			btnContractType.setDisable(true);
 			btnFaq.setDisable(true);
+			btnKpi.setDisable(true);
+			btnStatistics.setDisable(true);
 		}
 		
 		btnUsername.setText(dc.getEmployee().getUser().getUserName());		
@@ -73,8 +80,20 @@ public class DashboardPanelController extends GridPane {
 		btnFaq.setOnAction(this::displayFaq);
 		btnEmployee.setOnAction(this::displayEmployees);
 		btnContractType.setOnAction(this::displayContractType);
+<<<<<<< HEAD
+		btnKpi.setOnAction(this::displayKpi);
+=======
+		btnStatistics.setOnAction(this::displayStatictics);
+>>>>>>> 86377129a67c1411764da14f22b4e75535eb7349
 	}
 
+	private void displayStatictics(ActionEvent event) {
+		setActiveButtonColor(btnStatistics);
+		StatisticsPanelController cppc = new StatisticsPanelController(dc);
+		bpDashboard.setCenter(cppc);
+		bpDashboard.setPadding(new Insets(150, 0, 0, 300));
+	}
+	
 	private void displayCustomers(ActionEvent event) {
 		setActiveButtonColor(btnCustomer);
 		ContactPersonPanelController cppc = new ContactPersonPanelController(dc);
@@ -112,6 +131,13 @@ public class DashboardPanelController extends GridPane {
 		bpDashboard.setCenter(sap);
 		bpDashboard.setPadding(new Insets(0, 0, 0, 500));
 	}
+	
+	private void displayKpi(ActionEvent event) {
+		setActiveButtonColor(btnKpi);
+		KpiPanelController kpi = new KpiPanelController(dc);
+		bpDashboard.setCenter(kpi);
+		
+	}
 
 	private void setActiveButtonColor(Button button) {
 		btnCustomer.setStyle("-fx-text-fill: #7c7c7c;");
@@ -119,29 +145,16 @@ public class DashboardPanelController extends GridPane {
 		btnEmployee.setStyle("-fx-text-fill: #7c7c7c;");
 		btnFaq.setStyle("-fx-text-fill: #7c7c7c;");
 		btnUsername.setStyle("-fx-text-fill: #7c7c7c;");
+<<<<<<< HEAD
+		btnKpi.setStyle("-fx-text-fill: #7c7c7c;");
 		
-		if (button.equals(btnCustomer)) {
-			btnCustomer.setStyle("-fx-text-fill: #000000;");
-		}
-
-		if (button.equals(btnTickets)) {
-			btnTickets.setStyle("-fx-text-fill: #000000;");
-		}
-
-		if (button.equals(btnEmployee)) {
-			btnEmployee.setStyle("-fx-text-fill: #000000;");
-		}
-
-		if (button.equals(btnFaq)) {
-			btnFaq.setStyle("-fx-text-fill: #000000;");
-		}
+		button.setStyle("-fx-text-fill: #000000;");
+=======
+		btnStatistics.setStyle("-fx-text-fill: #7c7c7c;");
+		btnKpi.setStyle("-fx-text-fill: #7c7c7c;");
+		//set active button
+		button.setStyle("-fx-text-fill: #000000;");
 		
-		if (button.equals(btnContractType)) {
-			btnContractType.setStyle("-fx-text-fill: #000000;");
-		}
-		
-		if(button.equals(btnUsername)) {
-			btnUsername.setStyle("-fx-text-fill: #000000;");
-		}
+>>>>>>> 86377129a67c1411764da14f22b4e75535eb7349
 	}
 }

@@ -116,7 +116,6 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		cmbContactPerson.setDisable(true);
 		cmbEmployee.setItems(FXCollections.observableArrayList(dc.getAllEmployeesCombo()));
 		cmbEmployee.getSelectionModel().select(ticket.getEmployee().getFirstName());
-		
 		dpDateCreate.setValue(ticket.getDateCreation());
 		dpDateCreate.setDisable(true);
 		//button acties
@@ -125,13 +124,11 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		btnCreateTicket.setOnAction(this::createTicketStart);
 		lstReactions.setVisible(ticket != null);
 		txtReactionText.setVisible(ticket != null);
-		
 		//listview reacties
 		//lstReactions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		btnAddReaction.setOnAction(this::addReaction);
 		btnAddReaction.setVisible(true);
 		ObservableList<String> reactions = FXCollections.observableArrayList(ticket.getReactions().stream().map(r->r.getNameUserReaction()).collect(Collectors.toList()));
-		
 		lstReactions.setItems(reactions);
 		lstReactions.getSelectionModel().selectedItemProperty()
 		.addListener((observableValue, vorigReactie, selectedReactie) -> 

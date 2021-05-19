@@ -45,6 +45,8 @@ public class TechnicianController extends Controller {
 	@Override
 	public void updateTicket(TicketStatusEnum status,String descrip, String first, String last) {
 		//changes in de edit panel toepassen
+		
+		
 		ticket.setStatus(status);
 		ticket.setDescription(descrip);
 		Employee employee = dm.getEmployeeByFirstAndLastName(first, last);

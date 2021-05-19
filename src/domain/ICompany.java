@@ -31,6 +31,8 @@ public interface ICompany {
 	List<ContactPerson> getContactPersons();
 
 	List<Contract> getContracts();
+	
+	List<Ticket> getTickets();
 
 
 	boolean getStatus();

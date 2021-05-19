@@ -32,6 +32,13 @@ public class User {
 		
 	}
 	
+	public User(String id, String username, String email, String phonenumber) {
+		this.id = id;
+		this.userName = new SimpleStringProperty(username);
+		this.email = email;
+		this.phoneNumber = phonenumber;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
