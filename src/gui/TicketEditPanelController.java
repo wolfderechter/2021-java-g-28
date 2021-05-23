@@ -120,7 +120,7 @@ public class TicketEditPanelController extends GridPane implements PropertyChang
 		cmbContactPerson.setDisable(true);
 		cmbEmployee.setItems(FXCollections.observableArrayList(dc.getAllEmployeesCombo()));
 		if(ticket.getEmployee()!=null)
-			cmbEmployee.getSelectionModel().select(ticket.getEmployee().getFirstName());
+			cmbEmployee.getSelectionModel().select(ticket.getEmployee().getFirstName() + " " + ticket.getEmployee().getLastName() + ", " + ticket.getEmployee().getRole());
 		dpDateCreate.setValue(ticket.getDateCreation());
 		dpDateCreate.setDisable(true);
 		//button acties

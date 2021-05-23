@@ -10,7 +10,15 @@ import javafx.event.ActionEvent;
 
 public class LoginController {
 
-
+	private int singInCount = 0;
+	
+	public int getSignInCount() {
+		return singInCount;
+	}
+	
+	public void addToSignInCount() {
+		this.singInCount +=1;
+	}
 	
 	/**Sends GET request to specific URL and returns result from server as a string
 	 * @throws IOException **/

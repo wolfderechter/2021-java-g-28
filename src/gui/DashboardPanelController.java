@@ -103,17 +103,20 @@ public class DashboardPanelController extends GridPane {
 		setActiveButtonColor(btnTickets);
 		TicketPanelController tpc = new TicketPanelController(dc);
 		bpDashboard.setCenter(tpc);
+		bpDashboard.setPadding(new Insets(0, 0, 0, 0));
 	}
 	private void displayContractType(ActionEvent event) {
 		setActiveButtonColor(btnContractType);
 		ContractTypePanelController ctpc = new ContractTypePanelController((SupportManagerController) dc);
 		bpDashboard.setCenter(ctpc);
+		bpDashboard.setPadding(new Insets(0, 0, 0, 0));
 	}
 	
 	private void displayFaq(ActionEvent event) {
 		setActiveButtonColor(btnFaq);
 		FaqPanelController fpc = new FaqPanelController(dc);
 		bpDashboard.setCenter(fpc);
+		bpDashboard.setPadding(new Insets(0, 0, 0, 0));
 	}
 
 	private void displayEmployees(ActionEvent event) {
@@ -134,7 +137,7 @@ public class DashboardPanelController extends GridPane {
 		setActiveButtonColor(btnKpi);
 		KpiPanelController kpi = new KpiPanelController(dc);
 		bpDashboard.setCenter(kpi);
-		
+		bpDashboard.setPadding(new Insets(0, 0, 0, 0));
 	}
 
 	private void setActiveButtonColor(Button button) {

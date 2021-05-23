@@ -26,6 +26,7 @@ public class TechnicianController extends Controller {
 	public TechnicianController(IEmployee emp) {
 		ticketSubject = new PropertyChangeSupport(this);
 		this.employee = emp;
+		this.dm = new DomainManager();
 	}
 	
 	@Override

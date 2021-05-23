@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" type="VBox" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox>
          <children>
@@ -69,14 +69,29 @@
          <padding>
             <Insets bottom="5.0" />
          </padding>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </HBox>
       <HBox prefHeight="20.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="txFieldAddFirstName" prefWidth="100.0" />
-            <TextField fx:id="txFieldAddLastName" prefWidth="100.0" />
-            <TextField fx:id="txFieldAddEmail" prefWidth="100.0" />
+            <TextField fx:id="txFieldAddFirstName" prefWidth="100.0" promptText="Firstname">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></TextField>
+            <TextField fx:id="txFieldAddLastName" prefWidth="100.0" promptText="Lastname">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></TextField>
+            <TextField fx:id="txFieldAddEmail" prefWidth="100.0" promptText="Email">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></TextField>
             <Button fx:id="btnCreateContactPerson2" mnemonicParsing="false" prefHeight="25.0" prefWidth="49.0" text="Add" />
          </children>
+         <VBox.margin>
+            <Insets bottom="4.0" left="4.0" right="4.0" />
+         </VBox.margin>
       </HBox>
       <HBox prefHeight="20.0" prefWidth="200.0" />
       <HBox prefHeight="20.0" prefWidth="200.0">
@@ -126,13 +141,7 @@
                   <Label text="Status:" />
                   <CheckBox fx:id="checkBoxStatus" mnemonicParsing="false" text="Active" GridPane.columnIndex="1" />
                   <DatePicker fx:id="datePickerDateInService" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Label" GridPane.rowIndex="2" />
-                  <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Save" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button fx:id="btnCreateCompany" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Create company" GridPane.rowIndex="1" />
+                  <Label text="Date:" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
@@ -154,6 +163,14 @@
                <padding>
                   <Insets top="-10.0" />
                </padding>
+               <children>
+                  <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Save" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="btnCreateCompany" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Create company" />
+               </children>
             </GridPane>
             <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel">
                <HBox.margin>
@@ -168,6 +185,6 @@
       <HBox layoutX="25.0" layoutY="330.0" prefHeight="20.0" prefWidth="200.0" />
    </children>
    <padding>
-      <Insets left="15.0" right="15.0" />
+      <Insets left="50.0" right="15.0" />
    </padding>
 </fx:root>

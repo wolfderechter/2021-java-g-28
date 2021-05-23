@@ -69,8 +69,16 @@ public class AccountPanelController extends GridPane {
 				}
 				showDashboard(lc.getController(signedInUser));
 			} else {
-				lblLoginError.setText("Username or password incorrect");
-				txtUsername.requestFocus();
+				if(lc.getSignInCount() < 5) {
+					lc.addToSignInCount();
+					lblLoginError.setText("Username or password incorrect");
+					txtUsername.requestFocus();
+				} else {
+					lblLoginError.setText("This account has been blocked");
+					btnSignIn.setDisable(true);
+					txtUsername.setDisable(true);
+					pwfPassword.setDisable(true);
+				}
 			}
 		} catch (IOException e) {
 			createAndShowPopupConnection();
