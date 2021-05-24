@@ -1,7 +1,7 @@
 # Welcome to G28!
 
 This is the GitHub repository for project-workshop II: programming. U can find and clone all the source code in here. 
-The project is about a help desk application where the customer can log-in, view their tickets, create tickets and view the feedback on their tickets. This is a school project for the company actemium.
+The project is about a help desk application where the customer can log-in, view their tickets, create tickets and view the feedback on their tickets. This repository is the back-end where employees can login and manage tickets, contracts, contracttypes and employees depending on the rights. This is a school project for the company actemium.
 
 ## Table of contents
 
