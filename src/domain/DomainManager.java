@@ -274,9 +274,9 @@ public class DomainManager {
 
 
 	public User getUserByUsername(String username) {
-		if(userList == null) {
+		//if(userList == null) {
 	    	userList = userRepo.getAll();
-		}
+		//}
     	return userList.stream()
     			.filter(u -> u.getUserName().equals(username)).findFirst().orElse(null);
 	}
